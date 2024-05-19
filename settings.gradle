@@ -1,0 +1,6 @@
+rootProject.name = 'pet-id'
+include 'core'
+include 'auth'
+include 'domain'
+include 'infra'
+
