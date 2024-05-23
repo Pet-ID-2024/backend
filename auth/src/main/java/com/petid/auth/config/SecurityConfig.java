@@ -1,5 +1,7 @@
 package com.petid.auth.config;
 
+import com.petid.auth.jwt.TokenAuthExceptionFilter;
+import com.petid.auth.jwt.TokenAuthFilter;
 import com.petid.auth.oauth.CustomOAuth2UserService;
 import com.petid.auth.oauth.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -21,6 +24,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final TokenAuthFilter tokenAuthFilter;
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
@@ -39,8 +43,7 @@ public class SecurityConfig {
 
 
                 .authorizeHttpRequests(
-                        request -> request.requestMatchers(PathRequest.toH2Console())
-                                .permitAll()
+                        request -> request
                                 .requestMatchers(
                                         new AntPathRequestMatcher("/"),
                                         new AntPathRequestMatcher("/error"),
@@ -56,15 +59,9 @@ public class SecurityConfig {
                                 .successHandler(oAuth2SuccessHandler)
                 );
 
-        // jwt 관련 설정
-//                .addFilterBefore(tokenAuthenticationFilter,
-//                        UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new TokenExceptionFilter(), tokenAuthenticationFilter.getClass()) // 토큰 예외 핸들링
-//
-//                // 인증 예외 핸들링
-//                .exceptionHandling((exceptions) -> exceptions
-//                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-//                        .accessDeniedHandler(new CustomAccessDeniedHandler()));
+        http
+                .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new TokenAuthExceptionFilter(), TokenAuthFilter.class);
 
         return http.build();
     }

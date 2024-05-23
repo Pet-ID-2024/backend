@@ -2,6 +2,7 @@ package com.petid.auth.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -40,7 +41,12 @@ public class TokenProvider {
 
         if (!token.startsWith("Bearer ")) return false;
 
-        return true;
+        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secretKey)).build().verify(token);
+
+        if (!decodedJWT.getClaim("role").asString().startsWith("ROLE_")) return false;
+
+        String tokenType = decodedJWT.getClaim("tokenType").asString();
+        return tokenType.equals("ACCESS_TOKEN") || tokenType.equals("REFRESH_TOKEN");
     }
     private String createToken(Authentication authentication, LocalDateTime expire, String type) {
         String authorities = authentication.getAuthorities().stream()
@@ -51,7 +57,7 @@ public class TokenProvider {
                 .withSubject(authentication.getName())
                 .withExpiresAt(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()))
                 .withClaim(ROLE_CLAIM_NAME, authorities)
-                .withClaim("com/petid/domain/type", type)
+                .withClaim("tokenType", type)
                 .sign(Algorithm.HMAC256(secretKey));
     }
 }
