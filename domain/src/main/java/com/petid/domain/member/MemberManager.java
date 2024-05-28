@@ -1,5 +1,7 @@
 package com.petid.domain.member;
 
+import com.petid.domain.exception.CustomException;
+import com.petid.domain.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,5 +15,10 @@ public class MemberManager {
     ) {
         return memberRepository.findByUid(member.uid())
                 .orElseGet(() -> memberRepository.save(member));
+    }
+
+    public Member getByUid(String uid) {
+        return memberRepository.findByUid(uid)
+                .orElseThrow(() -> new CustomException(ExceptionType.MEMBER_NOT_FOUND));
     }
 }

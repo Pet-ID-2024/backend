@@ -1,7 +1,8 @@
 package com.petid.domain.member;
 
 public record MemberAuth(
-        int memberId,
+        Long id,
+        long memberId,
         String name,
         String ssn,
         String address,

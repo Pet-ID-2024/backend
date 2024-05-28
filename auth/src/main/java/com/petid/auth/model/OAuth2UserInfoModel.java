@@ -72,6 +72,7 @@ public record OAuth2UserInfoModel(
             String platform
     ) {
         return new Member(
+                null,
                 sub,
                 platform,
                 email,
