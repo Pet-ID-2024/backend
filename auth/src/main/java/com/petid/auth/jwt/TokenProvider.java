@@ -60,4 +60,9 @@ public class TokenProvider {
                 .withClaim("tokenType", type)
                 .sign(Algorithm.HMAC256(secretKey));
     }
+
+    public String getUidFromAccessToken(String token) {
+        DecodedJWT jwt = JWT.decode(token);
+        return jwt.getClaim("sub").asString();
+    }
 }

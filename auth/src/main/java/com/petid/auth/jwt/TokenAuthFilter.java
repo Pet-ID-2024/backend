@@ -30,6 +30,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
         String token = request.getHeader(AUTHORIZATION);
 
         if (!tokenProvider.validateToken(token)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
+        request.setAttribute("uid", tokenProvider.getUidFromAccessToken(token));
 
         filterChain.doFilter(request, response);
     }
