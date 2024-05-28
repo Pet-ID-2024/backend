@@ -1,6 +1,6 @@
-package com.petid.infra.repository;
+package com.petid.infra.member.repository;
 
-import com.petid.infra.entity.MemberEntity;
+import com.petid.infra.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

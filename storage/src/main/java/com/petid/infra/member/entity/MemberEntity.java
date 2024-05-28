@@ -1,12 +1,14 @@
-package com.petid.infra.entity;
+package com.petid.infra.member.entity;
 
 import com.petid.domain.member.Member;
 import com.petid.domain.type.Role;
 import com.petid.infra.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,9 @@ public class MemberEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String uid;
+    @Column(nullable = false)
     private String platform;
     private String email;
 
@@ -25,6 +29,7 @@ public class MemberEntity extends BaseEntity {
 
     public Member toDomain() {
         return new Member(
+                id,
                 uid,
                 platform,
                 email,
@@ -34,7 +39,7 @@ public class MemberEntity extends BaseEntity {
 
     public static MemberEntity from(Member member) {
         return new MemberEntity(
-                null,
+                member.id(),
                 member.uid(),
                 member.platform(),
                 member.email(),

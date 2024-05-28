@@ -1,8 +1,8 @@
-package com.petid.infra.repository;
+package com.petid.infra.member.repository;
 
 import com.petid.domain.member.Member;
 import com.petid.domain.member.MemberRepository;
-import com.petid.infra.entity.MemberEntity;
+import com.petid.infra.member.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
