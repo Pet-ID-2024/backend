@@ -18,7 +18,6 @@ spring:
             authorization-grant-type: authorization_code
             scope:
               - profile_nickname
-#              - account_email
             client-name: kakao
 
           naver:

@@ -8,3 +8,8 @@ spring:
     url: jdbc:h2:file:./data/petid;AUTO_SERVER=true
     username: sa
     password:
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
