@@ -2,3 +2,5 @@ spring:
   profiles:
     include:
       - oauth
+  jpa:
+    open-in-view: false
