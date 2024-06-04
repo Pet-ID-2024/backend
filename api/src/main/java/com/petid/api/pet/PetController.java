@@ -2,11 +2,7 @@ package com.petid.api.pet;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import com.petid.domain.pet.dto.PetAppearanceDto;
-import com.petid.domain.pet.dto.PetDto;
-import com.petid.domain.pet.dto.PetImageDto;
 import com.petid.domain.pet.entity.Pet;
 import com.petid.domain.pet.entity.PetAppearance;
 import com.petid.domain.pet.entity.PetImage;
@@ -35,8 +31,8 @@ public class PetController {
   
 
   @PostMapping
-  public ResponseEntity<Pet> createPet(@RequestBody PetDto pet) {
-    Optional<Pet> petOptional = petService.getPetById(pet.getId());
+  public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
+    Optional<Pet> petOptional = petService.getPetById(pet.id());
     Pet createdPet = petService.createPet(petOptional.get());
     //PetAppearance createdAppearance = petService.createAppearance(createdPet.getId(), petDto.getAppearance());
     //PetImage createdImage = petService.createImage(createdPet.getId(), createdAppearance.toDto());
@@ -66,7 +62,7 @@ public class PetController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody PetDto pet) {
+  public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody Pet pet) {
     Optional<Pet> petOptional = petService.getPetById(id);
     if (petOptional.isPresent()) {
       Pet existingPet = petOptional.get();
@@ -87,24 +83,24 @@ public class PetController {
   }
 
    @PutMapping("/{petId}/appearance")
-  public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable Long petId, @RequestBody PetAppearanceDto appearanceDto) {
+  public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable Long petId, @RequestBody PetAppearance petAppearance) {
     Optional<Pet> petOptional = petService.getPetById(petId);
     
-    PetAppearance updatedAppearance = petService.updatePetAppearance(petId, null, appearanceDto);    
+    PetAppearance updatedAppearance = petService.updatePetAppearance(petId, null, petAppearance);    
 
     return ResponseEntity.ok(updatedAppearance);
   }
 
   @PostMapping("/{petId}/image")
-  public ResponseEntity<PetImage> createPetImage(@PathVariable Long petId, @RequestBody PetImageDto imageDto) {
-    PetImage createdImage = petService.createImage(petId, imageDto);
+  public ResponseEntity<PetImage> createPetImage(@PathVariable Long petId, @RequestBody PetImage petImage) {
+    PetImage createdImage = petService.createImage(petId, petImage);
     return ResponseEntity.ok(createdImage);
   }
 
   // Update Pet Image (PUT)
   @PutMapping("/{petId}/image")
-  public ResponseEntity<PetImage> updatePetImage(@PathVariable Long petId, @RequestBody PetImageDto imageDto) {
-    PetImage updatedImage = petService.createImage(petId, imageDto);
+  public ResponseEntity<PetImage> updatePetImage(@PathVariable Long petId, @RequestBody PetImage petImage) {
+    PetImage updatedImage = petService.createImage(petId, petImage);
     return ResponseEntity.ok(updatedImage);
   }
 }

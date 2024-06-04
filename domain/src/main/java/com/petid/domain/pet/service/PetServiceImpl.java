@@ -12,9 +12,9 @@ import com.petid.domain.pet.dto.PetImageDto;
 import com.petid.domain.pet.entity.Pet;
 import com.petid.domain.pet.entity.PetAppearance;
 import com.petid.domain.pet.entity.PetImage;
-import com.petid.domain.pet.repository.PetAppearanceJpaRepository;
-import com.petid.domain.pet.repository.PetImageJpaRepository;
-import com.petid.domain.pet.repository.PetJpaRepository;
+import com.petid.domain.pet.repository.PetAppearanceRepository;
+import com.petid.domain.pet.repository.PetImageRepository;
+import com.petid.domain.pet.repository.PetRepository;
 import com.petid.domain.type.Breed;
 
 import java.util.List;
@@ -24,14 +24,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
   
-  private PetJpaRepository petRepo;
-  private PetAppearanceJpaRepository petAppearanceRepo;
-  private PetImageJpaRepository PetImgRepo;
+  private PetRepository petRepo;
+  private PetAppearanceRepository petAppearanceRepo;
+  private PetImageRepository PetImgRepo;
 
   @Override
   public Pet createPet(Pet pet) {
 
-    if (pet.getPetName() == null || pet.getPetName().isEmpty()) {
+    if (pet.petName() == null || pet.petName().isEmpty()) {
         throw new IllegalArgumentException("Pet name cannot be empty");
     }
     
@@ -40,7 +40,7 @@ public class PetServiceImpl implements PetService {
 
   @Override
   public List<Pet> getAllPets() {
-    return petRepo.findAll();
+    return (List<Pet>) petRepo.findAll();
   }
 
   @Override
@@ -49,13 +49,13 @@ public class PetServiceImpl implements PetService {
   }
 
   @Override
-  public Pet updatePet(PetDto petDto)  throws PetNotFoundException {
-    Long petId = petDto.getId();
+  public Pet updatePet(Pet pet)  throws PetNotFoundException {
+    Long petId = pet.id();
     Pet existingPet = petRepo.findById(petId)
         .orElseThrow(() -> new PetNotFoundException(petId));
 
     // Update pet data (assuming mapping logic exists)
-    existingPet.setPetName(petDto.getPetName()); // Update other fields as needed
+    //existingPet.setPetName(petDto.getPetName()); // Update other fields as needed
     petRepo.save(existingPet);
 
     return existingPet;
@@ -69,7 +69,7 @@ public class PetServiceImpl implements PetService {
         .orElseThrow(() -> new PetAppearanceNotFoundException(petId));
 
     // Update appearance data (assuming mapping logic exists)
-    existingAppearance.setBreed(appearanceDto.getBreed()); // Update other fields as needed
+   // existingAppearance.setBreed(appearanceDto.getBreed()); // Update other fields as needed
     petAppearanceRepo.save(existingAppearance);
 
     return existingAppearance;
@@ -82,9 +82,9 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public PetImage createImage(Long petId, PetImageDto imageDto) {
-        PetImage petImageEntity = new PetImage();
-       return PetImgRepo.save(null);
+    public PetImage createImage(Long petId, PetImage petImage) {
+        
+       return PetImgRepo.save(petId, petImage);
     }
 
 

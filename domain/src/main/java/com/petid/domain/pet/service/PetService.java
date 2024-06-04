@@ -19,12 +19,12 @@ public interface PetService {
   
     Optional<Pet> getPetById(Long id);
   
-    Pet updatePet(PetDto pet);
+    Pet updatePet(Pet pet);
   
     void deletePet(Long id);
 
-    PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearanceDto appearanceDto);
+    PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearance petAppearance);
 
-    PetImage createImage(Long petId, PetImageDto imageDto);
+    PetImage createImage(Long petId, PetImage petImage);
   }
   
