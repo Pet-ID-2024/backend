@@ -2,12 +2,13 @@ package com.petid.auth.oauth.sdk.service;
 
 import com.petid.auth.common.type.OAuth2Platform;
 import com.petid.auth.jwt.TokenProvider;
+import com.petid.auth.oauth.model.OAuth2UserInfoModel;
 import com.petid.auth.oauth.sdk.controller.OAuth2UserInfoUriConverter;
 import com.petid.auth.oauth.sdk.controller.TokenDto;
-import com.petid.auth.oauth.model.OAuth2UserInfoModel;
 import com.petid.domain.member.Member;
 import com.petid.domain.member.MemberManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,11 +40,14 @@ public class OAuth2ServiceImpl implements OAuth2Service {
                 .fromHttpUrl(oauth2Converter.convertUserInfoUri(platform))
                 .queryParam("access_token", token);
 
+        // 제네릭 타입정보를 런타임에 유지
+        ParameterizedTypeReference<Map<String, Object>> responseType = new ParameterizedTypeReference<>() {};
+
         Map<String, Object> response = restTemplate.exchange(
                 uriBuilder.toUriString(),
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                Map.class
+                responseType
         ).getBody();
 
         OAuth2UserInfoModel oAuth2UserInfo = OAuth2UserInfoModel.of(
