@@ -1,7 +1,7 @@
-package com.petid.auth.oauth;
+package com.petid.auth.oauth.redirect;
 
-import com.petid.auth.model.OAuth2UserInfoModel;
-import com.petid.auth.model.PrincipalDetails;
+import com.petid.auth.oauth.model.OAuth2UserInfoModel;
+import com.petid.auth.oauth.model.PrincipalDetails;
 import com.petid.domain.member.Member;
 import com.petid.domain.member.MemberManager;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +27,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String platform = userRequest.getClientRegistration().getRegistrationId();
 
-        String sub = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
-
         OAuth2UserInfoModel oAuth2UserInfo = OAuth2UserInfoModel.of(platform, oAuth2UserAttributes);
 
         Member member = memberManager.getOrSave(oAuth2UserInfo.toDomain(platform));
 
-        return new PrincipalDetails(member, oAuth2UserAttributes, sub);
+        return new PrincipalDetails(member, oAuth2UserAttributes);
     }
 }

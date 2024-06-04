@@ -1,7 +1,7 @@
-package com.petid.auth.model;
+package com.petid.auth.oauth.model;
 
-import com.petid.auth.exception.CustomAuthException;
-import com.petid.auth.exception.CustomAuthExceptionType;
+import com.petid.auth.common.exception.CustomAuthException;
+import com.petid.auth.common.exception.CustomAuthExceptionType;
 import com.petid.domain.member.Member;
 import com.petid.domain.type.Role;
 
@@ -30,7 +30,7 @@ public record OAuth2UserInfoModel(
             Map<String, Object> attributes
     ) {
         return new OAuth2UserInfoModel(
-                (String) attributes.get("sub"),
+                (String) attributes.get("id"),
                 (String) attributes.get("name"),
                 (String) attributes.get("email")
         );

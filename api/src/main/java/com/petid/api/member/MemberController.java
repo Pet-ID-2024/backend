@@ -16,7 +16,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/auth")
-    public BasicResponse<Boolean> auth(
+    public BasicResponse<Boolean> isMemberAuth(
             HttpServletRequest request
     ) {
         String uid = request.getAttribute("uid").toString();
