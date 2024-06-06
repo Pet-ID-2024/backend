@@ -25,4 +25,8 @@ public enum OAuth2Platform {
                         () -> new CustomAuthException(CustomAuthExceptionType.REGISTRATION_ID_NOT_FOUND)
                 );
     }
+
+    public boolean isNeedBearer() {
+        return this == NAVER;
+    }
 }

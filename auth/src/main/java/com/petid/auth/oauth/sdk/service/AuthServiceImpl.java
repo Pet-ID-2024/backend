@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class OAuth2ServiceImpl implements OAuth2Service {
+public class AuthServiceImpl implements AuthService {
 
     private final RestTemplate restTemplate;
     private final MemberManager memberManager;
@@ -63,6 +63,19 @@ public class OAuth2ServiceImpl implements OAuth2Service {
         return new TokenDto(
                 "Bearer " + accessToken,
                 "Bearer " + refreshToken
+        );
+    }
+
+    @Override
+    public TokenDto refreshToken(String uid) {
+        Member member = memberManager.getByUid(uid);
+
+        String newAccessToken = tokenProvider.getAccessToken(member);
+        String newRefreshToken = tokenProvider.getRefreshToken(member);
+
+        return new TokenDto(
+                newAccessToken,
+                newRefreshToken
         );
     }
 }
