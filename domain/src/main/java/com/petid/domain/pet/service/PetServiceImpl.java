@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.petid.domain.exception.PetAppearanceNotFoundException;
 import com.petid.domain.exception.PetNotFoundException;
-import com.petid.domain.pet.dto.PetAppearanceDto;
-import com.petid.domain.pet.dto.PetDto;
-import com.petid.domain.pet.dto.PetImageDto;
+
 import com.petid.domain.pet.entity.Pet;
 import com.petid.domain.pet.entity.PetAppearance;
 import com.petid.domain.pet.entity.PetImage;
@@ -60,7 +58,7 @@ public class PetServiceImpl implements PetService {
 
     return existingPet;
   }
-    public PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearanceDto appearanceDto) 
+    public PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearance appearance) 
       throws PetNotFoundException, PetAppearanceNotFoundException {
     Pet existingPet = petRepo.findById(petId)
         .orElseThrow(() -> new PetNotFoundException(petId));
