@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberAuth authMember(
+    public MemberAuth saveMemberAuth(
             Member member,
             MemberAuth memberAuth
     ) {
