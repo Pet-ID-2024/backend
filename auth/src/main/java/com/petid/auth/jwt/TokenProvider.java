@@ -2,7 +2,7 @@ package com.petid.auth.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import com.petid.domain.member.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -30,24 +30,24 @@ public class TokenProvider {
         return createToken(authentication, localDateTime, "ACCESS_TOKEN");
     }
 
+    public String getAccessToken(Member member) {
+        LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(ACCESS_TOKEN_EXPIRE_TIME);
+
+        return createToken(member, localDateTime, "ACCESS_TOKEN");
+    }
+
     public String getRefreshToken(Authentication authentication) {
         LocalDateTime localDateTime = LocalDateTime.now().plusDays(REFRESH_TOKEN_EXPIRE_TIME);
 
         return createToken(authentication, localDateTime, "REFRESH_TOKEN");
     }
 
-    public boolean validateToken(String token) {
-        if (token == null || token.isEmpty()) return false;
+    public String getRefreshToken(Member member) {
+        LocalDateTime localDateTime = LocalDateTime.now().plusDays(REFRESH_TOKEN_EXPIRE_TIME);
 
-        if (!token.startsWith("Bearer ")) return false;
-
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secretKey)).build().verify(token);
-
-        if (!decodedJWT.getClaim("role").asString().startsWith("ROLE_")) return false;
-
-        String tokenType = decodedJWT.getClaim("tokenType").asString();
-        return tokenType.equals("ACCESS_TOKEN") || tokenType.equals("REFRESH_TOKEN");
+        return createToken(member, localDateTime, "REFRESH_TOKEN");
     }
+
     private String createToken(Authentication authentication, LocalDateTime expire, String type) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -57,6 +57,15 @@ public class TokenProvider {
                 .withSubject(authentication.getName())
                 .withExpiresAt(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()))
                 .withClaim(ROLE_CLAIM_NAME, authorities)
+                .withClaim("tokenType", type)
+                .sign(Algorithm.HMAC256(secretKey));
+    }
+
+    private String createToken(Member member, LocalDateTime expire, String type) {
+        return JWT.create()
+                .withSubject(member.uid())
+                .withExpiresAt(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()))
+                .withClaim(ROLE_CLAIM_NAME, member.role().name())
                 .withClaim("tokenType", type)
                 .sign(Algorithm.HMAC256(secretKey));
     }

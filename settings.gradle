@@ -1,6 +1,10 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+}
 rootProject.name = 'pet-id'
 include 'core'
 include 'auth'
 include 'domain'
-include 'infra'
+include 'storage'
+include 'api'
 

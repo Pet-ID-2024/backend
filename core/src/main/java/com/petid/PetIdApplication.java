@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EntityScan(basePackages = "com.petid.infra")
+@EntityScan(basePackages = {"com.petid.infra", "com.petid.domain"} )
 public class PetIdApplication {
     public static void main(String[] args) {
         SpringApplication.run(PetIdApplication.class, args);
