@@ -1,6 +1,6 @@
 package com.petid.infra.member.entity;
 
-import com.petid.domain.member.Member;
+import com.petid.domain.member.model.Member;
 import com.petid.domain.type.Role;
 import com.petid.infra.common.BaseEntity;
 import jakarta.persistence.*;

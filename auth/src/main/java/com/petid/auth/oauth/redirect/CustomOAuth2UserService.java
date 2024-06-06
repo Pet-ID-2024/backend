@@ -2,8 +2,8 @@ package com.petid.auth.oauth.redirect;
 
 import com.petid.auth.oauth.model.OAuth2UserInfoModel;
 import com.petid.auth.oauth.model.PrincipalDetails;
-import com.petid.domain.member.Member;
-import com.petid.domain.member.MemberManager;
+import com.petid.domain.member.model.Member;
+import com.petid.domain.member.manager.MemberManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

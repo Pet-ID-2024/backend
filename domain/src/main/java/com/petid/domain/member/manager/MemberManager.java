@@ -1,6 +1,8 @@
-package com.petid.domain.member;
+package com.petid.domain.member.manager;
 
 import com.petid.domain.exception.MemberNotFoundException;
+import com.petid.domain.member.model.Member;
+import com.petid.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

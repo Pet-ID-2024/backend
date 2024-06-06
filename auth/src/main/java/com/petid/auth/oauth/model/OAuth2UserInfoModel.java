@@ -2,7 +2,7 @@ package com.petid.auth.oauth.model;
 
 import com.petid.auth.common.exception.CustomAuthException;
 import com.petid.auth.common.exception.CustomAuthExceptionType;
-import com.petid.domain.member.Member;
+import com.petid.domain.member.model.Member;
 import com.petid.domain.type.Role;
 
 import java.util.Map;

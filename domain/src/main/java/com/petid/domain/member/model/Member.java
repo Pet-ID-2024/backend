@@ -1,4 +1,4 @@
-package com.petid.domain.member;
+package com.petid.domain.member.model;
 
 import com.petid.domain.type.Role;
 
