@@ -1,7 +1,6 @@
 package com.petid.auth.oauth.redirect;
 
 import com.petid.auth.jwt.TokenProvider;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             HttpServletRequest request,
             HttpServletResponse response,
             Authentication authentication
-    ) throws IOException, ServletException {
+    ) throws IOException {
         String accessToken = tokenProvider.getAccessToken(authentication);
         String refreshToken = tokenProvider.getRefreshToken(authentication);
 

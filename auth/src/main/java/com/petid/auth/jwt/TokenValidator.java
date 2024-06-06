@@ -17,8 +17,6 @@ public class TokenValidator {
     public boolean isTokenNotValid(String token) {
         if (token == null || token.isEmpty()) return true;
 
-        if (!token.startsWith("Bearer ")) return true;
-
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secretKey)).build().verify(token);
 
         if (!decodedJWT.getClaim("role").asString().startsWith("ROLE_")) return true;

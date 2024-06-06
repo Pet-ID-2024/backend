@@ -2,12 +2,17 @@ package com.petid.auth.jwt;
 
 import com.petid.auth.common.exception.CustomAuthException;
 import com.petid.auth.common.exception.CustomAuthExceptionType;
+import com.petid.auth.oauth.model.PrincipalDetails;
+import com.petid.domain.member.Member;
+import com.petid.domain.member.MemberManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,6 +25,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class TokenAuthFilter extends OncePerRequestFilter {
 
     private final TokenValidator tokenValidator;
+    private final MemberManager memberManager;
 
     @Override
     protected void doFilterInternal(
@@ -34,7 +40,17 @@ public class TokenAuthFilter extends OncePerRequestFilter {
         String token = request.getHeader(AUTHORIZATION);
 
         if (tokenValidator.isTokenNotValid(token)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
-        request.setAttribute("uid", tokenValidator.getUidFromToken(token));
+
+        String uid = tokenValidator.getUidFromToken(token);
+        request.setAttribute("uid", uid);
+
+        Member member = memberManager.getByUid(uid);
+        PrincipalDetails principalDetails = new PrincipalDetails(member, null);
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }

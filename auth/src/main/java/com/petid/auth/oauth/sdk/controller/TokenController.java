@@ -23,9 +23,9 @@ public class TokenController {
     public ResponseEntity<TokenDto> refreshToken(
             @RequestParam("refreshToken") String refreshToken
     ) {
-        if (tokenValidator.isTokenNotValid(refreshToken)) {
-            throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
-        }
+        refreshToken = refreshToken.replace("Bearer ", "");
+
+        if (tokenValidator.isTokenNotValid(refreshToken)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
 
         String uid = tokenValidator.getUidFromToken(refreshToken);
 
