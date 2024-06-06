@@ -14,17 +14,17 @@ public class TokenValidator {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    public boolean validateToken(String token) {
-        if (token == null || token.isEmpty()) return false;
+    public boolean isTokenNotValid(String token) {
+        if (token == null || token.isEmpty()) return true;
 
-        if (!token.startsWith("Bearer ")) return false;
+        if (!token.startsWith("Bearer ")) return true;
 
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secretKey)).build().verify(token);
 
-        if (!decodedJWT.getClaim("role").asString().startsWith("ROLE_")) return false;
+        if (!decodedJWT.getClaim("role").asString().startsWith("ROLE_")) return true;
 
         String tokenType = decodedJWT.getClaim("tokenType").asString();
-        return tokenType.equals("ACCESS_TOKEN") || tokenType.equals("REFRESH_TOKEN");
+        return !tokenType.equals("ACCESS_TOKEN") && !tokenType.equals("REFRESH_TOKEN");
     }
 
     public String getUidFromToken(String token) {

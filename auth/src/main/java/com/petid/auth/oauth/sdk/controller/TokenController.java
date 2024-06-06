@@ -23,7 +23,7 @@ public class TokenController {
     public ResponseEntity<TokenDto> refreshToken(
             @RequestParam("refreshToken") String refreshToken
     ) {
-        if (!tokenValidator.validateToken(refreshToken)) {
+        if (tokenValidator.isTokenNotValid(refreshToken)) {
             throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
         }
 
