@@ -1,9 +1,9 @@
-package com.petid.auth.config;
+package com.petid.auth.common.config;
 
 import com.petid.auth.jwt.TokenAuthExceptionFilter;
 import com.petid.auth.jwt.TokenAuthFilter;
-import com.petid.auth.oauth.CustomOAuth2UserService;
-import com.petid.auth.oauth.OAuth2SuccessHandler;
+import com.petid.auth.oauth.redirect.CustomOAuth2UserService;
+import com.petid.auth.oauth.redirect.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -48,20 +48,19 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/"),
                                         new AntPathRequestMatcher("/error"),
                                         new AntPathRequestMatcher("/favicon.ico"),
-                                        new AntPathRequestMatcher("/auth/success")
+                                        new AntPathRequestMatcher("/auth/success"),
+                                        new AntPathRequestMatcher("/oauth2/authorization/token/**")
                                 )
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )
+                .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new TokenAuthExceptionFilter(), TokenAuthFilter.class)
 
                 .oauth2Login(oauth ->
                         oauth.userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                 .successHandler(oAuth2SuccessHandler)
                 );
-
-        http
-                .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TokenAuthExceptionFilter(), TokenAuthFilter.class);
 
         return http.build();
     }
