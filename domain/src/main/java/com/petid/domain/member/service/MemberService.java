@@ -6,5 +6,5 @@ import com.petid.domain.member.model.MemberAuth;
 public interface MemberService {
     boolean isMemberAuthed(String uid);
 
-    MemberAuth authMember(Member member, MemberAuth domain);
+    MemberAuth saveMemberAuth(Member member, MemberAuth domain);
 }
