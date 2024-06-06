@@ -39,12 +39,15 @@ public class TokenAuthFilter extends OncePerRequestFilter {
         }
         String token = request.getHeader(AUTHORIZATION);
 
+<<<<<<< Updated upstream
         // test용
         if (token.equals("test")) {
             filterChain.doFilter(request, response);
             return;
         }
 
+=======
+>>>>>>> Stashed changes
         if (tokenValidator.isTokenNotValid(token)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
 
         String uid = tokenValidator.getUidFromToken(token);
