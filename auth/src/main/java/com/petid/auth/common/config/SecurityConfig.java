@@ -49,7 +49,8 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/error"),
                                         new AntPathRequestMatcher("/favicon.ico"),
                                         new AntPathRequestMatcher("/auth/success"),
-                                        new AntPathRequestMatcher("/oauth2/authorization/token/**")
+                                        new AntPathRequestMatcher("/auth/oauth2/login/**"),
+                                        new AntPathRequestMatcher("/auth/token/refresh")
                                 )
                                 .permitAll()
                                 .anyRequest().authenticated()

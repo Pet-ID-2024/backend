@@ -1,5 +1,7 @@
-package com.petid.domain.member;
+package com.petid.domain.member.manager;
 
+import com.petid.domain.member.model.Member;
+import com.petid.domain.member.repository.MemberAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
