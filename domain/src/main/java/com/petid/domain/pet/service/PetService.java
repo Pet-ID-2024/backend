@@ -1,9 +1,5 @@
 package com.petid.domain.pet.service;
 
-
-import com.petid.domain.pet.dto.PetAppearanceDto;
-import com.petid.domain.pet.dto.PetDto;
-import com.petid.domain.pet.dto.PetImageDto;
 import com.petid.domain.pet.entity.Pet;
 import com.petid.domain.pet.entity.PetAppearance;
 import com.petid.domain.pet.entity.PetImage;

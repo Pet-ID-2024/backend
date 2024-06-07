@@ -1,7 +1,7 @@
 package com.petid.auth.jwt;
 
-import com.petid.auth.exception.CustomAuthException;
-import com.petid.auth.exception.CustomAuthExceptionType;
+import com.petid.auth.common.exception.CustomAuthException;
+import com.petid.auth.common.exception.CustomAuthExceptionType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

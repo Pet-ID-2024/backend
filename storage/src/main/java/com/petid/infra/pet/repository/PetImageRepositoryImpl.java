@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class PetImageRepositoryImpl implements PetImageRepository {
 
-    private final PetImageRepository petImageJpaRepo;
+    private final PetImageJpaRepository petImageJpaRepo;
 
 	@Override
 	public PetImage save(Long petId, PetImage petImage) {

@@ -1,4 +1,4 @@
-package com.petid.auth.model;
+package com.petid.auth.oauth.model;
 
 import com.petid.domain.member.Member;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,13 +12,12 @@ import java.util.Map;
 
 public record PrincipalDetails(
         Member member,
-        Map<String, Object> attributes,
-        String attributeKey
+        Map<String, Object> attributes
 ) implements OAuth2User, UserDetails {
 
     @Override
     public String getName() {
-        return attributes.get(attributeKey).toString();
+        return member.uid();
     }
 
     @Override

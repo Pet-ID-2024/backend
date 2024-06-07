@@ -1,4 +1,4 @@
-package com.petid.auth.exception;
+package com.petid.auth.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

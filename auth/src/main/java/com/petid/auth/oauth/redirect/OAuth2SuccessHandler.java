@@ -1,4 +1,4 @@
-package com.petid.auth.oauth;
+package com.petid.auth.oauth.redirect;
 
 import com.petid.auth.jwt.TokenProvider;
 import jakarta.servlet.ServletException;
