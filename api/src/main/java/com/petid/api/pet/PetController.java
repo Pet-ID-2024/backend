@@ -3,9 +3,9 @@ package com.petid.api.pet;
 import java.util.List;
 import java.util.Optional;
 
-import com.petid.domain.pet.entity.Pet;
-import com.petid.domain.pet.entity.PetAppearance;
-import com.petid.domain.pet.entity.PetImage;
+import com.petid.domain.pet.model.Pet;
+import com.petid.domain.pet.model.PetAppearance;
+import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.service.PetService;
 
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.petid.infra.pet.repository;
 
-import com.petid.domain.pet.entity.PetAppearance;
+import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.repository.PetAppearanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

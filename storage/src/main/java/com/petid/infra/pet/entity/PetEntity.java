@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.petid.domain.pet.entity.Pet;
+import com.petid.domain.pet.model.Pet;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.petid.domain.pet.entity;
+package com.petid.domain.pet.model;
 
 import java.time.LocalDateTime;
 import java.util.List;

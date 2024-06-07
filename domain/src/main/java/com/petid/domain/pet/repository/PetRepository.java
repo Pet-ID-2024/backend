@@ -1,8 +1,8 @@
 package com.petid.domain.pet.repository;
 
-import com.petid.domain.pet.entity.Pet;
-
 import java.util.Optional;
+
+import com.petid.domain.pet.model.Pet;
 
 public interface PetRepository {
     Optional<Pet> findById(Long petId);

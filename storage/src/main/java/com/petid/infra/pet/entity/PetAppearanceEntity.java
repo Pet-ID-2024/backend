@@ -1,6 +1,6 @@
 package com.petid.infra.pet.entity;
 
-import com.petid.domain.pet.entity.PetAppearance;
+import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.type.Breed;
 
 import jakarta.persistence.*;

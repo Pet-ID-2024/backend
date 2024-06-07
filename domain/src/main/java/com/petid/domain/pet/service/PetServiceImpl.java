@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.petid.domain.exception.PetAppearanceNotFoundException;
 import com.petid.domain.exception.PetNotFoundException;
-
-import com.petid.domain.pet.entity.Pet;
-import com.petid.domain.pet.entity.PetAppearance;
-import com.petid.domain.pet.entity.PetImage;
+import com.petid.domain.pet.model.Pet;
+import com.petid.domain.pet.model.PetAppearance;
+import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.repository.PetAppearanceRepository;
 import com.petid.domain.pet.repository.PetImageRepository;
 import com.petid.domain.pet.repository.PetRepository;

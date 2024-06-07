@@ -1,4 +1,4 @@
-package com.petid.domain.pet.entity;
+package com.petid.domain.pet.model;
 
 import com.petid.domain.type.Breed;
 

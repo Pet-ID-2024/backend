@@ -1,6 +1,6 @@
 package com.petid.infra.pet.repository;
 
-import com.petid.domain.pet.entity.PetImage;
+import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.repository.PetImageRepository;
 
 import lombok.RequiredArgsConstructor;

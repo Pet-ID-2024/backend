@@ -1,11 +1,11 @@
 package com.petid.domain.pet.service;
 
-import com.petid.domain.pet.entity.Pet;
-import com.petid.domain.pet.entity.PetAppearance;
-import com.petid.domain.pet.entity.PetImage;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.petid.domain.pet.model.Pet;
+import com.petid.domain.pet.model.PetAppearance;
+import com.petid.domain.pet.model.PetImage;
 
 public interface PetService {
 

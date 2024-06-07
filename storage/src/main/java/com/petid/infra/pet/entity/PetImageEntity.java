@@ -1,6 +1,6 @@
 package com.petid.infra.pet.entity;
 
-import com.petid.domain.pet.entity.PetImage;
+import com.petid.domain.pet.model.PetImage;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
