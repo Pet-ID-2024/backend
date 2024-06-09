@@ -9,18 +9,22 @@ import com.petid.domain.pet.model.PetImage;
 
 public interface PetService {
 
-    Pet createPet(Pet pet);
-  
-    List<Pet> getAllPets();
-  
-    Optional<Pet> getPetById(Long id);
-  
-    Pet updatePet(Pet pet);
-  
-    void deletePet(Long id);
+  Pet createPet(Pet pet);
+  Pet updatePet(Pet pet);
+  void deletePet(Long petId);
+  Optional<Pet> findPetById(Long petId);
+  List<Pet> findAllPets();
 
-    PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearance petAppearance);
+  PetImage createPetImage(Long petId, PetImage petImage);
+  PetImage updatePetImage(Long petId, PetImage petImage);
+  void deletePetImage(Long petImageId);
+  Optional<PetImage> findPetImageById(Long petId, Long petImageId);
+  List<PetImage> findAllPetImages();
 
-    PetImage createImage(Long petId, PetImage petImage);
+  PetAppearance createPetAppearance(Long petId, PetAppearance petAppearance);
+  PetAppearance updatePetAppearance(Long petId, PetAppearance petAppearance);
+  void deletePetAppearance(Long appearanceId);
+  Optional<PetAppearance> findPetAppearanceById(Long appearanceId);
+  List<PetAppearance> findAllPetAppearances();
   }
   

@@ -1,11 +1,15 @@
 package com.petid.domain.pet.repository;
 
+import java.util.List;
 import java.util.Optional;
 
-import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 
 public interface PetAppearanceRepository {
-    Optional<PetAppearance> findByPetAppearanceId(Long id);
-    PetAppearance save(PetAppearance pet) ;
+    
+    PetAppearance createPetAppearance(PetAppearance petAppearance);
+    PetAppearance updatePetAppearance(PetAppearance petAppearance);
+    void deletePetAppearance(Long appearanceId);
+    Optional<PetAppearance> findPetAppearanceById(Long appearanceId);
+    List<PetAppearance> findAllPetAppearances();
 }

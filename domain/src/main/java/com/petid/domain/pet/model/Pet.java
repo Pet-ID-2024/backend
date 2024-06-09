@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record Pet(
-		Long id,
+		Long petId,
 		String petChipNumber,
 		String petName,
 		String petBirthDate,

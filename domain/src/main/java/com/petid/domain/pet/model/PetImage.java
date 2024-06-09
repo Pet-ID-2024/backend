@@ -1,8 +1,8 @@
 package com.petid.domain.pet.model;
 
 public record PetImage(
-		Long id,
-		Pet pet,
+		Long petImageId,
+		Long petId,
 		String imagePath
 ) {
 }

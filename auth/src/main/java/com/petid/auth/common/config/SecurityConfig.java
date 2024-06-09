@@ -50,7 +50,8 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/favicon.ico"),
                                         new AntPathRequestMatcher("/auth/success"),
                                         new AntPathRequestMatcher("/auth/oauth2/login/**"),
-                                        new AntPathRequestMatcher("/auth/token/refresh")
+                                        new AntPathRequestMatcher("/auth/token/refresh"),
+                                        new AntPathRequestMatcher("/v1/pet/**")
                                 )
                                 .permitAll()
                                 .anyRequest().authenticated()

@@ -4,87 +4,129 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
-import com.petid.domain.exception.PetAppearanceNotFoundException;
-import com.petid.domain.exception.PetNotFoundException;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.repository.PetAppearanceRepository;
 import com.petid.domain.pet.repository.PetImageRepository;
 import com.petid.domain.pet.repository.PetRepository;
-import com.petid.domain.type.Breed;
+
+
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
   
-  private PetRepository petRepo;
-  private PetAppearanceRepository petAppearanceRepo;
-  private PetImageRepository PetImgRepo;
+  private final PetRepository petRepo;
+  private final PetAppearanceRepository petAppearanceRepo;
+  private final PetImageRepository PetImgRepo;
 
   @Override
+  @Transactional
   public Pet createPet(Pet pet) {
+      return petRepo.createPet(pet);
+  }
 
-    if (pet.petName() == null || pet.petName().isEmpty()) {
-        throw new IllegalArgumentException("Pet name cannot be empty");
+  @Override
+  @Transactional
+  public Pet updatePet(Pet pet) {
+      return petRepo.updatePet(pet);
+  }
+
+  @Override
+  @Transactional
+  public void deletePet(Long petId) {
+      petRepo.deletePet(petId);
+  }
+
+  @Override
+  public Optional<Pet> findPetById(Long petId) {
+      return petRepo.findPetById(petId);
+  }
+
+  @Override
+  public List<Pet> findAllPets() {
+      return petRepo.findAllPets();
+  }
+
+  @Override
+  @Transactional
+  public PetImage createPetImage(Long petId, PetImage petImage) {
+    if (!petRepo.findPetById(petId).isPresent()) {
+      throw new RuntimeException("Pet not found for ID: " + petId);
+    }
+    return PetImgRepo.createPetImage(petImage);
+  }
+
+  @Override
+  @Transactional
+  public PetImage updatePetImage(Long petId, PetImage petImage) {
+    if (!petRepo.findPetById(petId).isPresent()) {
+      throw new RuntimeException("Pet not found for ID: " + petId);
     }
     
-    return petRepo.save(pet);
+    return PetImgRepo.updatePetImage(petImage);
   }
 
   @Override
-  public List<Pet> getAllPets() {
-    return (List<Pet>) petRepo.findAll();
+  @Transactional
+  public void deletePetImage(Long petImageId) {
+      PetImgRepo.deletePetImage(petImageId);
   }
 
   @Override
-  public Optional<Pet> getPetById(Long id) {
-    return petRepo.findById(id);
-  }
-
-  @Override
-  public Pet updatePet(Pet pet)  throws PetNotFoundException {
-    Long petId = pet.id();
-    Pet existingPet = petRepo.findById(petId)
-        .orElseThrow(() -> new PetNotFoundException(petId));
-
-    // Update pet data (assuming mapping logic exists)
-    //existingPet.setPetName(petDto.getPetName()); // Update other fields as needed
-    petRepo.save(existingPet);
-
-    return existingPet;
-  }
-    public PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearance appearance) 
-      throws PetNotFoundException, PetAppearanceNotFoundException {
-    Pet existingPet = petRepo.findById(petId)
-        .orElseThrow(() -> new PetNotFoundException(petId));
-
-    PetAppearance existingAppearance = petAppearanceRepo.findByPetAppearanceId(PetAppearanceId)
-        .orElseThrow(() -> new PetAppearanceNotFoundException(petId));
-
-    // Update appearance data (assuming mapping logic exists)
-   // existingAppearance.setBreed(appearanceDto.getBreed()); // Update other fields as needed
-    petAppearanceRepo.save(existingAppearance);
-
-    return existingAppearance;
-  }
-  
-
-    @Override
-    public void deletePet(Long id) {
-        petRepo.deleteById(id);
+  public Optional<PetImage> findPetImageById(Long petId, Long petImageId) {
+    if (!petRepo.findPetById(petId).isPresent()) {
+      throw new RuntimeException("Pet not found for ID: " + petId);
     }
+      return PetImgRepo.findPetImageById(petImageId);
+  }
 
-    @Override
-    public PetImage createImage(Long petId, PetImage petImage) {
-        
-       return PetImgRepo.save(petId, petImage);
+  @Override
+  public List<PetImage> findAllPetImages() {
+      return PetImgRepo.findAllPetImages();
+  }
+
+  @Override
+  @Transactional
+  public PetAppearance createPetAppearance(Long petId, PetAppearance petAppearance) {
+    if (!petRepo.findPetById(petId).isPresent()) {
+      throw new RuntimeException("Pet not found for ID: " + petId);
     }
+    
+    return petAppearanceRepo.createPetAppearance(petAppearance);
+  }
 
+  @Override
+  @Transactional
+  public PetAppearance updatePetAppearance(Long petId, PetAppearance petAppearance) {
+    if (!petRepo.findPetById(petId).isPresent()) {
+      throw new RuntimeException("Pet not found for ID: " + petId);
+    }
+    
+    return petAppearanceRepo.updatePetAppearance(petAppearance);
+  }
 
+  @Override
+  @Transactional
+  public void deletePetAppearance(Long appearanceId) {
+    petAppearanceRepo.deletePetAppearance(appearanceId);
+  }
+
+  @Override
+  public Optional<PetAppearance> findPetAppearanceById(Long appearanceId) {
+      return petAppearanceRepo.findPetAppearanceById(appearanceId);
+  }
+
+  @Override
+  public List<PetAppearance> findAllPetAppearances() {
+      return petAppearanceRepo.findAllPetAppearances();
+  }
   
     
 }

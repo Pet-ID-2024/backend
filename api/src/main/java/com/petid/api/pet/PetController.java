@@ -10,6 +10,7 @@ import com.petid.domain.pet.service.PetService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,79 +29,34 @@ import org.springframework.web.bind.annotation.RestController;
 public class PetController {
 
   private final PetService petService;  
-  
 
   @PostMapping
   public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
-    Optional<Pet> petOptional = petService.getPetById(pet.id());
-    Pet createdPet = petService.createPet(petOptional.get());
-    //PetAppearance createdAppearance = petService.createAppearance(createdPet.getId(), petDto.getAppearance());
-    //PetImage createdImage = petService.createImage(createdPet.getId(), createdAppearance.toDto());
-    //return ResponseEntity.ok(new PetDto(createdPet, createdAppearance, createdImage));    
-    return null;
+      Pet createdPet = petService.createPet(pet);
+      return new ResponseEntity<>(createdPet, HttpStatus.CREATED);
+  }
+
+  @PutMapping("/{petId}/appearance")
+  public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable Long petId, @RequestBody PetAppearance petAppearance) {
+     PetAppearance updatedAppearance = petService.updatePetAppearance(petId, petAppearance);
+      return new ResponseEntity<>(updatedAppearance, HttpStatus.OK);
+  }
+
+  @PostMapping("/{petId}/images")
+  public ResponseEntity<PetImage> addPetImage(@PathVariable Long petId, @RequestBody PetImage petImage) {
+      PetImage createdImage = petService.createPetImage(petId, petImage);
+      return new ResponseEntity<>(createdImage, HttpStatus.CREATED);
+  }
+
+  @GetMapping("/{petId}")
+  public ResponseEntity<Pet> getPetById(@PathVariable Long petId) {
+      Optional<Pet> pet = petService.findPetById(petId);
+      return pet.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping
   public ResponseEntity<List<Pet>> getAllPets() {
-     List<Pet> pets = petService.getAllPets();
-    /*List<PetDto> petDtos = pets.stream()
-        .map(pet -> new PetDto(pet, petService.getPetById(pet.getId()), petService.getPetById(pet.getId())))
-        .collect(Collectors.toList());
-    return ResponseEntity.ok(pets);
-    */
-    return null;
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity<Pet> getPetById(@PathVariable Long id) {
-    Optional<Pet> petOptional = petService.getPetById(id);
-    if (petOptional.isPresent()) {
-      return ResponseEntity.ok(petOptional.get());
-    } else {
-      return ResponseEntity.notFound().build();
-    }
-  }
-
-  @PutMapping("/{id}")
-  public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody Pet pet) {
-    Optional<Pet> petOptional = petService.getPetById(id);
-    if (petOptional.isPresent()) {
-      Pet existingPet = petOptional.get();
-      
-      //
-
-      //petService.updatePet(existingPet);
-      return ResponseEntity.ok(existingPet);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deletePet(@PathVariable Long id) {
-    petService.deletePet(id);
-    return ResponseEntity.noContent().build();
-  }
-
-   @PutMapping("/{petId}/appearance")
-  public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable Long petId, @RequestBody PetAppearance petAppearance) {
-    Optional<Pet> petOptional = petService.getPetById(petId);
-    
-    PetAppearance updatedAppearance = petService.updatePetAppearance(petId, null, petAppearance);    
-
-    return ResponseEntity.ok(updatedAppearance);
-  }
-
-  @PostMapping("/{petId}/image")
-  public ResponseEntity<PetImage> createPetImage(@PathVariable Long petId, @RequestBody PetImage petImage) {
-    PetImage createdImage = petService.createImage(petId, petImage);
-    return ResponseEntity.ok(createdImage);
-  }
-
-  // Update Pet Image (PUT)
-  @PutMapping("/{petId}/image")
-  public ResponseEntity<PetImage> updatePetImage(@PathVariable Long petId, @RequestBody PetImage petImage) {
-    PetImage updatedImage = petService.createImage(petId, petImage);
-    return ResponseEntity.ok(updatedImage);
+      List<Pet> pets = petService.findAllPets();
+      return new ResponseEntity<>(pets, HttpStatus.OK);
   }
 }

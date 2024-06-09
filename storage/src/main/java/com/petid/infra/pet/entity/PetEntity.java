@@ -5,18 +5,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.petid.domain.pet.model.Pet;
+import com.petid.infra.common.BaseEntity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pet")
-public class PetEntity {
+public class PetEntity extends BaseEntity {
     
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +34,13 @@ public class PetEntity {
   private LocalDateTime petNeuteredDate;
   private String petAddr;
 
-  @OneToOne(mappedBy = "pet", cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "pet_id", referencedColumnName = "pet_id", insertable = false, updatable = false)
   private PetAppearanceEntity appearance;
 
-  @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-  private List<PetImageEntity> images;
+  @OneToMany(fetch = FetchType.EAGER)
+  @JoinColumn(name = "pet_id", referencedColumnName = "pet_id", insertable = false, updatable = false)
+  private List<PetImageEntity> petImages;
   
   public Pet toDomain() {
       return new Pet(
@@ -48,7 +53,7 @@ public class PetEntity {
               petNeuteredDate,
               petAddr,
               appearance.toDomain(),
-              images.stream()  // Stream the list of PetImageEntity
+              petImages.stream()  // Stream the list of PetImageEntity
               .map(PetImageEntity::toDomain) // Convert each entity to domain object
               .collect(Collectors.toList())  // Collect the converted objects into a list
       );
@@ -56,7 +61,7 @@ public class PetEntity {
   
   public static PetEntity from(Pet pet) {
 	    return new PetEntity(
-        		  pet.id(),
+        		  pet.petId(),
                   pet.petChipNumber(),
                   pet.petName(),
                   pet.petBirthDate(),

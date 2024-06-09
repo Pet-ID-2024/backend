@@ -3,8 +3,8 @@ package com.petid.domain.pet.model;
 import com.petid.domain.type.Breed;
 
 public record PetAppearance(
-		Long id,
-		Pet pet,
+		Long appearanceId,
+		Long petId,
 		Breed breed,
 		String hairColor,
 		Integer weight,
