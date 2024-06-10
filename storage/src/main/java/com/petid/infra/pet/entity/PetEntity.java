@@ -52,10 +52,10 @@ public class PetEntity extends BaseEntity {
               petNeuteredYn,
               petNeuteredDate,
               petAddr,
-              appearance.toDomain(),
-              petImages.stream()  // Stream the list of PetImageEntity
+              id != null && appearance != null ? appearance.toDomain() : null,
+              id != null && petImages != null ? petImages.stream()  // Stream the list of PetImageEntity
               .map(PetImageEntity::toDomain) // Convert each entity to domain object
-              .collect(Collectors.toList())  // Collect the converted objects into a list
+              .collect(Collectors.toList())  : null // Collect the converted objects into a list
       );
   }
   
@@ -69,10 +69,10 @@ public class PetEntity extends BaseEntity {
                   pet.petNeuteredYn(),
                   pet.petNeuteredDate(),
                   pet.petAddr(),
-                  PetAppearanceEntity.from(pet.appearance()),
-                  pet.images().stream()
+                  pet.petId() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
+                  pet.petId() != null ? pet.petImages().stream()
                   .map(PetImageEntity::from)  
-                  .toList()
+                  .toList() : null
         );
     }
 }

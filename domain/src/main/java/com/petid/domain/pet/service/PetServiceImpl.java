@@ -24,12 +24,18 @@ public class PetServiceImpl implements PetService {
   
   private final PetRepository petRepo;
   private final PetAppearanceRepository petAppearanceRepo;
-  private final PetImageRepository PetImgRepo;
+  private final PetImageRepository petImgRepo;
 
   @Override
   @Transactional
   public Pet createPet(Pet pet) {
-      return petRepo.createPet(pet);
+	  Pet savedPet = petRepo.createPet(pet);
+	  petAppearanceRepo.createPetAppearance(savedPet.petId(), pet.appearance());
+	  List<PetImage> petImages = pet.petImages();
+	  if(petImages != null && !petImages.isEmpty()) {
+		  petImages.forEach(image -> petImgRepo.createPetImage(savedPet.petId(), image));
+	  };
+	  return savedPet;
   }
 
   @Override
@@ -60,7 +66,7 @@ public class PetServiceImpl implements PetService {
     if (!petRepo.findPetById(petId).isPresent()) {
       throw new RuntimeException("Pet not found for ID: " + petId);
     }
-    return PetImgRepo.createPetImage(petImage);
+	return petImgRepo.createPetImage(petId, petImage);
   }
 
   @Override
@@ -70,13 +76,13 @@ public class PetServiceImpl implements PetService {
       throw new RuntimeException("Pet not found for ID: " + petId);
     }
     
-    return PetImgRepo.updatePetImage(petImage);
+    return petImgRepo.updatePetImage(petImage);
   }
 
   @Override
   @Transactional
   public void deletePetImage(Long petImageId) {
-      PetImgRepo.deletePetImage(petImageId);
+      petImgRepo.deletePetImage(petImageId);
   }
 
   @Override
@@ -84,12 +90,12 @@ public class PetServiceImpl implements PetService {
     if (!petRepo.findPetById(petId).isPresent()) {
       throw new RuntimeException("Pet not found for ID: " + petId);
     }
-      return PetImgRepo.findPetImageById(petImageId);
+      return petImgRepo.findPetImageById(petImageId);
   }
 
   @Override
   public List<PetImage> findAllPetImages() {
-      return PetImgRepo.findAllPetImages();
+      return petImgRepo.findAllPetImages();
   }
 
   @Override
@@ -99,7 +105,7 @@ public class PetServiceImpl implements PetService {
       throw new RuntimeException("Pet not found for ID: " + petId);
     }
     
-    return petAppearanceRepo.createPetAppearance(petAppearance);
+    return petAppearanceRepo.createPetAppearance(petId, petAppearance);
   }
 
   @Override
@@ -109,13 +115,13 @@ public class PetServiceImpl implements PetService {
       throw new RuntimeException("Pet not found for ID: " + petId);
     }
     
-    return petAppearanceRepo.updatePetAppearance(petAppearance);
+    return petAppearanceRepo.updatePetAppearance( petAppearance);
   }
 
   @Override
   @Transactional
-  public void deletePetAppearance(Long appearanceId) {
-    petAppearanceRepo.deletePetAppearance(appearanceId);
+  public void deletePetAppearance(Long petId) {
+    petAppearanceRepo.deletePetAppearanceByPetId(petId);
   }
 
   @Override
@@ -126,6 +132,27 @@ public class PetServiceImpl implements PetService {
   @Override
   public List<PetAppearance> findAllPetAppearances() {
       return petAppearanceRepo.findAllPetAppearances();
+  }
+  
+  public void deletePetById(Long petId) {
+	  if (!petRepo.findPetById(petId).isPresent()) {
+	      throw new RuntimeException("Pet not found for ID: " + petId);
+	    }
+	  
+      // Delete PetAppearance associated with the pet
+	  petAppearanceRepo.deletePetAppearanceByPetId(petId);
+      // Delete PetImage associated with the pet
+      petImgRepo.deletePetImageByPetId(petId);
+   // Delete the pet
+      petRepo.deletePet(petId);
+      
+  }
+
+  public void deletePetImage(Long petId, Long imageId) {
+	  if (!petRepo.findPetById(petId).isPresent()) {
+	      throw new RuntimeException("Pet not found for ID: " + petId);
+	    }
+	  petImgRepo.deletePetImage(imageId);
   }
   
     

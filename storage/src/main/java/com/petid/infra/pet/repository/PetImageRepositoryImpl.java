@@ -21,8 +21,9 @@ public class PetImageRepositoryImpl implements PetImageRepository {
 
 	 @Override
     @Transactional
-    public PetImage createPetImage(PetImage petImage) {
+    public PetImage createPetImage(Long petId, PetImage petImage) {
         PetImageEntity petImageEntity = PetImageEntity.from(petImage);
+        petImageEntity.setPetId(petId);
         PetImageEntity savedPetImageEntity = petImageJpaRepo.save(petImageEntity);
         return savedPetImageEntity.toDomain();
     }
@@ -43,8 +44,8 @@ public class PetImageRepositoryImpl implements PetImageRepository {
 
     @Override
     @Transactional
-    public void deletePetImage(Long petImageId) {
-        petImageJpaRepo.deleteById(petImageId);
+    public void deletePetImageByPetId(Long petId) {
+        petImageJpaRepo.deleteByPetId(petId);
     }
 
     @Override
@@ -56,6 +57,11 @@ public class PetImageRepositoryImpl implements PetImageRepository {
     public List<PetImage> findAllPetImages() {
         return petImageJpaRepo.findAll().stream().map(PetImageEntity::toDomain).collect(Collectors.toList());
     }
+
+	@Override
+	public void deletePetImage(Long petImageId) {
+		petImageJpaRepo.deleteById(petImageId);
+	}
 
     
 

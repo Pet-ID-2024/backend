@@ -26,5 +26,8 @@ public interface PetService {
   void deletePetAppearance(Long appearanceId);
   Optional<PetAppearance> findPetAppearanceById(Long appearanceId);
   List<PetAppearance> findAllPetAppearances();
-  }
+  
+  public void deletePetById(Long petId);
+  public void deletePetImage(Long petId, Long imageId);
+ }
   

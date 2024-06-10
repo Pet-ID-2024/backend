@@ -43,8 +43,8 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     @Transactional
-    public void deletePet(Long Id) {
-        petJpaRepo.deleteById(Id);
+    public void deletePet(Long id) {
+        petJpaRepo.deleteById(id);
     }
 
     @Override

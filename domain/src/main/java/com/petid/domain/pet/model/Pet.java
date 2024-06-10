@@ -13,7 +13,7 @@ public record Pet(
 		LocalDateTime petNeuteredDate,
 		String petAddr,
 		PetAppearance appearance,
-		List<PetImage> images
+		List<PetImage> petImages
 ) {
 }
 

@@ -1,10 +1,17 @@
 package com.petid.domain.type;
 
 public enum Breed {
-    GOLDEN_RETRIEVER("Golden Retriever"),
-    LABRADOR("Labrador"),
+	GOLDEN_RETRIEVER("Golden Retriever"),
+    LABRADOR("Labrador Retriever"),
     BEAGLE("Beagle"),
-    MALTESE("Maltese");    
+    MALTESE("Maltese"),    
+    BULLDOG("Bulldog"),
+    POODLE("Poodle"),
+    SIBERIAN_HUSKY("Siberian Husky"),
+    GERMAN_SHEPHERD("German Shepherd"),
+    DACHSHUND("Dachshund"),
+    BOXER("Boxer"),
+    CHIHUAHUA("Chihuahua");
 
     private final String displayName;
 

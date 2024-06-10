@@ -19,8 +19,9 @@ public class PetApearanceRepositoryImpl implements PetAppearanceRepository {
 
 	 @Override
     @Transactional
-    public PetAppearance createPetAppearance(PetAppearance petAppearance) {
+    public PetAppearance createPetAppearance(Long petId, PetAppearance petAppearance) {
         PetAppearanceEntity petAppearanceEntity = PetAppearanceEntity.from(petAppearance);
+        petAppearanceEntity.setPetId(petId);
         PetAppearanceEntity savedPetAppearanceEntity = petAppearanceJpaRepo.save(petAppearanceEntity);
         return savedPetAppearanceEntity.toDomain();
     }
@@ -41,8 +42,8 @@ public class PetApearanceRepositoryImpl implements PetAppearanceRepository {
 
     @Override
     @Transactional
-    public void deletePetAppearance(Long appearanceId) {
-        petAppearanceJpaRepo.deleteById(appearanceId);
+    public void deletePetAppearanceByPetId(Long petId) {
+        petAppearanceJpaRepo.deleteByPetId(petId);
     }
 
     @Override

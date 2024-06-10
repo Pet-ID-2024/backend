@@ -37,19 +37,19 @@ public class PetController {
   }
 
   @PutMapping("/{petId}/appearance")
-  public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable Long petId, @RequestBody PetAppearance petAppearance) {
+  public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable(name = "petId") Long petId, @RequestBody PetAppearance petAppearance) {
      PetAppearance updatedAppearance = petService.updatePetAppearance(petId, petAppearance);
       return new ResponseEntity<>(updatedAppearance, HttpStatus.OK);
   }
 
   @PostMapping("/{petId}/images")
-  public ResponseEntity<PetImage> addPetImage(@PathVariable Long petId, @RequestBody PetImage petImage) {
+  public ResponseEntity<PetImage> addPetImage(@PathVariable(name = "petId") Long petId, @RequestBody PetImage petImage) {
       PetImage createdImage = petService.createPetImage(petId, petImage);
       return new ResponseEntity<>(createdImage, HttpStatus.CREATED);
   }
 
   @GetMapping("/{petId}")
-  public ResponseEntity<Pet> getPetById(@PathVariable Long petId) {
+  public ResponseEntity<Pet> getPetById(@PathVariable (name = "petId") Long petId) {
       Optional<Pet> pet = petService.findPetById(petId);
       return pet.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
@@ -58,5 +58,17 @@ public class PetController {
   public ResponseEntity<List<Pet>> getAllPets() {
       List<Pet> pets = petService.findAllPets();
       return new ResponseEntity<>(pets, HttpStatus.OK);
+  }
+  
+  @DeleteMapping("/{petId}")
+  public ResponseEntity<Void> deletePet(@PathVariable(name = "petId") Long petId) {
+      petService.deletePetById(petId);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  @DeleteMapping("/{petId}/images/{imageId}")
+  public ResponseEntity<Void> deletePetImage(@PathVariable(name = "petId") Long petId, @PathVariable(name = "imageId") Long imageId) {
+      petService.deletePetImage(petId, imageId);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
