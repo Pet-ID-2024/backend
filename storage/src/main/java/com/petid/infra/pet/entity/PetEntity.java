@@ -69,8 +69,8 @@ public class PetEntity extends BaseEntity {
                   pet.petNeuteredYn(),
                   pet.petNeuteredDate(),
                   pet.petAddr(),
-                  pet.petId() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
-                  pet.petId() != null ? pet.petImages().stream()
+                  pet.petId() != null && pet.appearance() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
+                  pet.petId() != null && pet.petImages() != null? pet.petImages().stream()
                   .map(PetImageEntity::from)  
                   .toList() : null
         );

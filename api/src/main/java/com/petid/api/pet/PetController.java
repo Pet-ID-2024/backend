@@ -36,6 +36,12 @@ public class PetController {
       return new ResponseEntity<>(createdPet, HttpStatus.CREATED);
   }
 
+  @PutMapping("/{petId}")
+  public ResponseEntity<Pet> updatePet(@PathVariable(name = "petId") Long petId, @RequestBody Pet pet) {
+    Pet updatedPet = petService.updatePet(petId, pet);
+    return new ResponseEntity<>(updatedPet, HttpStatus.OK);
+  }
+
   @PutMapping("/{petId}/appearance")
   public ResponseEntity<PetAppearance> updatePetAppearance(@PathVariable(name = "petId") Long petId, @RequestBody PetAppearance petAppearance) {
      PetAppearance updatedAppearance = petService.updatePetAppearance(petId, petAppearance);
