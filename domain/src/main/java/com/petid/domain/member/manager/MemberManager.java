@@ -18,8 +18,17 @@ public class MemberManager {
                 .orElseGet(() -> memberRepository.save(member));
     }
 
-    public Member getByUid(String uid) {
+    public Member getByUid(
+            String uid
+    ) {
         return memberRepository.findByUid(uid)
                 .orElseThrow(() -> new MemberNotFoundException(uid));
+    }
+
+    public Member get(
+            long memberId
+    ) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException(memberId));
     }
 }

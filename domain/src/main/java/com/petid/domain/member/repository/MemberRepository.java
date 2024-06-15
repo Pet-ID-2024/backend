@@ -9,4 +9,6 @@ public interface MemberRepository {
     Optional<Member> findByUid(String uid);
 
     Member save(Member member);
+
+    Optional<Member> findById(long memberId);
 }
