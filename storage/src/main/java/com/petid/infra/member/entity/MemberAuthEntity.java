@@ -28,7 +28,7 @@ public class MemberAuthEntity extends BaseEntity {
     public MemberAuth toDomain() {
         return new MemberAuth(
                 id,
-                member.getId(),
+                member.getUid(),
                 name,
                 ssn,
                 phone,
