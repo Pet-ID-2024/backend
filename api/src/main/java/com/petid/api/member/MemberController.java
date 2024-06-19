@@ -1,8 +1,7 @@
 package com.petid.api.member;
 
-import com.petid.api.member.dto.MemberAuthRequest;
-import com.petid.domain.member.manager.MemberManager;
-import com.petid.domain.member.model.Member;
+import com.petid.api.common.RequestUtil;
+import com.petid.api.member.dto.MemberAuthDto;
 import com.petid.domain.member.model.MemberAuth;
 import com.petid.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,29 +14,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/member")
 public class MemberController {
 
-    private final MemberManager memberManager;
     private final MemberService memberService;
 
     @GetMapping("/auth")
     public ResponseEntity<Boolean> isMemberAuth(
             HttpServletRequest request
     ) {
-        String uid = request.getAttribute("uid").toString();
+        String uid = RequestUtil.getUidFromRequest(request);
         boolean isMemberAuthed = memberService.isMemberAuthed(uid);
 
         return ResponseEntity.ok(isMemberAuthed);
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<MemberAuth> saveMemberAuth(
+    public ResponseEntity<MemberAuthDto.Response> saveMemberAuth(
             HttpServletRequest request,
-            @RequestBody MemberAuthRequest authRequest
+            @RequestBody MemberAuthDto.Request authRequest
     ) {
-        String uid = request.getAttribute("uid").toString();
-        Member member = memberManager.getByUid(uid);
+        String uid = RequestUtil.getUidFromRequest(request);
 
-        MemberAuth saved = memberService.saveMemberAuth(member, authRequest.toDomain(member.id()));
+        MemberAuth memberAuth = memberService.saveMemberAuth(authRequest.toDomain(uid));
 
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(MemberAuthDto.Response.from(memberAuth));
     }
 }
