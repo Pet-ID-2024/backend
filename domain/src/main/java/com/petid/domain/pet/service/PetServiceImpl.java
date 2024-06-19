@@ -40,8 +40,11 @@ public class PetServiceImpl implements PetService {
 
   @Override
   @Transactional
-  public Pet updatePet(Pet pet) {
-      return petRepo.updatePet(pet);
+  public Pet updatePet(Long petId, Pet pet) {
+    if (!petRepo.findPetById(petId).isPresent()) {
+      throw new RuntimeException("Pet not found for ID: " + petId);
+    }
+    return petRepo.updatePet(pet);
   }
 
   @Override

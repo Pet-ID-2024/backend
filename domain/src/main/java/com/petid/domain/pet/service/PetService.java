@@ -10,7 +10,7 @@ import com.petid.domain.pet.model.PetImage;
 public interface PetService {
 
   Pet createPet(Pet pet);
-  Pet updatePet(Pet pet);
+  Pet updatePet(Long petId, Pet pet);
   void deletePet(Long petId);
   Optional<Pet> findPetById(Long petId);
   List<Pet> findAllPets();
