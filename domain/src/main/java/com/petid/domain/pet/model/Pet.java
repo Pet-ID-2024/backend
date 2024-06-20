@@ -5,7 +5,7 @@ import java.util.List;
 
 public record Pet(
 		Long petId,
-		String petChipNumber,
+		String petRegNo,
 		String petName,
 		String petBirthDate,
 		Character petSex,

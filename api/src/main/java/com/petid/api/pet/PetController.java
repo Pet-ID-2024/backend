@@ -86,5 +86,11 @@ public class PetController {
 	  String url = S3service.createPresignedGetUrl(fileName);
       return new ResponseEntity<String>(url, HttpStatus.OK);
   }
+
+  @PostMapping("/{petId}/images/presigned-url")
+  public ResponseEntity<String> putPetImageBucketUrl(@PathVariable (name = "petId") Long petId, @RequestBody String filePath) {
+	  String url = S3service.createPresignedPutUrl(filePath);
+      return new ResponseEntity<String>(url, HttpStatus.OK);
+  }
   
 }

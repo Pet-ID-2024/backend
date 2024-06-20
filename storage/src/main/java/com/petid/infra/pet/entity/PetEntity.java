@@ -26,7 +26,7 @@ public class PetEntity extends BaseEntity {
   @Column(name = "pet_id")
   private Long id;
 
-  private String petChipNumber;
+  private String petRegNo;
   private String petName;
   private String petBirthDate;
   private Character petSex;
@@ -45,7 +45,7 @@ public class PetEntity extends BaseEntity {
   public Pet toDomain() {
       return new Pet(
               id,
-              petChipNumber,
+              petRegNo,
               petName,
               petBirthDate,
               petSex,
@@ -62,7 +62,7 @@ public class PetEntity extends BaseEntity {
   public static PetEntity from(Pet pet) {
 	    return new PetEntity(
         		  pet.petId(),
-                  pet.petChipNumber(),
+                  pet.petRegNo(),
                   pet.petName(),
                   pet.petBirthDate(),
                   pet.petSex(),
