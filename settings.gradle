@@ -7,4 +7,5 @@ include 'auth'
 include 'domain'
 include 'storage'
 include 'api'
+include 'batch'
 
