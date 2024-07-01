@@ -20,7 +20,7 @@ public class HospitalController {
     public ResponseEntity<List<HospitalDto.Response>> findAllHospital(
             @RequestParam("sido") int sidoId,
             @RequestParam("sigungu") int sigunguId,
-            @RequestParam("eupmundong") List<Integer> eupmundongIds
+            @RequestParam("eupmundong") List<Long> eupmundongIds
     ) {
         List<Hospital> hospitals = hospitalService.findAllHospital(sidoId, sigunguId, eupmundongIds);
 

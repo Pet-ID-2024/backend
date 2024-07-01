@@ -18,9 +18,9 @@ public class HospitalEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int sidoId;
-    private int sigunguId;
-    private int eupmundongId;
+    private long sidoId;
+    private long sigunguId;
+    private long eupmundongId;
     private String imageUrl;
     private String address;
     private String name;

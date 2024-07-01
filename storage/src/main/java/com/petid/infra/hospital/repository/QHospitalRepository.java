@@ -16,9 +16,9 @@ public class QHospitalRepository {
     private final JPAQueryFactory queryFactory;
 
     public List<HospitalEntity> findAllByLocation(
-            int sidoId,
-            int sigunguId,
-            List<Integer> eupmundongIds
+            long sidoId,
+            long sigunguId,
+            List<Long> eupmundongIds
     ) {
         return queryFactory
                 .selectFrom(hospitalEntity)

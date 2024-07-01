@@ -10,5 +10,5 @@ public interface HospitalRepository {
 
     void saveAllBulk(List<Hospital> hospitals);
 
-    List<Hospital> findAllBySigunguId(int sidoId, int sigunguId, List<Integer> eupmundongIds);
+    List<Hospital> findAllBySigunguId(long sidoId, long sigunguId, List<Long> eupmundongIds);
 }

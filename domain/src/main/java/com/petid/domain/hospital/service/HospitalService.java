@@ -16,7 +16,7 @@ public class HospitalService {
     public List<Hospital> findAllHospital(
             int sidoId,
             int sigunguId,
-            List<Integer> eupmundongIds
+            List<Long> eupmundongIds
     ) {
         return hospitalRepository.findAllBySigunguId(sidoId, sigunguId, eupmundongIds);
     }

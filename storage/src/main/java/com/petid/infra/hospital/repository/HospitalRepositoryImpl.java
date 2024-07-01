@@ -34,27 +34,29 @@ public class HospitalRepositoryImpl implements HospitalRepository {
             List<Hospital> hospitals
     ) {
         String sql = """
-                INSERT INTO hospital (sigungu_id, address, name, tel, vet)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO hospital (sido_id, sigungu_id, eupmundong_id, address, name, tel, vet)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
 
         jdbcTemplate.batchUpdate(sql,
                 hospitals,
                 hospitals.size(),
                 (PreparedStatement ps, Hospital hospital) -> {
-                    ps.setLong(1, hospital.sigunguId());
-                    ps.setString(2, hospital.address());
-                    ps.setString(3, hospital.name());
-                    ps.setString(4, hospital.tel());
-                    ps.setString(5, hospital.vet());
+                    ps.setLong(1, hospital.sidoId());
+                    ps.setLong(2, hospital.sigunguId());
+                    ps.setLong(3, hospital.eupmundongId());
+                    ps.setString(4, hospital.address());
+                    ps.setString(5, hospital.name());
+                    ps.setString(6, hospital.tel());
+                    ps.setString(7, hospital.vet());
                 });
     }
 
     @Override
     public List<Hospital> findAllBySigunguId(
-            int sidoId, 
-            int sigunguId, 
-            List<Integer> eupmundongIds
+            long sidoId,
+            long sigunguId,
+            List<Long> eupmundongIds
     ) {
         return qRepository.findAllByLocation(sidoId, sigunguId, eupmundongIds)
                 .stream()

@@ -10,9 +10,9 @@ public record HospitalItemModel(
         String tel
 ) {
     public Hospital toDomain(
-            int sidoId,
-            int sigunguId,
-            int eupmundongId
+            long sidoId,
+            long sigunguId,
+            long eupmundongId
     ) {
         return new Hospital(
                 null,
