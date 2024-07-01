@@ -1,5 +1,6 @@
 package com.petid.infra.location.entity;
 
+import com.petid.domain.location.model.Sido;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,4 +19,11 @@ public class SidoEntity {
     private Long id;
 
     private String name;
+
+    public Sido toDomain() {
+        return new Sido(
+                id,
+                name
+        );
+    }
 }

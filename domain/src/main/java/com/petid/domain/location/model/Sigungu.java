@@ -1,4 +1,4 @@
-package com.petid.domain.location;
+package com.petid.domain.location.model;
 
 public record Sigungu(
         Long id,
