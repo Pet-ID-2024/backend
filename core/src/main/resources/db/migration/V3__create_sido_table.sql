@@ -1,0 +1,5 @@
+CREATE TABLE sido
+(
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name     VARCHAR(10)  NOT NULL
+);

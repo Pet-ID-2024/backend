@@ -26,14 +26,12 @@ public record HospitalOrderDto() {
 
     public record Response(
             Long id,
-            String uid,
             long hospitalId,
             Instant date
     ) {
         public static Response from(HospitalOrder hospitalOrder) {
             return new Response(
                     hospitalOrder.id(),
-                    hospitalOrder.uid(),
                     hospitalOrder.hospitalId(),
                     hospitalOrder.date()
             );
