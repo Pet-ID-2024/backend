@@ -37,4 +37,16 @@ public class MemberController {
 
         return ResponseEntity.ok(MemberAuthDto.Response.from(memberAuth));
     }
+
+    @PatchMapping("/policy")
+    public ResponseEntity<Boolean> updateOptionalPolicy(
+            HttpServletRequest request,
+            @RequestParam("ad") boolean ad
+    ) {
+        String uid = RequestUtil.getUidFromRequest(request);
+
+        memberService.updateOptionalPolicy(uid, ad);
+
+        return ResponseEntity.ok(ad);
+    }
 }

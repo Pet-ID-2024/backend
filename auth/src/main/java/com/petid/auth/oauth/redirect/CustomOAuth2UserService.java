@@ -29,7 +29,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2UserInfoModel oAuth2UserInfo = OAuth2UserInfoModel.of(platform, oAuth2UserAttributes);
 
-        Member member = memberManager.getOrSave(oAuth2UserInfo.toDomain(platform));
+        Member member = memberManager.getOrSave(oAuth2UserInfo.toDomain(platform, null));
 
         return new PrincipalDetails(member, oAuth2UserAttributes);
     }

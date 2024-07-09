@@ -1,6 +1,6 @@
 package com.petid.domain.location;
 
-import com.petid.domain.exception.LocationDataNotFoundException;
+import com.petid.domain.exception.LocationNotFoundException;
 import com.petid.domain.location.model.Sigungu;
 import com.petid.domain.location.repository.SigunguRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,6 @@ public class SigunguManager {
             long id
     ) {
         return sigunguRepository.findById(id)
-                .orElseThrow(() -> new LocationDataNotFoundException(id));
+                .orElseThrow(() -> new LocationNotFoundException(id));
     }
 }

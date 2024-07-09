@@ -1,4 +1,4 @@
-package com.petid.auth.oauth.sdk.controller;
+package com.petid.auth.oauth.sdk.controller.dto;
 
 public record TokenDto(
         String accessToken,
