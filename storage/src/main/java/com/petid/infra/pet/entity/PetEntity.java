@@ -34,7 +34,7 @@ public class PetEntity extends BaseEntity {
   private LocalDateTime petNeuteredDate;
   private String petAddr;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pet_id", referencedColumnName = "pet_id", insertable = false, updatable = false)
   private PetAppearanceEntity appearance;
 
