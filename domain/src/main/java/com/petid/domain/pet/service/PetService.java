@@ -1,30 +1,33 @@
 package com.petid.domain.pet.service;
 
-
-import com.petid.domain.pet.dto.PetAppearanceDto;
-import com.petid.domain.pet.dto.PetDto;
-import com.petid.domain.pet.dto.PetImageDto;
-import com.petid.domain.pet.entity.Pet;
-import com.petid.domain.pet.entity.PetAppearance;
-import com.petid.domain.pet.entity.PetImage;
-
 import java.util.List;
 import java.util.Optional;
 
+import com.petid.domain.pet.model.Pet;
+import com.petid.domain.pet.model.PetAppearance;
+import com.petid.domain.pet.model.PetImage;
+
 public interface PetService {
 
-    Pet createPet(Pet pet);
-  
-    List<Pet> getAllPets();
-  
-    Optional<Pet> getPetById(Long id);
-  
-    Pet updatePet(PetDto pet);
-  
-    void deletePet(Long id);
+  Pet createPet(Pet pet);
+  Pet updatePet(Long petId, Pet pet);
+  void deletePet(Long petId);
+  Optional<Pet> findPetById(Long petId);
+  List<Pet> findAllPets();
 
-    PetAppearance updatePetAppearance(Long petId, Long PetAppearanceId, PetAppearanceDto appearanceDto);
+  PetImage createPetImage(Long petId, PetImage petImage);
+  PetImage updatePetImage(Long petId, PetImage petImage);
+  void deletePetImage(Long petImageId);
+  Optional<PetImage> findPetImageById(Long petId, Long petImageId);
+  List<PetImage> findAllPetImages();
 
-    PetImage createImage(Long petId, PetImageDto imageDto);
-  }
+  PetAppearance createPetAppearance(Long petId, PetAppearance petAppearance);
+  PetAppearance updatePetAppearance(Long petId, PetAppearance petAppearance);
+  void deletePetAppearance(Long appearanceId);
+  Optional<PetAppearance> findPetAppearanceById(Long appearanceId);
+  List<PetAppearance> findAllPetAppearances();
+  
+  public void deletePetById(Long petId);
+  public void deletePetImage(Long petId, Long imageId);
+ }
   

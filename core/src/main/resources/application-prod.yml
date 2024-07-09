@@ -9,3 +9,11 @@ spring:
     baseline-on-migrate: true
     baseline-version: 1
     fail-on-missing-locations: true
+  cloud:
+    aws:
+      s3:
+        bucket: ${AWS_BUCKET}
+      region:
+        static: ${AWS_REGION}
+      stack:
+        auto: false
