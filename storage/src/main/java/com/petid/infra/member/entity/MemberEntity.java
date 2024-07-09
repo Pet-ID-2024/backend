@@ -22,6 +22,7 @@ public class MemberEntity extends BaseEntity {
     private String uid;
     @Column(nullable = false)
     private String platform;
+    private String fcmToken;
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -32,6 +33,7 @@ public class MemberEntity extends BaseEntity {
                 id,
                 uid,
                 platform,
+                fcmToken,
                 email,
                 role
         );
@@ -42,6 +44,7 @@ public class MemberEntity extends BaseEntity {
                 member.id(),
                 member.uid(),
                 member.platform(),
+                member.fcmToken(),
                 member.email(),
                 member.role()
         );

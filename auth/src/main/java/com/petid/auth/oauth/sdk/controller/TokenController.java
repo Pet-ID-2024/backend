@@ -3,6 +3,7 @@ package com.petid.auth.oauth.sdk.controller;
 import com.petid.auth.common.exception.CustomAuthException;
 import com.petid.auth.common.exception.CustomAuthExceptionType;
 import com.petid.auth.jwt.TokenValidator;
+import com.petid.auth.oauth.sdk.controller.dto.TokenDto;
 import com.petid.auth.oauth.sdk.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

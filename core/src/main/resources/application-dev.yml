@@ -9,7 +9,10 @@ spring:
     username: sa
     password:
   flyway:
-    enabled: false
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    fail-on-missing-locations: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none

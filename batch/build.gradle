@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.terra'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":domain")
+    runtimeOnly project(":storage")
+
+    // MD5 hash
+    implementation 'commons-codec:commons-codec:1.15'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}

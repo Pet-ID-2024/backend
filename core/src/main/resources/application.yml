@@ -2,6 +2,6 @@ spring:
   profiles:
     include:
       - oauth
-      - prod
+      - openapi
   jpa:
     open-in-view: false

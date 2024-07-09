@@ -1,6 +1,6 @@
 package com.petid.domain.exception;
 
-public class MemberNotFoundException extends RuntimeException {
+public class MemberNotFoundException extends MemberDataNotFoundException {
 
     public MemberNotFoundException(String uid) {
         super("Member UID : " + uid + " not found");
