@@ -27,7 +27,10 @@ public class FcmInitializer {
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(refreshToken)).build();
 
+            FirebaseApp.getInstance().delete();
             FirebaseApp.initializeApp(options);            
+            
+            
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
