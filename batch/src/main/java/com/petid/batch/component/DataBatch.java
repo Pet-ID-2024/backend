@@ -6,6 +6,7 @@ import com.petid.domain.location.SigunguManager;
 import com.petid.domain.location.model.Sigungu;
 import com.petid.domain.location.repository.EupmundongRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,8 +21,11 @@ public class DataBatch {
     private final SigunguManager sigunguManager;
     private final HospitalRepository hospitalRepository;
 
-//    @Scheduled(cron = "0 0 0 1 * ?")
+    private static boolean check = false;
+
+    @Scheduled(cron = "0 * * * * ?")
     public void updateHospitalData() {
+        if (check) return;
         eupmundongRepository.findAll()
                 .forEach(eupmundong -> {
                     Sigungu sigungu = sigunguManager.get(eupmundong.sigunguId());
@@ -34,5 +38,6 @@ public class DataBatch {
                                 hospitalRepository.saveAllBulk(hospitals);
                             });
                 });
+        check = true;
     }
 }

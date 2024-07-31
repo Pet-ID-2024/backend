@@ -69,12 +69,14 @@ public record OAuth2UserInfoModel(
     }
 
     public Member toDomain(
-            String platform
+            String platform,
+            String fcmToken
     ) {
         return new Member(
                 null,
                 sub,
                 platform,
+                fcmToken,
                 email,
                 Role.ROLE_USER
         );

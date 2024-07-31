@@ -29,7 +29,9 @@ public record HospitalOrderDto() {
             long hospitalId,
             Instant date
     ) {
-        public static Response from(HospitalOrder hospitalOrder) {
+        public static Response from(
+          HospitalOrder hospitalOrder
+        ) {
             return new Response(
                     hospitalOrder.id(),
                     hospitalOrder.hospitalId(),
