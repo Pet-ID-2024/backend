@@ -4,7 +4,7 @@ import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.repository.PetRepository;
 import com.petid.infra.pet.entity.PetEntity;
 
-import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional; 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -56,12 +56,6 @@ public class PetRepositoryImpl implements PetRepository {
     public List<Pet> findAllPets() {
         return petJpaRepo.findAll().stream().map(PetEntity::toDomain).collect(Collectors.toList());
     }
-
-   
-
-   
-
-    
 
    
 }

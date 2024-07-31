@@ -13,6 +13,7 @@ import com.petid.domain.fcm.model.Fcm;
  */
 public interface FcmService {
 
-    public void sendNotification(Fcm fcm) throws FirebaseMessagingException;
+    public void sendNotificationToUser(Fcm fcm) throws FirebaseMessagingException;
+    public void sendNotificationByTopic(Fcm fcm) throws FirebaseMessagingException;
 
 }
