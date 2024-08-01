@@ -39,7 +39,7 @@ public class S3Service {
                 .build();
 
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(10))  // The URL will expire in 10 minutes.
+                .signatureDuration(Duration.ofMinutes(1))  // The URL will expire in 1 minutes.
                 .getObjectRequest(objectRequest)
                 .build();
 
@@ -61,7 +61,7 @@ public class S3Service {
                 .build();
 
         PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(1))  // The URL will expire in 10 minutes.
+                .signatureDuration(Duration.ofMinutes(1))  // The URL will expire in 1 minutes.
                 .putObjectRequest(putObjectRequest)
                 .build();
 

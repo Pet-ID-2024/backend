@@ -21,7 +21,7 @@ public class BannerRepositoryImpl implements BannerRepository {
 
 	@Override
 	public List<Banner> findByType(String type) {
-		return bannerJpaRepository.findByType(type).stream().map(BannerEntity::toDomain).collect(Collectors.toList());
+		return bannerJpaRepository.findAllByType(type).stream().map(BannerEntity::toDomain).collect(Collectors.toList());
 	}
 
 

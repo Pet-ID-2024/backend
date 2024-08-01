@@ -7,5 +7,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BannerJpaRepository extends JpaRepository<BannerEntity, Long> {
-	List<BannerEntity> findByType(String type);
+	List<BannerEntity> findAllByType(String type);
 }

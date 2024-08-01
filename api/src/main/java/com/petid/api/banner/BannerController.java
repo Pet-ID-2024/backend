@@ -12,7 +12,7 @@ import com.petid.domain.pet.service.S3Service;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/banners")
+@RequestMapping("/v1/banner")
 @RequiredArgsConstructor
 public class BannerController {
 
@@ -21,7 +21,7 @@ public class BannerController {
 
 
     @GetMapping("/type")
-    public List<Banner> getBannersByType(@RequestParam String type) {
+    public List<Banner> getBannersByType(@RequestBody String type) {
         return bannerService.getBannersByType(type);
     }
 
@@ -46,7 +46,7 @@ public class BannerController {
     }
     
     @GetMapping("/presigned-get-url")
-    public ResponseEntity<String> getPetImageBucketUrl(@RequestParam String filePath) {
+    public ResponseEntity<String> getPetImageBucketUrl(@RequestBody String filePath) {
   	  String url = S3service.createPresignedGetUrl(filePath);
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }
