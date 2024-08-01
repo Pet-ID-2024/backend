@@ -11,10 +11,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = "banner")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BannerEntity {
@@ -25,38 +27,16 @@ public class BannerEntity {
     private String imageUrl;
     private String text;
     private String type; 
-
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
+    private String status; 
+   
     
     public static BannerEntity from(Banner banner) {
         return new BannerEntity(
         		banner.id(),
         		banner.imageUrl(),
         		banner.text(),
-        		banner.type()
+        		banner.type(),
+                banner.status()
         		);
     }
     
@@ -65,7 +45,8 @@ public class BannerEntity {
             this.getId(),
             this.getImageUrl(),
             this.getText(),
-            this.getType()
+            this.getType(),
+            this.getStatus()
         );
     }
 

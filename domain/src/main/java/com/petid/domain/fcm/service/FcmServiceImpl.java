@@ -17,7 +17,7 @@ public class FcmServiceImpl implements FcmService{
      * @param fcm 모바일에서 전달받은 Object
      * @return 성공(1), 실패(0)
      */
-	public void sendNotificationToUser(Fcm fcm) throws FirebaseMessagingException {
+	public void sendNotificationToUser(Fcm fcm) {
 		Notification notification  = Notification.builder()
 				.setTitle(fcm.title())
 				.setBody(fcm.body())
@@ -27,10 +27,15 @@ public class FcmServiceImpl implements FcmService{
         		.setNotification(notification)
                 .setToken(fcm.target())
                 .build();
-        FirebaseMessaging.getInstance().send(msg);
+        try {
+          FirebaseMessaging.getInstance().send(msg);
+        } catch (FirebaseMessagingException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
     }
 
-    public void sendNotificationByTopic(Fcm fcm) throws FirebaseMessagingException {
+    public void sendNotificationByTopic(Fcm fcm)  {
       Notification notification  = Notification.builder()
           .setTitle(fcm.title())
           .setBody(fcm.body())
@@ -40,7 +45,12 @@ public class FcmServiceImpl implements FcmService{
                   .setNotification(notification)
                   .setTopic(fcm.target())                  
                   .build();
-          FirebaseMessaging.getInstance().send(msg);
+          try {
+            FirebaseMessaging.getInstance().send(msg);
+          } catch (FirebaseMessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
       }
 
 }

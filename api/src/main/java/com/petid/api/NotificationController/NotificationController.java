@@ -1,6 +1,5 @@
 package com.petid.api.NotificationController;
 
-import com.google.firebase.messaging.FirebaseMessagingException;
 import com.petid.api.common.RequestUtil;
 import com.petid.domain.fcm.model.Fcm;
 import com.petid.domain.fcm.service.FcmService;
@@ -10,7 +9,7 @@ import com.petid.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class NotificationController  {
 
     @PostMapping("/send-notification")
     public ResponseEntity<String> sendNotification(HttpServletRequest request, @RequestBody Fcm fcm) {
-    	try {
+    	
     		String targetType = fcm.targetType();
     		if (targetType.equals("TOPIC")) {
     			fcmService.sendNotificationByTopic(fcm);
@@ -35,8 +34,6 @@ public class NotificationController  {
     			fcmService.sendNotificationToUser(fcm);
     		}
             return ResponseEntity.ok("Notification has been sent.");
-        } catch (FirebaseMessagingException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending notification: " + e.getMessage());
-        }
+        
     }
 }

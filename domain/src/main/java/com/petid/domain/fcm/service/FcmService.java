@@ -1,7 +1,5 @@
 package com.petid.domain.fcm.service;
 
-
-import com.google.firebase.messaging.FirebaseMessagingException;
 import com.petid.domain.fcm.model.Fcm;
 
 /**
@@ -13,7 +11,7 @@ import com.petid.domain.fcm.model.Fcm;
  */
 public interface FcmService {
 
-    public void sendNotificationToUser(Fcm fcm) throws FirebaseMessagingException;
-    public void sendNotificationByTopic(Fcm fcm) throws FirebaseMessagingException;
+    public void sendNotificationToUser(Fcm fcm) ;
+    public void sendNotificationByTopic(Fcm fcm) ;
 
 }
