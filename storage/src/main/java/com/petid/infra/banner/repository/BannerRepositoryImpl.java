@@ -50,7 +50,7 @@ public class BannerRepositoryImpl implements BannerRepository {
 			updatedBannerEntity.setImageUrl(updatedBanner.imageUrl());
 			updatedBannerEntity.setText(updatedBanner.text());
 			updatedBannerEntity.setType(updatedBanner.type());
-            bannerJpaRepository.save(bannerEntity).toDomain();
+            bannerJpaRepository.save(updatedBannerEntity).toDomain();
             return  updatedBannerEntity.toDomain();
 		 }
         throw new RuntimeException("Banner not found");
