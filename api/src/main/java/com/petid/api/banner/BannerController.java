@@ -9,6 +9,8 @@ import com.petid.domain.banner.BannerService;
 import com.petid.domain.banner.model.Banner;
 import com.petid.domain.pet.service.S3Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -46,14 +48,16 @@ public class BannerController {
     }
     
     @GetMapping("/presigned-get-url")
-    public ResponseEntity<String> getPetImageBucketUrl(@RequestBody String filePath) {
-  	  String url = S3service.createPresignedGetUrl(filePath);
+    public ResponseEntity<String> getPetImageBucketUrl(@RequestBody String encodedFilePath) {
+      String decodedFilePath = URLDecoder.decode(encodedFilePath, StandardCharsets.UTF_8);
+  	  String url = S3service.createPresignedGetUrl(decodedFilePath);
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }
 
     @PostMapping("/presigned-put-url")
-    public ResponseEntity<String> putPetImageBucketUrl(@RequestBody String filePath) {
-  	  String url = S3service.createPresignedPutUrl(filePath);
+    public ResponseEntity<String> putPetImageBucketUrl(@RequestBody String encodedFilePath) {
+      String decodedFilePath = URLDecoder.decode(encodedFilePath, StandardCharsets.UTF_8);
+  	  String url = S3service.createPresignedPutUrl(decodedFilePath);
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }
     
