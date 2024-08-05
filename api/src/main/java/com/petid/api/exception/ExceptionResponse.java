@@ -1,13 +1,17 @@
 package com.petid.api.exception;
 
 public record ExceptionResponse(
-        int code,
-        String message
+        long timestamp,
+        int status,
+        String error,
+        String path
 ) {
-    public static ExceptionResponse of(int code, String message) {
+    public static ExceptionResponse of(int code, String message, String path) {
         return new ExceptionResponse(
+                System.currentTimeMillis(),
                 code,
-                message
+                message,
+                path
         );
     }
 }

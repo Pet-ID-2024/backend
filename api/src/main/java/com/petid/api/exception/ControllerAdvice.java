@@ -1,6 +1,7 @@
 package com.petid.api.exception;
 
 import com.petid.domain.exception.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,24 +20,28 @@ public class ControllerAdvice {
             }
     )
     public ResponseEntity<ExceptionResponse> handleMemberNotFoundException(
+            HttpServletRequest request,
             MemberDataNotFoundException e
     ) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 ExceptionResponse.of(
                         404,
-                        e.getMessage()
+                        e.getMessage(),
+                        request.getRequestURI()
                 )
         );
     }
 
     @ExceptionHandler(UnSupportedPlatformException.class)
     public ResponseEntity<ExceptionResponse> handleUnSupportedPlatformException(
+            HttpServletRequest request,
             UnSupportedPlatformException e
     ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ExceptionResponse.of(
                         400,
-                        e.getMessage()
+                        e.getMessage(),
+                        request.getRequestURI()
                 )
         );
     }
