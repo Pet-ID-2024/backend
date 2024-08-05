@@ -6,7 +6,6 @@ import com.petid.domain.location.SigunguManager;
 import com.petid.domain.location.model.Sigungu;
 import com.petid.domain.location.repository.EupmundongRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class DataBatch {
 
     private static boolean check = false;
 
-    @Scheduled(cron = "0 * * * * ?")
+//    @Scheduled(cron = "0 * * * * ?")
     public void updateHospitalData() {
         if (check) return;
         eupmundongRepository.findAll()

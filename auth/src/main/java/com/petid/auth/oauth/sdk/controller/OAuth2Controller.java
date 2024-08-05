@@ -30,7 +30,7 @@ public class OAuth2Controller {
             @RequestParam("fcmToken") String fcmToken,
             @RequestParam("token") String token,
             @RequestParam("ad") boolean ad
-            ) {
+    ) {
         OAuth2Platform platformEnum = OAuth2Platform.fromString(platform);
         if (platformEnum.isNeedBearer()) token = "Bearer " + token;
 
