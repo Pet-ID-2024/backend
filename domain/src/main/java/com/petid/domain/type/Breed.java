@@ -11,7 +11,8 @@ public enum Breed {
     GERMAN_SHEPHERD("German Shepherd"),
     DACHSHUND("Dachshund"),
     BOXER("Boxer"),
-    CHIHUAHUA("Chihuahua");
+    CHIHUAHUA("Chihuahua"),
+	DRAGON("Dragon");
 
     private final String displayName;
 

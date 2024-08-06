@@ -25,17 +25,17 @@ public class PetEntity extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "pet_id")
   private Long id;
-
+  private Integer ownerId;
   private String petRegNo;
   private String petName;
   private String petBirthDate;
   private Character petSex;
   private Character petNeuteredYn;
-  private LocalDateTime petNeuteredDate;
+  private String petNeuteredDate;
   private String petAddr;
-
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "pet_id", referencedColumnName = "pet_id", insertable = false, updatable = false)
+  
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "appearance_id", insertable = false, updatable = false)
   private PetAppearanceEntity appearance;
 
   @OneToMany(fetch = FetchType.EAGER)
@@ -45,6 +45,7 @@ public class PetEntity extends BaseEntity {
   public Pet toDomain() {
       return new Pet(
               id,
+              ownerId,
               petRegNo,
               petName,
               petBirthDate,
@@ -60,8 +61,9 @@ public class PetEntity extends BaseEntity {
   }
   
   public static PetEntity from(Pet pet) {
-	    return new PetEntity(
+ 	    return new PetEntity(
         		  pet.petId(),
+        		  pet.ownerId(),
                   pet.petRegNo(),
                   pet.petName(),
                   pet.petBirthDate(),

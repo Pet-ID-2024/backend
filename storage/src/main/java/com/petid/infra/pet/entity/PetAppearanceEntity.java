@@ -18,14 +18,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "pet_appearance")
 public class PetAppearanceEntity extends BaseEntity {
-
-  @Id
+	
+ @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "appearance_id")
   private Long id;
-
-  @Column(name = "pet_id")
-  private Long petId;
 
   @Convert(converter = BreedConverter.class)
   private Breed breed;
@@ -36,8 +33,7 @@ public class PetAppearanceEntity extends BaseEntity {
 
   public PetAppearance toDomain() {
       return new PetAppearance(
-    		  id,
-    		  petId,
+    		  id,    		  
     		  breed,
     		  hairColor,
     		  weight,
@@ -47,12 +43,14 @@ public class PetAppearanceEntity extends BaseEntity {
   
   public static PetAppearanceEntity from(PetAppearance petAppearance) {
 	  return new PetAppearanceEntity(
-			  petAppearance.appearanceId(),
-			  petAppearance.petId(),
+			  petAppearance.appearanceId(),			  
 			  petAppearance.breed(),
 			  petAppearance.hairColor(),
 			  petAppearance.weight(),
 			  petAppearance.hairLength()
     );
   }
+  
+  
+
 }
