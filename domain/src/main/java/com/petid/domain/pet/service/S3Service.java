@@ -1,16 +1,13 @@
 package com.petid.domain.pet.service;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
+
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -22,8 +19,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 @Service
 @RequiredArgsConstructor
 public class S3Service {
-	private final S3Presigner s3Presigner;
-	private final S3Client s3Client;
+	private final S3Presigner s3Presigner;	
 	
 	@Value("${spring.cloud.aws.s3.bucket}")
     private String bucketName;
@@ -39,7 +35,7 @@ public class S3Service {
                 .build();
 
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(10))  // The URL will expire in 10 minutes.
+                .signatureDuration(Duration.ofMinutes(1))  // The URL will expire in 1 minutes.
                 .getObjectRequest(objectRequest)
                 .build();
 
@@ -61,7 +57,7 @@ public class S3Service {
                 .build();
 
         PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(10))  // The URL will expire in 10 minutes.
+                .signatureDuration(Duration.ofMinutes(1))  // The URL will expire in 1 minutes.
                 .putObjectRequest(putObjectRequest)
                 .build();
 

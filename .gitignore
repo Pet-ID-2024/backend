@@ -38,3 +38,6 @@ out/
 
 ### h2 db ###
 data
+
+### firebase sdk ###
+**/src/main/**/firebase/

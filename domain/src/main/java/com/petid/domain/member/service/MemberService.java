@@ -44,4 +44,9 @@ public class MemberService {
 
         memberPolicyRepository.save(updated);
     }
+    
+    public Member getUserByUid(String uid) {
+    		return  memberManager.getByUid(uid);
+	}
+
 }

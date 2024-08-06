@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.petid.infra.hospital.entity.QHospitalEntity.hospitalEntity;
+//import static com.petid.infra.hospital.entity.QHospitalEntity.hospitalEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,13 +20,13 @@ public class QHospitalRepository {
             long sigunguId,
             List<Long> eupmundongIds
     ) {
-        return queryFactory
+        return null; /*queryFactory
                 .selectFrom(hospitalEntity)
                 .where(
                         hospitalEntity.sidoId.eq(sidoId),
                         hospitalEntity.sigunguId.eq(sigunguId),
                         hospitalEntity.eupmundongId.in(eupmundongIds)
                 )
-                .fetch();
+                .fetch();*/ 
     }
 }

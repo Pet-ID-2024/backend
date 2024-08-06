@@ -17,3 +17,5 @@ spring:
         static: ${AWS_REGION}
       stack:
         auto: false
+firebase:
+    key-path: ${FIREBASE_KEY_PATH}

@@ -41,6 +41,9 @@ public class PetController {
 
   @PutMapping("/{petId}")
   public ResponseEntity<Pet> updatePet(@PathVariable(name = "petId") Long petId, @RequestBody Pet pet) {
+	 if (!petId.equals(pet.petId())) {
+          return ResponseEntity.badRequest().build(); // 400 Bad Request if IDs do not match
+     }
     Pet updatedPet = petService.updatePet(petId, pet);
     return new ResponseEntity<>(updatedPet, HttpStatus.OK);
   }
@@ -77,18 +80,21 @@ public class PetController {
 
   @DeleteMapping("/{petId}/images/{imageId}")
   public ResponseEntity<Void> deletePetImage(@PathVariable(name = "petId") Long petId, @PathVariable(name = "imageId") Long imageId) {
+	  if(!petService.findPetById(petId).isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);;
       petService.deletePetImage(petId, imageId);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
   
   @GetMapping("/{petId}/images/presigned-url")
-  public ResponseEntity<String> getPetImageBucketUrl(@PathVariable (name = "petId") Long petId, @RequestBody String fileName) {
-	  String url = S3service.createPresignedGetUrl(fileName);
+  public ResponseEntity<String> getPetImageBucketUrl(@PathVariable (name = "petId") Long petId, @RequestBody String filePath) {
+	  if(!petService.findPetById(petId).isPresent()) return new ResponseEntity<String>("pet not found", HttpStatus.OK);;
+	  String url = S3service.createPresignedGetUrl(filePath);
       return new ResponseEntity<String>(url, HttpStatus.OK);
   }
 
   @PostMapping("/{petId}/images/presigned-url")
   public ResponseEntity<String> putPetImageBucketUrl(@PathVariable (name = "petId") Long petId, @RequestBody String filePath) {
+	  if(!petService.findPetById(petId).isPresent()) return new ResponseEntity<String>("pet not found",HttpStatus.NOT_FOUND);;
 	  String url = S3service.createPresignedPutUrl(filePath);
       return new ResponseEntity<String>(url, HttpStatus.OK);
   }

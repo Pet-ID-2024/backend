@@ -7,9 +7,9 @@ import com.petid.domain.pet.model.PetAppearance;
 
 public interface PetAppearanceRepository {
     
-    PetAppearance createPetAppearance(Long petId, PetAppearance petAppearance);
+    PetAppearance createPetAppearance(PetAppearance petAppearance);
     PetAppearance updatePetAppearance(PetAppearance petAppearance);
-    void deletePetAppearanceByPetId(Long petId);
+    void deletePetAppearanceById(Long appearanceId);
     Optional<PetAppearance> findPetAppearanceById(Long appearanceId);
     List<PetAppearance> findAllPetAppearances();
 }
