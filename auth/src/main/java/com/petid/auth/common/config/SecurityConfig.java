@@ -1,13 +1,11 @@
 package com.petid.auth.common.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petid.auth.jwt.TokenAuthExceptionFilter;
 import com.petid.auth.jwt.TokenAuthFilter;
 import com.petid.auth.oauth.redirect.CustomOAuth2UserService;
 import com.petid.auth.oauth.redirect.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Arrays;
-
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +19,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +28,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final ObjectMapper objectMapper;
     private final TokenAuthFilter tokenAuthFilter;
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
@@ -72,7 +71,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TokenAuthExceptionFilter(), TokenAuthFilter.class)
+                .addFilterBefore(new TokenAuthExceptionFilter(objectMapper), TokenAuthFilter.class)
 
                 .oauth2Login(oauth ->
                         oauth.userInfoEndpoint(c -> c.userService(oAuth2UserService))
