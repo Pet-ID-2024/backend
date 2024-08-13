@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -45,9 +45,9 @@ public class SecurityConfig {
                     configuration.addAllowedMethod("PUT");
                     configuration.addAllowedMethod("POST");
                     configuration.addAllowedMethod("DELETE");
-                    configuration.setAllowedOrigins(Arrays.asList("*"));
-                    configuration.setAllowedMethods(Arrays.asList("*"));
-                    configuration.setAllowedHeaders(Arrays.asList("*"));
+                    configuration.setAllowedOrigins(List.of("*"));
+                    configuration.setAllowedMethods(List.of("*"));
+                    configuration.setAllowedHeaders(List.of("*"));
                     return configuration;
                 }))
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -63,6 +63,7 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/error"),
                                         new AntPathRequestMatcher("/favicon.ico"),
                                         new AntPathRequestMatcher("/auth/success"),
+                                        new AntPathRequestMatcher("/auth/oauth2/join/**"),
                                         new AntPathRequestMatcher("/auth/oauth2/login/**"),
                                         new AntPathRequestMatcher("/auth/token/refresh"),
                                         new AntPathRequestMatcher("/v1/**")
