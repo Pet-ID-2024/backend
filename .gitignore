@@ -40,4 +40,4 @@ out/
 data
 
 ### firebase sdk ###
-**/src/main/**/firebase/
+**/src/main/**/firebase/*
