@@ -39,6 +39,8 @@ public class TokenAuthFilter extends OncePerRequestFilter {
         }
         String token = request.getHeader(AUTHORIZATION);
 
+        if (token == null) throw new CustomAuthException(CustomAuthExceptionType.NO_TOKEN);
+
         // test용
         if (token.equals("test")) {
             request.setAttribute("uid", "test");
