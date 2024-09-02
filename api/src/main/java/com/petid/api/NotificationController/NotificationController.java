@@ -36,4 +36,13 @@ public class NotificationController  {
             return ResponseEntity.ok("Notification has been sent.");
         
     }
+
+	@PostMapping("/send-notification/booking")
+    public ResponseEntity<String> sendBookingNotification(HttpServletRequest request ) {
+			String bookingCode = request.getAttribute("code").toString();
+			String uid = RequestUtil.getUidFromRequest(request);
+			Fcm fcm = new Fcm("Booking Info", bookingCode , null, uid, null);
+			fcmService.sendNotificationToUser(fcm);
+    		return ResponseEntity.ok("Notification has been sent.");
+    }
 }

@@ -17,5 +17,17 @@ spring:
         static: ${AWS_REGION}
       stack:
         auto: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${spring.mail.username}
+    password: ${spring.mail.password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true    
 firebase:
     key-path: ${FIREBASE_KEY_PATH}
+
