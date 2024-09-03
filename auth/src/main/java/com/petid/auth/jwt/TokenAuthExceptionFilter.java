@@ -34,11 +34,11 @@ public class TokenAuthExceptionFilter extends OncePerRequestFilter {
         } catch (CustomAuthException e) {
             CustomAuthExceptionType exceptionType = e.getExceptionType();
             response.setContentType("application/json");
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setStatus(e.getExceptionType().getCode());
 
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("timestamp", Instant.now().toEpochMilli());
-            errorResponse.put("status", HttpServletResponse.SC_FORBIDDEN);
+            errorResponse.put("status", e.getExceptionType().getCode());
             errorResponse.put("error", exceptionType.getMessage());
             errorResponse.put("path", request.getRequestURI());
 
