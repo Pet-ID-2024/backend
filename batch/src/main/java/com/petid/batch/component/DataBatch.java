@@ -1,6 +1,8 @@
 package com.petid.batch.component;
 
+import com.petid.batch.model.LocationModel;
 import com.petid.domain.hospital.model.Hospital;
+import com.petid.domain.hospital.model.HospitalLocation;
 import com.petid.domain.hospital.repository.HospitalRepository;
 import com.petid.domain.location.SigunguManager;
 import com.petid.domain.location.model.Sigungu;
@@ -20,11 +22,8 @@ public class DataBatch {
     private final SigunguManager sigunguManager;
     private final HospitalRepository hospitalRepository;
 
-    private static boolean check = false;
-
 //    @Scheduled(cron = "0 * * * * ?")
     public void updateHospitalData() {
-        if (check) return;
         eupmundongRepository.findAll()
                 .forEach(eupmundong -> {
                     Sigungu sigungu = sigunguManager.get(eupmundong.sigunguId());
@@ -32,11 +31,15 @@ public class DataBatch {
                     Optional.ofNullable(dataComponent.getHospitalData(sigungu.name() + " " + eupmundong.name()))
                             .ifPresent(hospitalDataList -> {
                                 List<Hospital> hospitals = hospitalDataList.stream()
-                                        .map(data -> data.toDomain(sigungu.sidoId(), sigungu.id(), eupmundong.id()))
+                                        .map(data -> {
+                                            LocationModel locationData = dataComponent.getLocationData(data.orgAddr() + " " + data.orgAddrDtl());
+
+                                            HospitalLocation hospitalLocation = HospitalLocation.from(locationData.x(), locationData.y());
+                                            return data.toDomain(sigungu.sidoId(), sigungu.id(), eupmundong.id(), hospitalLocation);
+                                        })
                                         .toList();
                                 hospitalRepository.saveAllBulk(hospitals);
                             });
                 });
-        check = true;
     }
 }
