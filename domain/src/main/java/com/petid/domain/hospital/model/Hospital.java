@@ -10,6 +10,7 @@ public record Hospital(
         String name,
         String hours,
         String tel,
-        String vet
+        String vet,
+        HospitalLocation location
 ) {
 }

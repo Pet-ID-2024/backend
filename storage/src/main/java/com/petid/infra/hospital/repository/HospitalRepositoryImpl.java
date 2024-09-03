@@ -33,12 +33,12 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     public void saveAllBulk(
             List<Hospital> hospitals
     ) {
-        String sql = """
-                INSERT INTO hospital (sido_id, sigungu_id, eupmundong_id, address, name, tel, vet)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+        String insertHospitalQuery = """
+                INSERT INTO hospital (sido_id, sigungu_id, eupmundong_id, address, name, tel, vet, lat, lon)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-        jdbcTemplate.batchUpdate(sql,
+        jdbcTemplate.batchUpdate(insertHospitalQuery,
                 hospitals,
                 hospitals.size(),
                 (PreparedStatement ps, Hospital hospital) -> {
@@ -49,16 +49,32 @@ public class HospitalRepositoryImpl implements HospitalRepository {
                     ps.setString(5, hospital.name());
                     ps.setString(6, hospital.tel());
                     ps.setString(7, hospital.vet());
+                    ps.setObject(8, hospital.location().lat());
+                    ps.setObject(9, hospital.location().lon());
                 });
     }
 
     @Override
-    public List<Hospital> findAllBySigunguId(
+    public List<Hospital> findAllByLocationIds(
             long sidoId,
             long sigunguId,
             List<Long> eupmundongIds
     ) {
         return qRepository.findAllByLocation(sidoId, sigunguId, eupmundongIds)
+                .stream()
+                .map(HospitalEntity::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Hospital> findAllByLocationIdsOrderByLocation(
+            int sidoId,
+            int sigunguId,
+            List<Long> eupmundongIds,
+            double lat,
+            double lon
+    ) {
+        return qRepository.findAllByLocationIdsOrderByLocation(sidoId, sigunguId, eupmundongIds, lat, lon)
                 .stream()
                 .map(HospitalEntity::toDomain)
                 .toList();

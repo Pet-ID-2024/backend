@@ -24,10 +24,7 @@ public class HospitalOrderEntity extends BaseEntity {
     private Long id;
 
     private long memberId;
-
-    @JoinColumn(name = "hospital_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private HospitalEntity hospital;
+    private long hospitalId;
 
     private Instant date;
 
@@ -42,7 +39,7 @@ public class HospitalOrderEntity extends BaseEntity {
         return new HospitalOrderEntity(
                 hospitalOrder.id(),
                 member.id(),
-                HospitalEntity.from(hospital),
+                hospital.id(),
                 hospitalOrder.date(),
                 hospitalOrder.status()
         );
@@ -54,7 +51,7 @@ public class HospitalOrderEntity extends BaseEntity {
         return new HospitalOrder(
                 id,
                 uid,
-                hospital.getId(),
+                hospitalId,
                 date,
                 status
         );
