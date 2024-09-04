@@ -1,8 +1,9 @@
-package com.petid.api.NotificationController;
+package com.petid.api.Notification;
 
 import com.petid.api.common.RequestUtil;
 import com.petid.domain.fcm.model.Fcm;
 import com.petid.domain.fcm.service.FcmService;
+import com.petid.domain.hospital.model.HospitalOrder;
 import com.petid.domain.member.model.Member;
 import com.petid.domain.member.service.MemberService;
 
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v1/notification")
 public class NotificationController  {
 
     private final FcmService fcmService;
     
     private final MemberService memberService;
 
-    @PostMapping("/send-notification")
+    @PostMapping()
     public ResponseEntity<String> sendNotification(HttpServletRequest request, @RequestBody Fcm fcm) {
     	
     		String targetType = fcm.targetType();
@@ -37,11 +39,13 @@ public class NotificationController  {
         
     }
 
-	@PostMapping("/send-notification/booking")
-    public ResponseEntity<String> sendBookingNotification(HttpServletRequest request ) {
-			String bookingCode = request.getAttribute("code").toString();
-			String uid = RequestUtil.getUidFromRequest(request);
-			Fcm fcm = new Fcm("Booking Info", bookingCode , null, uid, null);
+	@PostMapping("/booking")
+    public ResponseEntity<String> sendBookingNotification(@RequestBody HospitalOrder hospitalOrder ) {
+			String bookingCode = hospitalOrder.status().toString();
+			String uid = hospitalOrder.uid();
+			Member member = memberService.getUserByUid(uid);
+			String token = member.fcmToken();
+			Fcm fcm = new Fcm("Booking Info", bookingCode , null, token, null);
 			fcmService.sendNotificationToUser(fcm);
     		return ResponseEntity.ok("Notification has been sent.");
     }

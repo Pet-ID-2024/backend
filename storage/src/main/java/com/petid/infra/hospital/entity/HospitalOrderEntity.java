@@ -35,7 +35,7 @@ public class HospitalOrderEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "member_id", insertable = false, updatable = false)
+    @Column(name = "member_id")
     private long memberId;
 
     @JoinColumn(name = "hospital_id")
@@ -48,7 +48,7 @@ public class HospitalOrderEntity extends BaseEntity {
     private OrderStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    @JoinColumn(name = "member_id", referencedColumnName = "id", insertable = false, updatable = false)
     private MemberEntity member;
 
     public static HospitalOrderEntity from(

@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/v1/hospital/order")
 public class HospitalOrderController {
+	
+	@Value("${spring.mail.username}")
+	private String emailSenderAddr;
+	
 
     private final HospitalOrderService hospitalOrderService;
 
     private final EmailService emailService; 
-
-    private final MemberService memberService; 
 
     @GetMapping
     public List<HospitalOrder> findAllOrder(@RequestParam("status") OrderStatus status) {
@@ -43,14 +46,20 @@ public class HospitalOrderController {
             HttpServletRequest request,
             @RequestBody HospitalOrderDto.Request orderRequest
     ) {
-        String uid = RequestUtil.getUidFromRequest(request);
+        String uid = "";
+        if (request.getParameter("uid") != null) {
+        	uid = request.getParameter("uid"); 
+        }else {
+        	uid =RequestUtil.getUidFromRequest(request);
+        }
+        
 
         HospitalOrder hospitalOrder = hospitalOrderService.createOrder(orderRequest.toDomain(uid));
 
-        Member member = memberService.getUserByUid(uid);
-        String recipientEmail = member.email(); 
+        //Member member = memberService.getUserByUid(uid);
+        String recipientEmail = emailSenderAddr; // for unforeseeable future, when we absolutely need to send out emails for booking confirmation,  use "member.email();" 
         String subject = "Booking Confirmation";
-        String text = "your appointment has been scheduled. We will get back to you as soon as possible.";
+        String text = "새 병원 예약 요청이 들어왔습니다.";
         emailService.sendEmail(recipientEmail, subject, text);
 
         return ResponseEntity.ok(
