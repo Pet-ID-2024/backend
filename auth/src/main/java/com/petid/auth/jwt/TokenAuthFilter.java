@@ -43,7 +43,9 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
         // test용
         if (token.equals("test")) {
-            request.setAttribute("uid", "test");
+        	if(request.getParameter("uid") == null ) {;
+        		request.setAttribute("uid", "test");	
+        	}
             filterChain.doFilter(request, response);
             return;
         }

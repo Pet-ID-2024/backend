@@ -1,12 +1,16 @@
 package com.petid.domain.hospital.service;
 
+import java.time.Instant;
+
+import org.springframework.stereotype.Service;
+
 import com.petid.domain.hospital.manager.HospitalOrderManager;
 import com.petid.domain.hospital.model.HospitalOrder;
 import com.petid.domain.hospital.repository.HospitalOrderRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.petid.domain.hospital.type.OrderStatus;
+import java.util.List;
 
-import java.time.Instant;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +44,11 @@ public class HospitalOrderService {
         HospitalOrder deleted = order.cancel();
 
         hospitalOrderRepository.save(deleted);
+    }
+
+    public List<HospitalOrder> getOrders(
+        OrderStatus status
+    ) {
+        return  hospitalOrderRepository.findAllByStatus(status);
     }
 }

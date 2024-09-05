@@ -23,7 +23,7 @@ public class BannerController {
 
 
     @GetMapping("/type")
-    public List<Banner> getBannersByType(@RequestBody String type) {
+    public List<Banner> getBannersByType(@RequestParam String type) {
         return bannerService.getBannersByType(type);
     }
 

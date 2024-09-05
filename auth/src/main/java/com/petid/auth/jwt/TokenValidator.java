@@ -2,7 +2,10 @@ package com.petid.auth.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.petid.auth.common.exception.CustomAuthException;
+import com.petid.auth.common.exception.CustomAuthExceptionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,7 +20,14 @@ public class TokenValidator {
     public boolean isTokenNotValid(String token) {
         if (token == null || token.isEmpty()) return true;
 
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secretKey)).build().verify(token);
+        token = token.replace("Bearer ", "");
+
+        DecodedJWT decodedJWT;
+        try {
+            decodedJWT = JWT.require(Algorithm.HMAC256(secretKey)).build().verify(token);
+        } catch (TokenExpiredException e) {
+            throw new CustomAuthException(CustomAuthExceptionType.TOKEN_EXPIRED);
+        }
 
         if (!decodedJWT.getClaim("role").asString().startsWith("ROLE_")) return true;
 
