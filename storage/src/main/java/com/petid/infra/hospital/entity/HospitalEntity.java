@@ -1,12 +1,14 @@
 package com.petid.infra.hospital.entity;
 
 import com.petid.domain.hospital.model.Hospital;
+import com.petid.domain.hospital.model.HospitalLocation;
 import com.petid.infra.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 @Getter
@@ -27,23 +29,7 @@ public class HospitalEntity extends BaseEntity {
     private String hours;
     private String tel;
     private String vet;
-
-    public static HospitalEntity from(
-            Hospital hospital
-    ) {
-        return new HospitalEntity(
-                hospital.id(),
-                hospital.sidoId(),
-                hospital.sigunguId(),
-                hospital.eupmundongId(),
-                hospital.imageUrl(),
-                hospital.address(),
-                hospital.name(),
-                hospital.hours(),
-                hospital.tel(),
-                hospital.vet()
-        );
-    }
+    private Point location;
 
     public Hospital toDomain() {
         return new Hospital(
@@ -56,7 +42,8 @@ public class HospitalEntity extends BaseEntity {
                 name,
                 hours,
                 tel,
-                vet
+                vet,
+                HospitalLocation.from(location.getX(), location.getY())
         );
     }
 }

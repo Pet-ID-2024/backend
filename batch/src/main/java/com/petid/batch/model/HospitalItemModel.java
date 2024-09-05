@@ -1,6 +1,7 @@
 package com.petid.batch.model;
 
 import com.petid.domain.hospital.model.Hospital;
+import com.petid.domain.hospital.model.HospitalLocation;
 
 public record HospitalItemModel(
         String orgAddr,
@@ -12,7 +13,8 @@ public record HospitalItemModel(
     public Hospital toDomain(
             long sidoId,
             long sigunguId,
-            long eupmundongId
+            long eupmundongId,
+            HospitalLocation hospitalLocation
     ) {
         return new Hospital(
                 null,
@@ -24,7 +26,8 @@ public record HospitalItemModel(
                 orgNm,
                 null,
                 tel,
-                memberNm
+                memberNm,
+                hospitalLocation
         );
     }
 }

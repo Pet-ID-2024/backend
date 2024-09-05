@@ -18,6 +18,16 @@ public class HospitalService {
             int sigunguId,
             List<Long> eupmundongIds
     ) {
-        return hospitalRepository.findAllBySigunguId(sidoId, sigunguId, eupmundongIds);
+        return hospitalRepository.findAllByLocationIds(sidoId, sigunguId, eupmundongIds);
+    }
+
+    public List<Hospital> findAllHospitalOrderByLocation(
+            int sidoId,
+            int sigunguId,
+            List<Long> eupmundongIds,
+            double lat,
+            double lon
+    ) {
+        return hospitalRepository.findAllByLocationIdsOrderByLocation(sidoId, sigunguId, eupmundongIds, lat, lon);
     }
 }

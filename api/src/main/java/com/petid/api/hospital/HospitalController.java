@@ -31,4 +31,20 @@ public class HospitalController {
         );
     }
 
+    @GetMapping("/location")
+    public ResponseEntity<List<HospitalDto.Response>> findAllHospitalOrderByLocation(
+            @RequestParam("sido") int sidoId,
+            @RequestParam("sigungu") int sigunguId,
+            @RequestParam("eupmundong") List<Long> eupmundongIds,
+            @RequestParam("lat") double lat,
+            @RequestParam("lon") double lon
+    ) {
+        List<Hospital> hospitals = hospitalService.findAllHospitalOrderByLocation(sidoId, sigunguId, eupmundongIds, lat, lon);
+
+        return ResponseEntity.ok(
+                hospitals.stream()
+                        .map(HospitalDto.Response::from)
+                        .toList()
+        );
+    }
 }
