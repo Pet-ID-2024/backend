@@ -35,8 +35,8 @@ public class TokenValidator {
         return !tokenType.equals("ACCESS_TOKEN") && !tokenType.equals("REFRESH_TOKEN");
     }
 
-    public String getUidFromToken(String token) {
+    public long getMemberIdFromToken(String token) {
         DecodedJWT jwt = JWT.decode(token);
-        return jwt.getClaim("sub").asString();
+        return Long.parseLong(jwt.getClaim("sub").asString());
     }
 }

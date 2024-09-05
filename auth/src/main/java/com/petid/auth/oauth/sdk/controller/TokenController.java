@@ -28,11 +28,11 @@ public class TokenController {
 
         if (tokenValidator.isTokenNotValid(refreshToken)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
 
-        String uid = tokenValidator.getUidFromToken(refreshToken);
+        long memberId = tokenValidator.getMemberIdFromToken(refreshToken);
 
         return ResponseEntity.ok(
                 authService.refreshToken(
-                        uid
+                        memberId
                 )
         );
     }

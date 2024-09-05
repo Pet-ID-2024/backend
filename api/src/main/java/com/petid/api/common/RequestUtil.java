@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestUtil {
 
-    public static String getUidFromRequest(HttpServletRequest request) {
-        return request.getAttribute("uid").toString();
+    public static long getMemberIdFromRequest(HttpServletRequest request) {
+        return Long.parseLong(request.getAttribute("id").toString());
     }
 }

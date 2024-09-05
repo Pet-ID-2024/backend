@@ -43,8 +43,8 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
         // test용
         if (token.equals("test")) {
-        	if(request.getParameter("uid") == null ) {;
-        		request.setAttribute("uid", "test");	
+        	if(request.getParameter("id") == null ) {
+        		request.setAttribute("id", "test");
         	}
             filterChain.doFilter(request, response);
             return;
@@ -52,10 +52,10 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
         if (tokenValidator.isTokenNotValid(token)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
 
-        String uid = tokenValidator.getUidFromToken(token);
-        request.setAttribute("uid", uid);
+        long memberId = tokenValidator.getMemberIdFromToken(token);
+        request.setAttribute("id", memberId);
 
-        Member member = memberManager.getByUid(uid);
+        Member member = memberManager.get(memberId);
         PrincipalDetails principalDetails = new PrincipalDetails(member, null);
 
         UsernamePasswordAuthenticationToken authentication =

@@ -21,8 +21,10 @@ public class MemberService {
     private final MemberPolicyManager memberPolicyManager;
     private final MemberPolicyRepository memberPolicyRepository;
 
-    public boolean isMemberAuthed(String uid) {
-        return memberAuthManager.existsByUid(uid);
+    public boolean isMemberAuthed(
+            long memberId
+    ) {
+        return memberAuthManager.existsById(memberId);
     }
 
     public MemberAuth saveMemberAuth(
@@ -34,19 +36,14 @@ public class MemberService {
     }
 
     public void updateOptionalPolicy(
-            String uid,
+            long memberId,
             boolean ad
     ) {
-        Member member = memberManager.getByUid(uid);
+        Member member = memberManager.get(memberId);
 
         MemberPolicy memberPolicy = memberPolicyManager.getByMemberId(member.id());
         MemberPolicy updated = memberPolicy.updatePolicy(ad);
 
         memberPolicyRepository.save(updated);
     }
-    
-    public Member getUserByUid(String uid) {
-    		return  memberManager.getByUid(uid);
-	}
-
 }

@@ -63,7 +63,7 @@ public class TokenProvider {
 
     private String createToken(Member member, LocalDateTime expire, String type) {
         return JWT.create()
-                .withSubject(member.uid())
+                .withSubject(String.valueOf(member.id()))
                 .withExpiresAt(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()))
                 .withClaim(ROLE_CLAIM_NAME, member.role().name())
                 .withClaim("tokenType", type)

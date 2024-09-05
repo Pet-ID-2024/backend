@@ -6,7 +6,7 @@ import com.petid.auth.oauth.sdk.controller.dto.TokenDto;
 public interface AuthService {
     TokenDto getUserInfo(OAuth2Platform platform, String fcmToken, String token, boolean advertisement);
 
-    TokenDto refreshToken(String uid);
+    TokenDto refreshToken(long memberId);
 
     TokenDto login(String uid, String fcmToken);
 }
