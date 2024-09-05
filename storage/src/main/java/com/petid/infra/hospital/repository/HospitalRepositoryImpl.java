@@ -5,6 +5,8 @@ import com.petid.domain.hospital.repository.HospitalRepository;
 import com.petid.infra.hospital.entity.HospitalEntity;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     private final JdbcTemplate jdbcTemplate;
     private final HospitalJpaRepository jpaRepository;
     private final QHospitalRepository qRepository;
+    private final GeometryFactory geometryFactory;
 
     @Override
     public Optional<Hospital> findById(
@@ -34,14 +37,18 @@ public class HospitalRepositoryImpl implements HospitalRepository {
             List<Hospital> hospitals
     ) {
         String insertHospitalQuery = """
-                INSERT INTO hospital (sido_id, sigungu_id, eupmundong_id, address, name, tel, vet, lat, lon)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO hospital (sido_id, sigungu_id, eupmundong_id, address, name, tel, vet, location)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
         jdbcTemplate.batchUpdate(insertHospitalQuery,
                 hospitals,
                 hospitals.size(),
                 (PreparedStatement ps, Hospital hospital) -> {
+                    Coordinate coordinate = (hospital.location().lon() != null && hospital.location().lat() != null)
+                            ? new Coordinate(hospital.location().lon(), hospital.location().lat())
+                            : null;
+
                     ps.setLong(1, hospital.sidoId());
                     ps.setLong(2, hospital.sigunguId());
                     ps.setLong(3, hospital.eupmundongId());
@@ -49,8 +56,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
                     ps.setString(5, hospital.name());
                     ps.setString(6, hospital.tel());
                     ps.setString(7, hospital.vet());
-                    ps.setObject(8, hospital.location().lat());
-                    ps.setObject(9, hospital.location().lon());
+                    ps.setObject(8, geometryFactory.createPoint(coordinate));
                 });
     }
 
