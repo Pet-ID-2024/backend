@@ -8,17 +8,13 @@ import com.petid.domain.email.EmailService;
 import com.petid.domain.hospital.model.HospitalOrder;
 import com.petid.domain.hospital.service.HospitalOrderService;
 import com.petid.domain.hospital.type.OrderStatus;
-import com.petid.domain.member.model.Member;
-import com.petid.domain.member.service.MemberService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
