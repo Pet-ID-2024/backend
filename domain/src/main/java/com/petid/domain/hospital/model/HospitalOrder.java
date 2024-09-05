@@ -6,30 +6,30 @@ import java.time.Instant;
 
 public record HospitalOrder(
         Long id,
-        String uid,
-        long hospitalId,
         Instant date,
-        OrderStatus status
+        long hospitalId,
+        OrderStatus status,
+        long memberId
 ) {
     public HospitalOrder update(
             Instant date
     ) {
         return new HospitalOrder(
                 id,
-                uid,
-                hospitalId,
                 date,
-                status
+                hospitalId,
+                status,
+                memberId
         );
     }
 
     public HospitalOrder cancel() {
         return new HospitalOrder(
                 id,
-                uid,
-                hospitalId,
                 date,
-                OrderStatus.CANCELLED
+                hospitalId,
+                OrderStatus.CANCELLED,
+                memberId
         );
     }
 }
