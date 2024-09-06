@@ -14,6 +14,7 @@ import com.petid.domain.pet.repository.PetRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,14 +32,16 @@ public class PetServiceImpl implements PetService {
   public Pet createPet(Pet pet) {
 	  
 	  PetAppearance savedPetAppearance =  petAppearanceRepo.createPetAppearance(pet.appearance());
-	  Pet savedPet = petRepo.createPet(pet);
-	  savedPet.updatePetAPpearance(savedPetAppearance);
+	  Pet savedPet = petRepo.createPet(pet.updatePetAPpearance(savedPetAppearance));
 	  petRepo.updatePet(savedPet);
 	  List<PetImage> petImages = pet.petImages();
+	  List<PetImage> newPetImages = new ArrayList<PetImage>();
 	  if(petImages != null && !petImages.isEmpty()) {
-		  petImages.forEach(image -> petImgRepo.createPetImage(savedPet.petId(), image));
+		  petImages.forEach(image ->newPetImages.add(petImgRepo.createPetImage(savedPet.petId(), image)));
 	  };
-	  return savedPet;
+	  Pet responsePet = savedPet.updatePetAPpearance(savedPetAppearance).updatePetimages(newPetImages);
+	  
+	  return responsePet;
   }
 
   @Override
@@ -148,7 +151,9 @@ public class PetServiceImpl implements PetService {
 	  Pet _pet = pet.get();
 	  
       // Delete PetAppearance associated with the pet
-	  petAppearanceRepo.deletePetAppearanceById(_pet.appearance().appearanceId());
+	  if(_pet.appearance() != null && _pet.appearance().appearanceId() != null) {		  
+		  petAppearanceRepo.deletePetAppearanceById(_pet.appearance().appearanceId());
+	  }
       // Delete PetImage associated with the pet
       petImgRepo.deletePetImageByPetId(petId);
    // Delete the pet
