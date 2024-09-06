@@ -29,6 +29,8 @@ public class HospitalHourEntity extends BaseEntity {
 
     private LocalTime openingTime;
     private LocalTime closingTime;
+    private LocalTime breakingTime;
+    private Integer breakingUnit;
     private boolean isClosed;
 
     public static HospitalHourEntity from(
@@ -40,6 +42,8 @@ public class HospitalHourEntity extends BaseEntity {
                 hospitalHour.day(),
                 hospitalHour.openingTime(),
                 hospitalHour.closingTime(),
+                hospitalHour.breakingTime(),
+                hospitalHour.breakingUnit(),
                 hospitalHour.isClosed()
         );
     }
@@ -51,6 +55,8 @@ public class HospitalHourEntity extends BaseEntity {
                 day,
                 openingTime,
                 closingTime,
+                breakingTime,
+                breakingUnit,
                 isClosed
         );
     }

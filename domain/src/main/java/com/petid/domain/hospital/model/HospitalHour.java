@@ -10,6 +10,8 @@ public record HospitalHour(
         DayType day,
         LocalTime openingTime,
         LocalTime closingTime,
+        LocalTime breakingTime,
+        Integer breakingUnit,
         boolean isClosed
 ) {
 }
