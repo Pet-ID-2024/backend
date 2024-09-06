@@ -49,4 +49,9 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
         return jpaRepository.findAllByStatus(status).stream().map(HospitalOrderEntity::toDomain).toList();
 	}
 
+	@Override
+	public int updateOrderStatus(long orderId, OrderStatus status) {
+		return jpaRepository.updateStatusByOrderId(orderId, status);		
+	}
+
 }
