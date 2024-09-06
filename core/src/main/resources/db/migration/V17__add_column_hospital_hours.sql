@@ -1,0 +1,2 @@
+ALTER TABLE hospital
+    ADD COLUMN hours VARCHAR(100);

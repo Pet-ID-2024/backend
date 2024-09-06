@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.io.WKTWriter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -38,7 +39,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     ) {
         String insertHospitalQuery = """
                 INSERT INTO hospital (sido_id, sigungu_id, eupmundong_id, address, name, tel, vet, location)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ST_GeomFromText(?))
                 """;
 
         jdbcTemplate.batchUpdate(insertHospitalQuery,
@@ -56,7 +57,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
                     ps.setString(5, hospital.name());
                     ps.setString(6, hospital.tel());
                     ps.setString(7, hospital.vet());
-                    ps.setObject(8, geometryFactory.createPoint(coordinate));
+                    ps.setString(8, new WKTWriter().write(geometryFactory.createPoint(coordinate)));
                 });
     }
 
