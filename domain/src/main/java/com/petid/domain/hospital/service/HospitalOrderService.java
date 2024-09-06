@@ -8,6 +8,9 @@ import com.petid.domain.hospital.manager.HospitalOrderManager;
 import com.petid.domain.hospital.model.HospitalOrder;
 import com.petid.domain.hospital.repository.HospitalOrderRepository;
 import com.petid.domain.hospital.type.OrderStatus;
+
+import jakarta.transaction.Transactional;
+
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -50,5 +53,10 @@ public class HospitalOrderService {
         OrderStatus status
     ) {
         return  hospitalOrderRepository.findAllByStatus(status);
+    }
+    
+    @Transactional
+    public int updateOrderStatus(long orderId , OrderStatus  status) {
+    	return hospitalOrderRepository.updateOrderStatus(orderId,  status);
     }
 }

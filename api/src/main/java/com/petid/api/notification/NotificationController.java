@@ -4,6 +4,7 @@ import com.petid.api.common.RequestUtil;
 import com.petid.domain.fcm.model.Fcm;
 import com.petid.domain.fcm.service.FcmService;
 import com.petid.domain.hospital.model.HospitalOrder;
+import com.petid.domain.hospital.service.HospitalOrderService;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ public class NotificationController  {
     private final FcmService fcmService;
     
     private final MemberManager memberManager;
+    private final HospitalOrderService hostpitalOrderService;
 
     @PostMapping()
     public ResponseEntity<String> sendNotification(HttpServletRequest request, @RequestBody Fcm fcm) {
@@ -41,12 +43,14 @@ public class NotificationController  {
 
 	@PostMapping("/booking")
     public ResponseEntity<String> sendBookingNotification(@RequestBody HospitalOrder hospitalOrder ) {
-			String bookingCode = hospitalOrder.status().toString();
+			String status = hospitalOrder.status().toString();
 			long memberId = hospitalOrder.memberId();
 			Member member = memberManager.get(memberId);
 			String token = member.fcmToken();
-			Fcm fcm = new Fcm("Booking Info", bookingCode , null, token, null);
+			Fcm fcm = new Fcm("Booking Info", status , null, token, null);
 			fcmService.sendNotificationToUser(fcm);
+			
+			hostpitalOrderService.updateOrderStatus(hospitalOrder.id(), hospitalOrder.status());
     		return ResponseEntity.ok("Notification has been sent.");
     }
 }
