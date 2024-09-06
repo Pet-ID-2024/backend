@@ -10,7 +10,7 @@ import lombok.*;
 
 import java.time.Instant;
 
-@Entity
+@Entity(name="hospital_order")
 @Getter
 @AllArgsConstructor
 @Table(name = "hospital_order")
@@ -28,7 +28,7 @@ public class HospitalOrderEntity extends BaseEntity {
     private OrderStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
     private MemberEntity member;
 
 
