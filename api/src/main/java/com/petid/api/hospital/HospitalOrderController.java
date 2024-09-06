@@ -42,18 +42,16 @@ public class HospitalOrderController {
             HttpServletRequest request,
             @RequestBody HospitalOrderDto.Request orderRequest
     ) {
-        String uid = "";
-        if (request.getParameter("uid") != null) {
-        	uid = request.getParameter("uid"); 
+        long memberId;
+        if (request.getParameter("id") != null) {
+        	memberId = Long.parseLong(request.getParameter("id"));
         }else {
-        	uid =RequestUtil.getUidFromRequest(request);
+        	memberId = RequestUtil.getMemberIdFromRequest(request);
         }
-        
 
-        HospitalOrder hospitalOrder = hospitalOrderService.createOrder(orderRequest.toDomain(uid));
+        HospitalOrder hospitalOrder = hospitalOrderService.createOrder(orderRequest.toDomain(memberId));
 
-        //Member member = memberService.getUserByUid(uid);
-        String recipientEmail = emailSenderAddr; // for unforeseeable future, when we absolutely need to send out emails for booking confirmation,  use "member.email();" 
+        String recipientEmail = emailSenderAddr; // for unforeseeable future, when we absolutely need to send out emails for booking confirmation,  use "member.email();"
         String subject = "Booking Confirmation";
         String text = "새 병원 예약 요청이 들어왔습니다.";
         emailService.sendEmail(recipientEmail, subject, text);

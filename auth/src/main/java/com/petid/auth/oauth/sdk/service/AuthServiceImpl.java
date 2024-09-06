@@ -76,9 +76,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public TokenDto refreshToken(
-            String uid
+            long memberId
     ) {
-        Member member = memberManager.getByUid(uid);
+        Member member = memberManager.get(memberId);
 
         String newAccessToken = tokenProvider.getAccessToken(member);
         String newRefreshToken = tokenProvider.getRefreshToken(member);

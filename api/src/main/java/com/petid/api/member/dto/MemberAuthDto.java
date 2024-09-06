@@ -1,5 +1,6 @@
 package com.petid.api.member.dto;
 
+import com.petid.domain.member.model.Member;
 import com.petid.domain.member.model.MemberAuth;
 
 public record MemberAuthDto() {
@@ -9,10 +10,10 @@ public record MemberAuthDto() {
             String address,
             String phone
     ) {
-        public MemberAuth toDomain(String uid) {
+        public MemberAuth toDomain(Member member) {
             return new MemberAuth(
                     null,
-                    uid,
+                    member.uid(),
                     name,
                     ssn,
                     address,

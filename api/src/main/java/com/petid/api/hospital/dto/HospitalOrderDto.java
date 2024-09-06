@@ -12,14 +12,14 @@ public record HospitalOrderDto() {
             Instant date
     ) {
         public HospitalOrder toDomain(
-                String uid
+                long memberId
         ) {
             return new HospitalOrder(
                     null,
-                    uid,
-                    hospitalId,
                     date,
-                    OrderStatus.PENDING
+                    hospitalId,
+                    OrderStatus.PENDING,
+                    memberId
             );
         }
     }
