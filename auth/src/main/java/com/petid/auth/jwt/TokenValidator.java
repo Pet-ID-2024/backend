@@ -36,6 +36,7 @@ public class TokenValidator {
     }
 
     public long getMemberIdFromToken(String token) {
+        token = token.replace("Bearer ", "");
         DecodedJWT jwt = JWT.decode(token);
         return Long.parseLong(jwt.getClaim("sub").asString());
     }
