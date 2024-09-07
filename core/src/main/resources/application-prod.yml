@@ -1,4 +1,6 @@
 spring:
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${MARIA_DB_HOST}:${MARIA_DB_PORT}/${MARIA_DB_NAME}
