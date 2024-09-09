@@ -39,8 +39,6 @@ public class QHospitalRepository {
             double lat,
             double lon
     ) {
-        String userLocation = "POINT(" + lon + " " + lat + ")";
-
         return queryFactory.selectFrom(hospitalEntity)
                 .where(
                         hospitalEntity.sidoId.eq(sidoId),
@@ -49,7 +47,9 @@ public class QHospitalRepository {
                 )
                 .orderBy(
                         Expressions.numberTemplate(Double.class,
-                                "ST_Distance_Sphere({0}, {1})", hospitalEntity.location, userLocation).asc()
+                                "ST_Distance_Sphere(POINT(ST_X({0}), ST_Y({0})), POINT({1}, {2}))",
+                                hospitalEntity.location,
+                                lon, lat).asc()
                 )
                 .fetch();
     }

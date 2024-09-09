@@ -2,14 +2,14 @@ package com.petid.domain.hospital.model;
 
 public record HospitalLocation(
         Long id,
-        Double lat,
-        Double lon
+        Double lon,
+        Double lat
 ) {
-    public static HospitalLocation from(Double lat, Double lon) {
+    public static HospitalLocation from(Double lon, Double lat) {
         return new HospitalLocation(
                 null,
-                lat,
-                lon
+                lon,
+                lat
         );
     }
 }
