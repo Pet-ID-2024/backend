@@ -35,7 +35,7 @@ public class PetEntity extends BaseEntity {
   private String petAddr;
   
   @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "appearance_id", insertable = false, updatable = false)
+  @JoinColumn(name = "appearance_id",  updatable = false)
   private PetAppearanceEntity appearance;
 
   @OneToMany(fetch = FetchType.EAGER)
@@ -71,7 +71,7 @@ public class PetEntity extends BaseEntity {
                   pet.petNeuteredYn(),
                   pet.petNeuteredDate(),
                   pet.petAddr(),
-                  pet.petId() != null && pet.appearance() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
+                  pet.appearance() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
                   pet.petId() != null && pet.petImages() != null? pet.petImages().stream()
                   .map(PetImageEntity::from)  
                   .toList() : null
