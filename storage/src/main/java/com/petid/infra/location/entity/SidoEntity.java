@@ -19,11 +19,13 @@ public class SidoEntity {
     private Long id;
 
     private String name;
+    private String showName;
 
     public Sido toDomain() {
         return new Sido(
                 id,
-                name
+                name,
+                showName
         );
     }
 }

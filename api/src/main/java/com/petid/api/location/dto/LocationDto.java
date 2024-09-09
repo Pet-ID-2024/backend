@@ -13,21 +13,21 @@ public record LocationDto() {
         public static Response from(Sigungu sigungu) {
             return new Response(
                     sigungu.id(),
-                    sigungu.name()
+                    sigungu.showName()
             );
         }
 
         public static Response from(Eupmundong eupmundong) {
             return new Response(
                     eupmundong.id(),
-                    eupmundong.name()
+                    eupmundong.showName()
             );
         }
 
         public static Response from(Sido sido) {
             return new Response(
                     sido.id(),
-                    sido.name()
+                    sido.showName()
             );
         }
     }
