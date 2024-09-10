@@ -1,12 +1,16 @@
 package com.petid.infra.hospital.repository;
 
 import com.petid.domain.hospital.model.HospitalOrder;
+import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.repository.HospitalOrderRepository;
 import com.petid.domain.hospital.type.OrderStatus;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
+
 import com.petid.infra.hospital.entity.HospitalOrderEntity;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +22,7 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
 
     private final MemberManager memberManager;
     private final HospitalOrderJpaRepository jpaRepository;
+    private final QHospitalOrderRepository qOrderRepository;
 
     @Override
     public HospitalOrder save(
@@ -42,11 +47,12 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
     }
 
     @Override
-	public List<HospitalOrder> findAllByStatus(OrderStatus status) {
-		if (status.name().equals("ALL")) {
+	public List<HospitalOrderSummaryDTO> findAllByStatus(OrderStatus status) {
+		/*if (status.name().equals("ALL")) {
             return jpaRepository.findAll().stream().map(HospitalOrderEntity::toDomain).toList();
-        }
-        return jpaRepository.findAllByStatus(status).stream().map(HospitalOrderEntity::toDomain).toList();
+        }*/
+		//return jpaRepository.findAllByStatus(status).stream().map(HospitalOrderEntity::toDomain).toList();
+		return qOrderRepository.findAllByStatus(status);
 	}
 
 	@Override

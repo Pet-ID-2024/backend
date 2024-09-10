@@ -18,10 +18,15 @@ public class FcmServiceImpl implements FcmService{
      * @return 성공(1), 실패(0)
      */
 	public void sendNotificationToUser(Fcm fcm) {
+		String image = "";
+		if (fcm.body().get("image") != null) {
+			image = fcm.body().get("image").toString();
+		}
+		
 		Notification notification  = Notification.builder()
 				.setTitle(fcm.title())
-				.setBody(fcm.body())
-				.setImage(fcm.image())
+				.setBody(fcm.body().toString())
+				.setImage(image)
 				.build();
         Message msg = Message.builder()
         		.setNotification(notification)
@@ -36,10 +41,15 @@ public class FcmServiceImpl implements FcmService{
     }
 
     public void sendNotificationByTopic(Fcm fcm)  {
+    	String image = "";
+		if (fcm.body().get("image") != null) {
+			image = fcm.body().get("image").toString();
+		}
+    	
       Notification notification  = Notification.builder()
-          .setTitle(fcm.title())
-          .setBody(fcm.body())
-          .setImage(fcm.image())
+        .setTitle(fcm.title())
+      	.setBody(fcm.body().toString())
+		.setImage(image)
           .build();
           Message msg = Message.builder()
                   .setNotification(notification)
