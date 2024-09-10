@@ -2,10 +2,12 @@ package com.petid.api.hospital.dto;
 
 import com.petid.domain.hospital.model.Hospital;
 
+import java.util.List;
+
 public record HospitalDto() {
     public record Response(
             long id,
-            String imageUrl,
+            List<String> imageUrl,
             String address,
             String name,
             String hours,
