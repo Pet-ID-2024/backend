@@ -25,7 +25,7 @@ public class HospitalEntity extends BaseEntity {
     private long sidoId;
     private long sigunguId;
     private long eupmundongId;
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> imageUrl;
     private String address;
     private String name;
