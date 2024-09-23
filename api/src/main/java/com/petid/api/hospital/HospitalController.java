@@ -22,7 +22,6 @@ public class HospitalController {
             @RequestParam("sigungu") int sigunguId,
             @RequestParam("eupmundong") List<Long> eupmundongIds
     ) {
-        System.out.println("IN===========");
         List<Hospital> hospitals = hospitalService.findAllHospital(sidoId, sigunguId, eupmundongIds);
 
         return ResponseEntity.ok(
