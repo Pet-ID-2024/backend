@@ -90,11 +90,13 @@ public class HospitalOrderController {
     }
 
     @GetMapping("/time")
-    public List<String> findAvailableTimes(
+    public ResponseEntity<List<String>> findAvailableTimes(
             @RequestParam("hospitalId") long hospitalId,
             @RequestParam("day") DayType day,
             @RequestParam("date") LocalDate date
     ) {
-        return hospitalHourService.findAvailableTimes(hospitalId, day, date);
+        List<String> availableTimes = hospitalHourService.findAvailableTimes(hospitalId, day, date);
+
+        return ResponseEntity.ok(availableTimes);
     }
 }
