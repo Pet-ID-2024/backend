@@ -19,7 +19,7 @@ public class HospitalHourService {
     private final HospitalHourManager hospitalHourManager;
     private final HospitalOrderManager hospitalOrderManager;
 
-    public List<LocalTime> findAvailableTimes(
+    public List<String> findAvailableTimes(
             long hospitalId,
             DayType day,
             LocalDate date
@@ -31,6 +31,9 @@ public class HospitalHourService {
 
         availableTimes.removeAll(unavailableTimes);
 
-        return availableTimes.stream().toList();
+        return availableTimes
+                .stream()
+                .map(LocalTime::toString)
+                .toList();
     }
 }

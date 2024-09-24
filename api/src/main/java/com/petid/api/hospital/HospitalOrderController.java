@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -91,7 +90,7 @@ public class HospitalOrderController {
     }
 
     @GetMapping("/time")
-    public List<LocalTime> findAvailableTimes(
+    public List<String> findAvailableTimes(
             @RequestParam("hospitalId") long hospitalId,
             @RequestParam("day") DayType day,
             @RequestParam("date") LocalDate date
