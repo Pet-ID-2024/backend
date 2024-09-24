@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -89,11 +90,12 @@ public class HospitalOrderController {
         return ResponseEntity.ok(requestOrderId);
     }
 
-    @GetMapping
+    @GetMapping("/time")
     public List<LocalTime> findAvailableTimes(
             @RequestParam("hospitalId") long hospitalId,
-            @RequestParam("day") DayType day
+            @RequestParam("day") DayType day,
+            @RequestParam("date") LocalDate date
     ) {
-        return hospitalHourService.findAvailableTimes(hospitalId, day);
+        return hospitalHourService.findAvailableTimes(hospitalId, day, date);
     }
 }

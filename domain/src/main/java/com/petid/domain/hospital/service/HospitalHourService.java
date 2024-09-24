@@ -1,45 +1,36 @@
 package com.petid.domain.hospital.service;
 
 import com.petid.domain.hospital.manager.HospitalHourManager;
+import com.petid.domain.hospital.manager.HospitalOrderManager;
 import com.petid.domain.hospital.model.HospitalHour;
 import com.petid.domain.hospital.type.DayType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class HospitalHourService {
 
-
     private final HospitalHourManager hospitalHourManager;
+    private final HospitalOrderManager hospitalOrderManager;
 
     public List<LocalTime> findAvailableTimes(
             long hospitalId,
-            DayType day
+            DayType day,
+            LocalDate date
     ) {
         HospitalHour hourData = hospitalHourManager.getByHospitalIdAndDay(hospitalId, day);
 
-        List<LocalTime> availableTimes = new ArrayList<>();
+        Set<LocalTime> availableTimes = hospitalHourManager.getAvailableTimes(hourData);
+        Set<LocalTime> unavailableTimes = hospitalOrderManager.getUnavailableTimes(hospitalId, date);
 
-        LocalTime currentTime = hourData.openingTime();
-        LocalTime closingTime = hourData.closingTime();
-        LocalTime breakingTime = hourData.breakingTime();
-        LocalTime breakEndTime = hourData.breakingTime().plusMinutes(hourData.breakingUnit());
-        int orderInterval = 30;
+        availableTimes.removeAll(unavailableTimes);
 
-        while (!currentTime.isAfter(closingTime)) {
-            if (currentTime.isAfter(breakingTime) && currentTime.isBefore(breakEndTime)) {
-                currentTime = breakEndTime;
-            } else {
-                availableTimes.add(currentTime);
-                currentTime = currentTime.plusMinutes(orderInterval);
-            }
-        }
-
-        return availableTimes;
+        return availableTimes.stream().toList();
     }
 }

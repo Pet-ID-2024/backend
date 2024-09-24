@@ -1,9 +1,10 @@
 package com.petid.domain.hospital.repository;
 
-import java.util.List;
 import com.petid.domain.hospital.model.HospitalOrder;
 import com.petid.domain.hospital.type.OrderStatus;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface HospitalOrderRepository {
@@ -14,4 +15,6 @@ public interface HospitalOrderRepository {
     List<HospitalOrder> findAllByStatus(OrderStatus status);
     
     int updateOrderStatus(long orderId, OrderStatus status);
+
+    List<HospitalOrder> findAllByHospitalIdAndDate(Long hospitalId, LocalDate date);
 }

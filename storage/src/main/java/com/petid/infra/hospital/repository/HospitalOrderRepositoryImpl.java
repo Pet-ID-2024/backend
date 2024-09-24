@@ -9,6 +9,10 @@ import com.petid.infra.hospital.entity.HospitalOrderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,7 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
 
     private final MemberManager memberManager;
     private final HospitalOrderJpaRepository jpaRepository;
+    private final QHospitalOrderRepository qRepository;
 
     @Override
     public HospitalOrder save(
@@ -53,5 +58,19 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
 	public int updateOrderStatus(long orderId, OrderStatus status) {
 		return jpaRepository.updateStatusByOrderId(orderId, status);		
 	}
+
+    @Override
+    public List<HospitalOrder> findAllByHospitalIdAndDate(
+            Long hospitalId,
+            LocalDate date
+    ) {
+        Instant startOfDay = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant endOfDay = date.atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant();
+
+        return qRepository.findAllByHospitalIdAndDate(hospitalId, startOfDay, endOfDay)
+                .stream()
+                .map(HospitalOrderEntity::toDomain)
+                .toList();
+    }
 
 }
