@@ -60,14 +60,17 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
 	}
 
     @Override
-    public List<HospitalOrder> findAllByHospitalIdAndDate(
+    public List<HospitalOrder> findAllByHospitalIdAndDateAndStatusValid(
             Long hospitalId,
-            LocalDate date
+            LocalDate date,
+            ZoneId zoneId
     ) {
-        Instant startOfDay = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
-        Instant endOfDay = date.atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant();
+        Instant startOfDay = date.atStartOfDay(zoneId).toInstant();
+        Instant endOfDay = date.atTime(LocalTime.MAX).atZone(zoneId).toInstant();
 
-        return qRepository.findAllByHospitalIdAndDate(hospitalId, startOfDay, endOfDay)
+        List<OrderStatus> validStatus = List.of(OrderStatus.PENDING, OrderStatus.CONFIRMED);
+
+        return qRepository.findAllByHospitalIdAndDateAndStatus(hospitalId, startOfDay, endOfDay, validStatus)
                 .stream()
                 .map(HospitalOrderEntity::toDomain)
                 .toList();

@@ -28,8 +28,8 @@ public class HospitalOrderManager {
             long hospitalId,
             LocalDate date
     ) {
-        ZoneId zoneId = ZoneId.systemDefault();
-        List<HospitalOrder> orderData = hospitalOrderRepository.findAllByHospitalIdAndDate(hospitalId, date);
+        ZoneId zoneId = ZoneId.of("UTC");
+        List<HospitalOrder> orderData = hospitalOrderRepository.findAllByHospitalIdAndDateAndStatusValid(hospitalId, date, zoneId);
 
         return orderData.stream()
                 .map(order -> order.date().atZone(zoneId).toLocalTime())

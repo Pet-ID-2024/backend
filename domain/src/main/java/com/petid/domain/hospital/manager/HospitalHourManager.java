@@ -30,14 +30,14 @@ public class HospitalHourManager {
     ) {
         Set<LocalTime> availableTimes = new TreeSet<>();
 
-        LocalTime currentTime = hourData.openingTime();
-        LocalTime closingTime = hourData.closingTime();
-        LocalTime breakingTime = hourData.breakingTime();
-        LocalTime breakEndTime = hourData.breakingTime().plusMinutes(hourData.breakingUnit());
         int orderInterval = 30;
+        LocalTime currentTime = hourData.openingTime();
+        LocalTime lastAvailableTime = hourData.closingTime().minusMinutes(orderInterval);
+        LocalTime lastAvailableTimeBeforeBreak = hourData.breakingTime().minusMinutes(orderInterval);
+        LocalTime breakEndTime = hourData.breakingTime().plusMinutes(hourData.breakingUnit());
 
-        while (!currentTime.isAfter(closingTime)) {
-            if (currentTime.isAfter(breakingTime) && currentTime.isBefore(breakEndTime)) {
+        while (!currentTime.isAfter(lastAvailableTime)) {
+            if (currentTime.isAfter(lastAvailableTimeBeforeBreak) && currentTime.isBefore(breakEndTime)) {
                 currentTime = breakEndTime;
             } else {
                 availableTimes.add(currentTime);

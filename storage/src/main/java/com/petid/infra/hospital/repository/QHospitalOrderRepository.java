@@ -1,5 +1,6 @@
 package com.petid.infra.hospital.repository;
 
+import com.petid.domain.hospital.type.OrderStatus;
 import com.petid.infra.hospital.entity.HospitalOrderEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +17,18 @@ public class QHospitalOrderRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<HospitalOrderEntity> findAllByHospitalIdAndDate(
+    public List<HospitalOrderEntity> findAllByHospitalIdAndDateAndStatus(
             Long hospitalId,
             Instant startOfDay,
-            Instant endOfDay
+            Instant endOfDay,
+            List<OrderStatus> statuses
     ) {
         return queryFactory
                 .selectFrom(hospitalOrderEntity)
                 .where(
                         hospitalOrderEntity.hospitalId.eq(hospitalId)
                                 .and(hospitalOrderEntity.date.between(startOfDay, endOfDay))
+                                .and(hospitalOrderEntity.status.in(statuses))
                 )
                 .fetch();
     }

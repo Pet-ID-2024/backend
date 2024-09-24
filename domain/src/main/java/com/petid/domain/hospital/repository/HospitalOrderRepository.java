@@ -4,6 +4,7 @@ import com.petid.domain.hospital.model.HospitalOrder;
 import com.petid.domain.hospital.type.OrderStatus;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +17,5 @@ public interface HospitalOrderRepository {
     
     int updateOrderStatus(long orderId, OrderStatus status);
 
-    List<HospitalOrder> findAllByHospitalIdAndDate(Long hospitalId, LocalDate date);
+    List<HospitalOrder> findAllByHospitalIdAndDateAndStatusValid(Long hospitalId, LocalDate date, ZoneId zoneId);
 }
