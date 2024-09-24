@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class HospitalHourService {
             LocalDate date
     ) {
         HospitalHour hourData = hospitalHourManager.getByHospitalIdAndDay(hospitalId, day);
+        if (hourData.isClosed()) return Collections.emptyList();
 
         Set<LocalTime> availableTimes = hospitalHourManager.getAvailableTimes(hourData);
         Set<LocalTime> unavailableTimes = hospitalOrderManager.getUnavailableTimes(hospitalId, date);
