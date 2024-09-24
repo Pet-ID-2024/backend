@@ -2,7 +2,6 @@ package com.petid.infra.hospital.entity;
 
 import com.petid.domain.hospital.model.HospitalHour;
 import com.petid.domain.hospital.type.DayType;
-import com.petid.infra.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,9 +13,9 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name = "hospital_hour")
+@Table(name = "hospital_hours")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class HospitalHourEntity extends BaseEntity {
+public class HospitalHourEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
