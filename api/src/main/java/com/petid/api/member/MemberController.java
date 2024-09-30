@@ -4,7 +4,6 @@ import com.petid.api.common.RequestUtil;
 import com.petid.api.member.dto.MemberAuthDto;
 import com.petid.domain.member.manager.MemberAuthManager;
 import com.petid.domain.member.manager.MemberManager;
-import com.petid.domain.member.model.Member;
 import com.petid.domain.member.model.MemberAuth;
 import com.petid.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ public class MemberController {
             HttpServletRequest request
     ) {
         long memberId = RequestUtil.getMemberIdFromRequest(request);
-        MemberAuth memberAuth = memberAuthManager.get(memberId);
+        MemberAuth memberAuth = memberAuthManager.getByMemberId(memberId);
 
         return ResponseEntity.ok(MemberAuthDto.Response.from(memberAuth));
     }
@@ -42,14 +41,13 @@ public class MemberController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<MemberAuthDto.Response> saveMemberAuth(
+    public ResponseEntity<MemberAuthDto.Response> updateMemberAuth(
             HttpServletRequest request,
             @RequestBody MemberAuthDto.Request authRequest
     ) {
         long memberId = RequestUtil.getMemberIdFromRequest(request);
-        Member member = memberManager.get(memberId);
 
-        MemberAuth memberAuth = memberService.saveMemberAuth(authRequest.toDomain(member));
+        MemberAuth memberAuth = memberService.updateMemberAuth(authRequest.toDomain(memberId));
 
         return ResponseEntity.ok(MemberAuthDto.Response.from(memberAuth));
     }

@@ -16,19 +16,29 @@ public class MemberAuthEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "member_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private MemberEntity member;
-
+    private Long memberId;
     private String name;
     private String ssn;
     private String phone;
     private String address;
 
+    public static MemberAuthEntity from(
+            MemberAuth memberAuth
+    ) {
+        return new MemberAuthEntity(
+                memberAuth.id(),
+                memberAuth.memberId(),
+                memberAuth.name(),
+                memberAuth.ssn(),
+                memberAuth.phone(),
+                memberAuth.address()
+        );
+    }
+
     public MemberAuth toDomain() {
         return new MemberAuth(
                 id,
-                member.getUid(),
+                memberId,
                 name,
                 ssn,
                 phone,

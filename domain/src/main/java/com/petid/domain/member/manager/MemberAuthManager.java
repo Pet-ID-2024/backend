@@ -14,7 +14,7 @@ public class MemberAuthManager {
     private final MemberManager memberManager;
     private final MemberAuthRepository memberAuthRepository;
 
-    public boolean existsById(
+    public boolean existsByMemberId(
             long memberId
     ) {
         Member member = memberManager.get(memberId);
@@ -22,7 +22,7 @@ public class MemberAuthManager {
         return memberAuthRepository.findByMemberId(member.id()).isPresent();
     }
 
-    public MemberAuth get(
+    public MemberAuth getByMemberId(
             long memberId
     ) {
         return memberAuthRepository.findByMemberId(memberId)
