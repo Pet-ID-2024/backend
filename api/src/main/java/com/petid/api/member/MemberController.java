@@ -2,6 +2,7 @@ package com.petid.api.member;
 
 import com.petid.api.common.RequestUtil;
 import com.petid.api.member.dto.MemberAuthDto;
+import com.petid.domain.member.manager.MemberAuthManager;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
 import com.petid.domain.member.model.MemberAuth;
@@ -18,6 +19,17 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberManager memberManager;
+    private final MemberAuthManager memberAuthManager;
+
+    @GetMapping
+    public ResponseEntity<MemberAuthDto.Response> getMemberInfo(
+            HttpServletRequest request
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+        MemberAuth memberAuth = memberAuthManager.get(memberId);
+
+        return ResponseEntity.ok(MemberAuthDto.Response.from(memberAuth));
+    }
 
     @GetMapping("/auth")
     public ResponseEntity<Boolean> isMemberAuth(
