@@ -3,7 +3,6 @@ package com.petid.api.member;
 import com.petid.api.common.RequestUtil;
 import com.petid.api.member.dto.MemberAuthDto;
 import com.petid.domain.member.manager.MemberAuthManager;
-import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.MemberAuth;
 import com.petid.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberManager memberManager;
     private final MemberAuthManager memberAuthManager;
 
     @GetMapping
