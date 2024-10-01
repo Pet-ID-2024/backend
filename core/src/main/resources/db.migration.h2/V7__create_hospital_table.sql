@@ -7,7 +7,7 @@ CREATE TABLE hospital
     image_url     VARCHAR(100),
     address       VARCHAR(100) NOT NULL,
     name          VARCHAR(30)  NOT NULL,
-    hours         VARCHAR(30),
+    hours         VARCHAR(256),
     tel           VARCHAR(20)  NOT NULL,
     vet           VARCHAR(10)  NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -5,7 +5,6 @@ import com.petid.domain.member.model.MemberAuth;
 public record MemberAuthDto() {
     public record Request(
             String name,
-            String ssn,
             String address,
             String phone
     ) {
@@ -14,7 +13,7 @@ public record MemberAuthDto() {
                     null,
                     memberId,
                     name,
-                    ssn,
+                    null,
                     address,
                     phone
             );
@@ -25,7 +24,6 @@ public record MemberAuthDto() {
             Long id,
             Long memberId,
             String name,
-            String ssn,
             String address,
             String phone
     ) {
@@ -34,7 +32,6 @@ public record MemberAuthDto() {
                     memberAuth.id(),
                     memberAuth.memberId(),
                     memberAuth.name(),
-                    memberAuth.ssn(),
                     memberAuth.address(),
                     memberAuth.phone()
             );

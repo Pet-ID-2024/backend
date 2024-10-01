@@ -1,5 +1,10 @@
 package com.petid.auth.oauth.sdk.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.petid.auth.common.exception.CustomAuthException;
+import com.petid.auth.common.exception.CustomAuthExceptionType;
 import com.petid.auth.common.type.OAuth2Platform;
 import com.petid.auth.jwt.TokenProvider;
 import com.petid.auth.oauth.model.OAuth2UserInfoModel;
@@ -22,12 +27,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Base64;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
     private final MemberManager memberManager;
     private final MemberRepository memberRepository;
@@ -44,28 +51,10 @@ public class AuthServiceImpl implements AuthService {
             String token,
             boolean advertisement
     ) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", token);
-        headers.set("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder
-                .fromHttpUrl(oauth2Converter.convertUserInfoUri(platform))
-                .queryParam("access_token", token);
-
-        // 제네릭 타입정보를 런타임에 유지
-        ParameterizedTypeReference<Map<String, Object>> responseType = new ParameterizedTypeReference<>() {};
-
-        Map<String, Object> response = restTemplate.exchange(
-                uriBuilder.toUriString(),
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                responseType
-        ).getBody();
-
-        OAuth2UserInfoModel oAuth2UserInfo = OAuth2UserInfoModel.of(
-                platform.getPlatform(),
-                response
-        );
+        OAuth2UserInfoModel oAuth2UserInfo =
+                (platform.getPlatform().equals("google"))
+                        ? parseSubFromToken(token)
+                        : requestToAuthServer(token, platform);
 
         Member member = memberManager.getOrSave(oAuth2UserInfo.toDomain(platform.getPlatform(), fcmToken));
         memberAuthRepository.save(MemberAuth.createDefaultMemberAuth(member.id(), randomNameUtil.getRandomName()));
@@ -109,6 +98,56 @@ public class AuthServiceImpl implements AuthService {
         return new TokenDto(
                 "Bearer " + accessToken,
                 "Bearer " + refreshToken
+        );
+    }
+
+    private OAuth2UserInfoModel requestToAuthServer(
+            String token,
+            OAuth2Platform platform
+    ) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        headers.set("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder
+                .fromHttpUrl(oauth2Converter.convertUserInfoUri(platform))
+                .queryParam("access_token", token);
+
+        // 제네릭 타입정보를 런타임에 유지
+        ParameterizedTypeReference<Map<String, Object>> responseType = new ParameterizedTypeReference<>() {
+        };
+
+        Map<String, Object> response = restTemplate.exchange(
+                uriBuilder.toUriString(),
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                responseType
+        ).getBody();
+
+        return OAuth2UserInfoModel.of(
+                platform.getPlatform(),
+                response
+        );
+    }
+
+    private OAuth2UserInfoModel parseSubFromToken(
+            String token
+    ) {
+        byte[] decodedBytes = Base64.getDecoder().decode(token);
+        String decodedString = new String(decodedBytes);
+
+        JsonNode jsonNode;
+        try {
+            jsonNode = objectMapper.readTree(decodedString);
+        } catch (JsonProcessingException e) {
+            throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
+        }
+        String kid = jsonNode.get("kid").asText();
+
+        return OAuth2UserInfoModel.of(
+                kid,
+                null,
+                null
         );
     }
 }
