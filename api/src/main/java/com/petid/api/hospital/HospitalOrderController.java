@@ -6,7 +6,9 @@ import com.petid.api.hospital.dto.HospitalOrderDto;
 import com.petid.api.hospital.dto.UpdateHospitalOrderDto;
 import com.petid.domain.email.EmailService;
 import com.petid.domain.hospital.model.HospitalOrder;
+import com.petid.domain.hospital.service.HospitalHourService;
 import com.petid.domain.hospital.service.HospitalOrderService;
+import com.petid.domain.hospital.type.DayType;
 import com.petid.domain.hospital.type.OrderStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,7 @@ public class HospitalOrderController {
 	
 
     private final HospitalOrderService hospitalOrderService;
+    private final HospitalHourService hospitalHourService;
 
     private final EmailService emailService; 
 
@@ -83,5 +87,16 @@ public class HospitalOrderController {
         hospitalOrderService.cabcekOrder(requestOrderId);
 
         return ResponseEntity.ok(requestOrderId);
+    }
+
+    @GetMapping("/time")
+    public ResponseEntity<List<String>> findAvailableTimes(
+            @RequestParam("hospitalId") long hospitalId,
+            @RequestParam("day") DayType day,
+            @RequestParam("date") LocalDate date
+    ) {
+        List<String> availableTimes = hospitalHourService.findAvailableTimes(hospitalId, day, date);
+
+        return ResponseEntity.ok(availableTimes);
     }
 }

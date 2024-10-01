@@ -3,9 +3,13 @@ package com.petid.api.hospital;
 import com.petid.api.hospital.dto.HospitalDto;
 import com.petid.domain.hospital.model.Hospital;
 import com.petid.domain.hospital.service.HospitalService;
+import com.petid.domain.hospital.type.DayType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -22,7 +26,6 @@ public class HospitalController {
             @RequestParam("sigungu") int sigunguId,
             @RequestParam("eupmundong") List<Long> eupmundongIds
     ) {
-        System.out.println("IN===========");
         List<Hospital> hospitals = hospitalService.findAllHospital(sidoId, sigunguId, eupmundongIds);
 
         return ResponseEntity.ok(
@@ -46,6 +49,16 @@ public class HospitalController {
                 hospitals.stream()
                         .map(HospitalDto.Response::from)
                         .toList()
+        );
+    }
+
+    @GetMapping("/off")
+    public ResponseEntity<Boolean> isOffDay(
+            @RequestParam("hospitalId") long hospitalId,
+            @RequestParam("day") DayType day
+    ) {
+        return ResponseEntity.ok(
+                hospitalService.isOffDay(hospitalId, day)
         );
     }
 }
