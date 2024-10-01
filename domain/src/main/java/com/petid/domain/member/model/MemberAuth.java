@@ -8,6 +8,20 @@ public record MemberAuth(
         String address,
         String phone
 ) {
+    public static MemberAuth createDefaultMemberAuth(
+            long memberId,
+            String randomName
+    ) {
+        return new MemberAuth(
+                null,
+                memberId,
+                randomName,
+                null,
+                null,
+                null
+        );
+    }
+
     public MemberAuth update(
             MemberAuth updateMemberAuth
     ) {

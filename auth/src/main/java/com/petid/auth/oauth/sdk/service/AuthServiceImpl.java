@@ -7,9 +7,12 @@ import com.petid.auth.oauth.sdk.controller.OAuth2UserInfoUriConverter;
 import com.petid.auth.oauth.sdk.controller.dto.TokenDto;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
+import com.petid.domain.member.model.MemberAuth;
 import com.petid.domain.member.model.MemberPolicy;
+import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.domain.member.repository.MemberPolicyRepository;
 import com.petid.domain.member.repository.MemberRepository;
+import com.petid.domain.member.util.RandomNameUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -31,9 +34,11 @@ public class AuthServiceImpl implements AuthService {
     private final MemberPolicyRepository memberPolicyRepository;
     private final TokenProvider tokenProvider;
     private final OAuth2UserInfoUriConverter oauth2Converter;
+    private final MemberAuthRepository memberAuthRepository;
+    private final RandomNameUtil randomNameUtil;
 
     @Override
-    public TokenDto getUserInfo(
+    public TokenDto join(
             OAuth2Platform platform,
             String fcmToken,
             String token,
@@ -63,6 +68,7 @@ public class AuthServiceImpl implements AuthService {
         );
 
         Member member = memberManager.getOrSave(oAuth2UserInfo.toDomain(platform.getPlatform(), fcmToken));
+        memberAuthRepository.save(MemberAuth.createDefaultMemberAuth(member.id(), randomNameUtil.getRandomName()));
         memberPolicyRepository.save(MemberPolicy.of(member, advertisement));
 
         String accessToken = tokenProvider.getAccessToken(member);
