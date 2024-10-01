@@ -35,7 +35,7 @@ public class OAuth2Controller {
         if (platformEnum.isNeedBearer()) token = "Bearer " + token;
 
         return ResponseEntity.ok(
-                authService.getUserInfo(
+                authService.join(
                         platformEnum,
                         fcmToken,
                         token,
