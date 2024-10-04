@@ -6,7 +6,7 @@ import com.petid.domain.member.model.Member;
 
 public record Pet(
 		Long petId,
-		Integer ownerId,
+		Long ownerId,
 		String petRegNo,
 		String petName,
 		String petBirthDate,

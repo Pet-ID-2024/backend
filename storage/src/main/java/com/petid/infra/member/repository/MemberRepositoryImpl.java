@@ -6,6 +6,7 @@ import com.petid.infra.member.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class MemberRepositoryImpl implements MemberRepository {
 
     private final MemberJpaRepository memberJpaRepository;
+    
+    private final QMemberRepository qMemberRepository;
 
     @Override
     public Optional<Member> findByUid(String uid) {
@@ -30,4 +33,9 @@ public class MemberRepositoryImpl implements MemberRepository {
         return memberJpaRepository.findById(memberId)
                 .map(MemberEntity::toDomain);
     }
+
+	@Override
+	public List<Member> findMembersWithoutPets() {		
+		return qMemberRepository.findMembersWithoutPets();
+	}
 }

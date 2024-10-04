@@ -3,14 +3,10 @@ package com.petid.infra.hospital.repository;
 import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.type.OrderStatus;
 
-import com.petid.infra.hospital.entity.HospitalEntity;
-import com.petid.infra.hospital.entity.HospitalOrderEntity;
 import com.petid.infra.hospital.entity.QHospitalEntity;
-import com.petid.infra.hospital.entity.QHospitalOrderEntity;
 import com.petid.infra.member.entity.QMemberEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

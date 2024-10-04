@@ -16,6 +16,7 @@ import com.petid.domain.hospital.repository.HospitalOrderRepository;
 import com.petid.domain.hospital.type.OrderStatus;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
+import com.petid.domain.member.repository.MemberRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class HospitalOrderScheduler {
 
     private final HospitalOrderRepository hospitalOrderRepository;
+    private final MemberRepository memberRepository;
     private final FcmService fcmService;
     private final MemberManager memberManager;
 
@@ -50,6 +52,10 @@ public class HospitalOrderScheduler {
     }
     @Scheduled(cron = "0 0 14 * * *")
     public void processPetUnregisteredMembers() {
+    	List<Member> membersWithouPets = memberRepository.findMembersWithoutPets();
+    	for (Member member : membersWithouPets) {
+    		sendPetRegisterReminderNotification(member);
+    	}
     	
     }
     @Transactional
@@ -66,5 +72,17 @@ public class HospitalOrderScheduler {
     	if(order.status().equals(OrderStatus.CONFIRMED)){
     		hospitalOrderRepository.updateOrderStatus(order.id(), OrderStatus.COMPLETED);
     	}
+    }
+    
+    @Transactional
+    private void sendPetRegisterReminderNotification(Member member) {
+    	System.out.println("Processing member ID: " + member.id());
+    	if (member.fcmToken() == null) return; 
+    	Map<String, Object> body = new HashMap<>();
+    	body.put("id", member.id() );
+    	body.put("message", "간단한 반려동물등록으로 평생을 함께하는 방법 지금 알려드려요!");		
+    	Fcm fcm = new Fcm("PetRegReminder", body, member.fcmToken(), null);
+    	fcm.updateFcmToken(member.fcmToken());
+    	fcmService.sendNotificationToUser(fcm);    	
     }
 }

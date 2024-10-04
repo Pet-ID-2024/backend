@@ -25,7 +25,7 @@ public class PetEntity extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "pet_id")
   private Long id;
-  private Integer ownerId;
+  private Long ownerId;
   private String petRegNo;
   private String petName;
   private String petBirthDate;
