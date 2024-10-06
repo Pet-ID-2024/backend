@@ -24,7 +24,9 @@ public class MemberService {
     public boolean isMemberAuthed(
             long memberId
     ) {
-        return memberAuthManager.existsByMemberId(memberId);
+        MemberAuth memberAuth = memberAuthManager.getByMemberId(memberId);
+
+        return memberAuth.isAuthed();
     }
 
     public MemberAuth updateMemberAuth(

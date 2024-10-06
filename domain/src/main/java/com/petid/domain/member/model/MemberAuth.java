@@ -34,4 +34,8 @@ public record MemberAuth(
                 updateMemberAuth.phone()
         );
     }
+
+    public boolean isAuthed() {
+        return address != null && phone != null;
+    }
 }
