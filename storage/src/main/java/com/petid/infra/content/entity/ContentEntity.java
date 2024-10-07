@@ -25,7 +25,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "banner")
+@Table(name = "content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ContentEntity {
 
