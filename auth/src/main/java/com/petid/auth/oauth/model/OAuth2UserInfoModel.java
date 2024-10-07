@@ -12,6 +12,17 @@ public record OAuth2UserInfoModel(
         String name,
         String email
 ) {
+    public static OAuth2UserInfoModel of(
+            String sub,
+            String name,
+            String email
+    ) {
+        return new OAuth2UserInfoModel(
+                sub,
+                name,
+                email
+        );
+    }
 
     public static OAuth2UserInfoModel of(
             String registrationId,

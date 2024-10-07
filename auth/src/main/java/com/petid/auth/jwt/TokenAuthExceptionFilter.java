@@ -33,7 +33,7 @@ public class TokenAuthExceptionFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (CustomAuthException e) {
             CustomAuthExceptionType exceptionType = e.getExceptionType();
-            response.setContentType("application/json");
+            response.setContentType("application/json; charset=UTF-8");
             response.setStatus(e.getExceptionType().getCode());
 
             Map<String, Object> errorResponse = new HashMap<>();

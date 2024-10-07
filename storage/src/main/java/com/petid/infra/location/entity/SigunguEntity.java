@@ -23,12 +23,14 @@ public class SigunguEntity {
     private SidoEntity sido;
 
     private String name;
+    private String showName;
 
     public Sigungu toDomain() {
         return new Sigungu(
                 id,
                 sido.getId(),
-                name
+                name,
+                showName
         );
     }
 }

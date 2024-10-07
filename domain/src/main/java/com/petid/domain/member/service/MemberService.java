@@ -24,15 +24,18 @@ public class MemberService {
     public boolean isMemberAuthed(
             long memberId
     ) {
-        return memberAuthManager.existsById(memberId);
+        MemberAuth memberAuth = memberAuthManager.getByMemberId(memberId);
+
+        return memberAuth.isAuthed();
     }
 
-    public MemberAuth saveMemberAuth(
-            MemberAuth memberAuth
+    public MemberAuth updateMemberAuth(
+            MemberAuth updateMemberAuth
     ) {
-        Member member = memberManager.getByUid(memberAuth.uid());
+        MemberAuth memberAuth = memberAuthManager.getByMemberId(updateMemberAuth.memberId());
+        MemberAuth updated = memberAuth.update(updateMemberAuth);
 
-        return memberAuthRepository.save(member, memberAuth);
+        return memberAuthRepository.save(updated);
     }
 
     public void updateOptionalPolicy(

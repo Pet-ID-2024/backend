@@ -34,6 +34,24 @@ public record Pet(
         		petImages
         );
     }
+	
+	public Pet updatePetimages(
+			List<PetImage> petImages
+    ) {
+        return new Pet(
+        		petId,
+        		ownerId,
+        		petRegNo,
+        		petName,
+        		petBirthDate,
+        		petSex,
+        		petNeuteredYn,
+        		petNeuteredDate,
+        		petAddr,
+        		appearance,
+        		petImages
+        );
+    }
 }
 
 

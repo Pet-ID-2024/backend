@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
 
+import java.util.List;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -23,7 +25,8 @@ public class HospitalEntity extends BaseEntity {
     private long sidoId;
     private long sigunguId;
     private long eupmundongId;
-    private String imageUrl;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> imageUrl;
     private String address;
     private String name;
     private String hours;

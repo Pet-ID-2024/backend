@@ -23,12 +23,14 @@ public class EupmundongEntity {
     private SigunguEntity sigungu;
 
     private String name;
+    private String showName;
 
     public Eupmundong toDomain() {
         return new Eupmundong(
                 id,
                 sigungu.getId(),
-                name
+                name,
+                showName
         );
     }
 }
