@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface HospitalOrderJpaRepository extends JpaRepository<HospitalOrderEntity, Long> {
-    List<HospitalOrderEntity> findAllByStatus(OrderStatus status);
+	List<HospitalOrderEntity> findAllByStatus(@Param("status") OrderStatus status);
     
     @Modifying
     @Query("UPDATE hospital_order h SET h.status = :status WHERE h.id = :id")

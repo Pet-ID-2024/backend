@@ -3,12 +3,16 @@ package com.petid.api.notification;
 import com.petid.api.common.RequestUtil;
 import com.petid.domain.fcm.model.Fcm;
 import com.petid.domain.fcm.service.FcmService;
-import com.petid.domain.hospital.model.HospitalOrder;
+import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.service.HospitalOrderService;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +27,7 @@ public class NotificationController  {
     private final FcmService fcmService;
     
     private final MemberManager memberManager;
-    private final HospitalOrderService hostpitalOrderService;
+    private final HospitalOrderService hostpitalOrderService;    
 
     @PostMapping()
     public ResponseEntity<String> sendNotification(HttpServletRequest request, @RequestBody Fcm fcm) {
@@ -42,12 +46,16 @@ public class NotificationController  {
     }
 
 	@PostMapping("/booking")
-    public ResponseEntity<String> sendBookingNotification(@RequestBody HospitalOrder hospitalOrder ) {
+    public ResponseEntity<String> sendBookingNotification(@RequestBody HospitalOrderSummaryDTO hospitalOrder ) {
 			String status = hospitalOrder.status().toString();
 			long memberId = hospitalOrder.memberId();
 			Member member = memberManager.get(memberId);
 			String token = member.fcmToken();
-			Fcm fcm = new Fcm("Booking Info", status , null, token, null);
+			Map<String, Object> body = new HashMap<>();
+			body.put("status", status);
+			body.put("hostpitalName", hospitalOrder.hospitalName());
+			
+			Fcm fcm = new Fcm("Booking Info", body , token, null);
 			fcmService.sendNotificationToUser(fcm);
 			
 			hostpitalOrderService.updateOrderStatus(hospitalOrder.id(), hospitalOrder.status());

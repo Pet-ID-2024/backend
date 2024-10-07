@@ -2,6 +2,7 @@ package com.petid.domain.hospital.service;
 
 import com.petid.domain.hospital.manager.HospitalOrderManager;
 import com.petid.domain.hospital.model.HospitalOrder;
+import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.repository.HospitalOrderRepository;
 import com.petid.domain.hospital.type.OrderStatus;
 import jakarta.transaction.Transactional;
@@ -45,7 +46,7 @@ public class HospitalOrderService {
         hospitalOrderRepository.save(deleted);
     }
 
-    public List<HospitalOrder> getOrders(
+    public List<HospitalOrderSummaryDTO> getOrders(
         OrderStatus status
     ) {
         return  hospitalOrderRepository.findAllByStatus(status);

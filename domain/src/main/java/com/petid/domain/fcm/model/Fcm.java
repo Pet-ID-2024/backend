@@ -1,9 +1,10 @@
 package com.petid.domain.fcm.model;
 
+import java.util.Map;
+
 public record Fcm(
 	String title,
-    String body,
-    String image,
+    Map<String, Object> body,    
     String target,
     String targetType
 ){
@@ -12,8 +13,7 @@ public record Fcm(
     ) {
         return new Fcm(
         		title,
-        		body,
-        		image,
+        		body,        		
         		fcmToken,
         		targetType                
         );
