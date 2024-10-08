@@ -73,7 +73,7 @@ public class ContentEntity {
     }
 
     // Convert domain model to entity
-    public static ContentEntity from(Content domain, Member author) {
+    public static ContentEntity from(Content domain, long authorId) {
     	ContentEntity entity = new ContentEntity();
         entity.setContentId(domain.contentId());
         entity.setTitle(domain.title());
@@ -83,7 +83,7 @@ public class ContentEntity {
         entity.setCreatedAt(domain.createdAt());
         entity.setUpdatedAt(domain.updatedAt());
         entity.setLikesCount(domain.likesCount());
-        entity.setAuthorId(author.id());  // Set the Member entity here
+        entity.setAuthorId(authorId);  // Set the Member entity here
         return entity;
     }
 }
