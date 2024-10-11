@@ -2,6 +2,7 @@ package com.petid.domain.content;
 
 import com.petid.domain.content.model.Content;
 import com.petid.domain.content.repository.ContentRepository;
+import com.petid.domain.type.Category;
 
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,10 @@ public class ContentService {
     // Get all contents
     public List<Content> getAllContents() {
         return contentRepository.findAll();
+    }
+    
+    public List<Content> getContentsByCategory(Category category, long memberId) {
+        return contentRepository.findByCategory(category, memberId);
     }
 
     // Get content by ID

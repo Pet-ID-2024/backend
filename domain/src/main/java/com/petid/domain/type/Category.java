@@ -1,9 +1,9 @@
 package com.petid.domain.type;
 
 public enum Category {
-	GENERAL, 
-	NEWS, 
+	RECOMMENDED, 
+	ABOUTPET, 
 	TIPS, 
-	EVENTS, 
-	REVIEW
+	VENUE, 
+	SUPPORT
 }

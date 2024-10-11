@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.petid.domain.content.model.Content;
+import com.petid.domain.type.Category;
 
 public interface ContentRepository {
 	Content save(Content content, long authorId);
 	
 	List<Content> findAll();
+	
+	List<Content> findByCategory(Category category, long memberId);
 	
 	Optional<Content> findById(long contentId);
 

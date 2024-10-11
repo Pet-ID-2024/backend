@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.petid.api.common.RequestUtil;
 import com.petid.domain.content.ContentService;
 import com.petid.domain.content.model.Content;
+import com.petid.domain.type.Category;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/banner")
+@RequestMapping("/v1/content")
 @RequiredArgsConstructor
 public class ContentController {
 
@@ -31,8 +32,9 @@ public class ContentController {
 
     // Get all contents
     @GetMapping
-    public ResponseEntity<List<Content>> getAllContents() {
-        List<Content> contents = contentService.getAllContents();
+    public ResponseEntity<List<Content>> getContentsByCategory(HttpServletRequest request, @RequestParam Category category) {
+    	long memberId = RequestUtil.getMemberIdFromRequest(request);
+        List<Content> contents = contentService.getContentsByCategory(category, memberId);
         return new ResponseEntity<>(contents, HttpStatus.OK);
     }
 

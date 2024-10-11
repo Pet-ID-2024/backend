@@ -1,9 +1,8 @@
 package com.petid.infra.content.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import com.petid.domain.content.model.Content;
-import com.petid.domain.member.model.Member;
 import com.petid.domain.type.Category;
 
 import jakarta.persistence.Column;
@@ -47,15 +46,15 @@ public class ContentEntity {
     private String imageUrl;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
     @Column(name = "likes_count", columnDefinition = "INT(11) DEFAULT 0")
     private Integer likesCount;
 
-    private Long authorId;
+    private long authorId;
    
     
     public Content toDomain() {
