@@ -10,6 +10,6 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /build
 
-COPY --from=build /home/gradle/project/build/libs/core-0.0.1-SNAPSHOT.jar core-0.0.1-SNAPSHOT.jar
+COPY --from=build /home/gradle/project/core/build/libs/core-0.0.1-SNAPSHOT.jar core-0.0.1-SNAPSHOT.jar
 
 ENTRYPOINT ["java", "-jar", "core-0.0.1-SNAPSHOT.jar"]
