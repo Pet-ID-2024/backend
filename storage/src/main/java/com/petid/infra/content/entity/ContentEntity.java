@@ -45,14 +45,14 @@ public class ContentEntity {
     @Column(name = "image_url", length = 255)
     private String imageUrl;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at")
     private Instant createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
     @Column(name = "likes_count", columnDefinition = "INT(11) DEFAULT 0")
-    private Integer likesCount;
+    private long likesCount;
 
     private long authorId;
    

@@ -1,8 +1,12 @@
 package com.petid.domain.content;
 
 import com.petid.domain.content.model.Content;
+import com.petid.domain.content.repository.ContentLikedRepository;
 import com.petid.domain.content.repository.ContentRepository;
 import com.petid.domain.type.Category;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
@@ -10,13 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ContentService {
 
     private final ContentRepository contentRepository;
-
-    public ContentService(ContentRepository contentRepository) {
-        this.contentRepository = contentRepository;
-    }
+    private final ContentLikedRepository contentLikedRepository;
 
     // Create new content
     public Content createContent(Content content, long authorId ) {
@@ -33,17 +35,30 @@ public class ContentService {
     }
 
     // Get content by ID
-    public Optional<Content> getContentById(Long id) {
-        return contentRepository.findById(id);
+    public Content getContentById(long id, long memberId) {
+        return contentRepository.findById(id, memberId);
     }
 
     // Update content
-    public Optional<Content> updateContent(Long id, Content content) {
+    public Optional<Content> updateContent(long id, Content content) {
         return contentRepository.updateContent(id, content);
     }
 
     // Delete content
-    public boolean deleteContent(Long id) {
+    public boolean deleteContent(long id) {
         return contentRepository.deleteById(id);
+    }
+    
+    @Transactional
+    public void likeContent(Long memberId, Long contentId) {
+        // Check if the member already liked the content
+        contentLikedRepository.findByMemberIdAndContentId(memberId, contentId);        
+          
+    }
+
+    @Transactional
+    public void unlikeContent(Long memberId, Long contentId) {
+        // Remove the like if it exists
+        contentLikedRepository.deleteByMemberIdAndContentId(memberId, contentId);
     }
 }

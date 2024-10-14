@@ -39,29 +39,43 @@ public class ContentController {
     }
 
     // Get content by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Content> getContentById(@PathVariable Long id) {
-        Optional<Content> content = contentService.getContentById(id);
-        return content.map(ResponseEntity::ok)
-                      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/{contentId}")
+    public ResponseEntity<Content> getContentById(HttpServletRequest request, @PathVariable long contentId) {
+    	long memberId = RequestUtil.getMemberIdFromRequest(request);
+        Content content = contentService.getContentById(contentId, memberId);
+        return new ResponseEntity<>(content, HttpStatus.OK);                      
     }
 
     // Update content by ID
-    @PutMapping("/{id}")
-    public ResponseEntity<Content> updateContent(@PathVariable Long id, @RequestBody Content content) {
-        Optional<Content> updatedContent = contentService.updateContent(id, content);
+    @PutMapping("/{contentId}")
+    public ResponseEntity<Content> updateContent(@PathVariable long contentId, @RequestBody Content content) {
+        Optional<Content> updatedContent = contentService.updateContent(contentId, content);
         return updatedContent.map(ResponseEntity::ok)
                              .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     // Delete content by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContent(@PathVariable Long id) {
-        boolean isDeleted = contentService.deleteContent(id);
+    @DeleteMapping("/{contentId}")
+    public ResponseEntity<Void> deleteContent(@PathVariable long contentId) {
+        boolean isDeleted = contentService.deleteContent(contentId);
         if (isDeleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    
+    @PostMapping("/{contentId}/like")
+    public ResponseEntity<Void> likeContent(HttpServletRequest request, @PathVariable Long contentId) {
+    	long memberId = RequestUtil.getMemberIdFromRequest(request);
+    	contentService.likeContent(memberId, contentId);
+        return ResponseEntity.ok().build();
+    }
+    
+    @DeleteMapping("/{contentId}/like")
+    public ResponseEntity<Void> unlikeContent(HttpServletRequest request, @PathVariable Long contentId) {
+    	long memberId = RequestUtil.getMemberIdFromRequest(request);
+    	contentService.unlikeContent(memberId, contentId);
+        return ResponseEntity.ok().build();
     }
 
 }

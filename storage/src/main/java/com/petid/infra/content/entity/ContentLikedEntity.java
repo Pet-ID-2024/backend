@@ -1,20 +1,19 @@
 package com.petid.infra.content.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "content_like")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class ContentLikedEntity {
 
     @Id
@@ -29,7 +28,7 @@ public class ContentLikedEntity {
     private Long contentId;
 
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     
 }
