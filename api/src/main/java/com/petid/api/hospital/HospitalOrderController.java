@@ -6,7 +6,6 @@ import com.petid.api.hospital.dto.HospitalOrderDto;
 import com.petid.api.hospital.dto.UpdateHospitalOrderDto;
 import com.petid.domain.email.EmailService;
 import com.petid.domain.hospital.model.HospitalOrder;
-import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.service.HospitalHourService;
 import com.petid.domain.hospital.service.HospitalOrderService;
 import com.petid.domain.hospital.type.DayType;
@@ -35,13 +34,16 @@ public class HospitalOrderController {
     private final EmailService emailService; 
 
     @GetMapping
-    public List<HospitalOrderSummaryDTO> findAllMemberOrder(
+    public List<HospitalOrderDto.NameResponse> findAllMemberOrder(
             HttpServletRequest request,
             @RequestParam("status") OrderStatus status
     ) {
         long memberId = RequestUtil.getMemberIdFromRequest(request);
 
-        return hospitalOrderService.findMemberOrders(memberId, status);
+        return hospitalOrderService.findMemberOrders(memberId, status)
+                .stream()
+                .map(HospitalOrderDto.NameResponse::from)
+                .toList();
 
     }
 

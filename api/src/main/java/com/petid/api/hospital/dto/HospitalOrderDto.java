@@ -1,6 +1,7 @@
 package com.petid.api.hospital.dto;
 
 import com.petid.domain.hospital.model.HospitalOrder;
+import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.type.OrderStatus;
 
 import java.time.Instant;
@@ -27,7 +28,8 @@ public record HospitalOrderDto() {
     public record Response(
             Long id,
             long hospitalId,
-            Instant date
+            Instant date,
+            OrderStatus status
     ) {
         public static Response from(
           HospitalOrder hospitalOrder
@@ -35,7 +37,26 @@ public record HospitalOrderDto() {
             return new Response(
                     hospitalOrder.id(),
                     hospitalOrder.hospitalId(),
-                    hospitalOrder.date()
+                    hospitalOrder.date(),
+                    hospitalOrder.status()
+            );
+        }
+    }
+
+    public record NameResponse(
+            Long id,
+            String hospitalName,
+            Instant date,
+            OrderStatus status
+    ) {
+        public static NameResponse from(
+                HospitalOrderSummaryDTO hospitalOrder
+        ) {
+            return new NameResponse(
+                    hospitalOrder.id(),
+                    hospitalOrder.hospitalName(),
+                    hospitalOrder.date(),
+                    hospitalOrder.status()
             );
         }
     }
