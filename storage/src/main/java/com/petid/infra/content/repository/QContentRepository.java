@@ -41,7 +41,7 @@ public class QContentRepository {
             .from(content)
             .leftJoin(contentLiked)
                .on(content.contentId.eq(contentLiked.contentId))
-            .where(content.category.eq(category))
+            .where(category.equals(Category.ALL) ? null : content.category.eq(category))
             .groupBy(contentLiked.contentId)
             .fetch();
     }

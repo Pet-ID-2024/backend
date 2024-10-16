@@ -5,5 +5,6 @@ public enum Category {
 	ABOUTPET, 
 	TIPS, 
 	VENUE, 
-	SUPPORT
+	SUPPORT,
+	ALL
 }
