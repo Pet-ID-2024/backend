@@ -13,7 +13,7 @@ public record Content(
     String imageUrl,
     Instant createdAt,
     Instant updatedAt,
-    Integer likesCount,
+    long likesCount,
     long authorId,
     Boolean isLiked
 ) {
@@ -25,7 +25,7 @@ public record Content(
 		    String imageUrl,
 		    Instant createdAt,
 		    Instant updatedAt,
-		    Integer likesCount,
+		    long likesCount,
 		    long authorId) {
 	  this(
 	            contentId, 

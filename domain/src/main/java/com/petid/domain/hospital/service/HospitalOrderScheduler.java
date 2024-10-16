@@ -34,7 +34,6 @@ public class HospitalOrderScheduler {
     @Scheduled(cron = "0 * 9-19 * * *")
     @Scheduled(cron = "0  0-29 19 * * *") 
     public void processConfirmedOrders() {
-    	log.info("Order Scheduler called");
         List<HospitalOrderSummaryDTO> confirmedOrders = hospitalOrderRepository.findAllByStatus(null, OrderStatus.CONFIRMED);
         
         for (HospitalOrderSummaryDTO order : confirmedOrders) {

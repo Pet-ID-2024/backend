@@ -17,7 +17,7 @@ import com.petid.infra.content.entity.ContentEntity;
 
 @Repository
 @RequiredArgsConstructor
-public class ConetneRepositoryImpl implements ContentRepository {
+public class ContentRepositoryImpl implements ContentRepository {
 
 	private final ContentJpaRepository contentJpaRepository;
 	private final QContentRepository qContentRepository;
@@ -42,9 +42,8 @@ public class ConetneRepositoryImpl implements ContentRepository {
 	}
 
 	@Override
-	public Optional<Content> findById(long contentId) {		
-		
-		return Optional.empty();
+	public Content findById(long contentId, long memberId) {		
+		return qContentRepository.findById(contentId,memberId);		
 	}
 
 	@Override
