@@ -17,7 +17,7 @@ import com.petid.infra.content.entity.ContentEntity;
 
 @Repository
 @RequiredArgsConstructor
-public class ConentRepositoryImpl implements ContentRepository {
+public class ContentRepositoryImpl implements ContentRepository {
 
 	private final ContentJpaRepository contentJpaRepository;
 	private final QContentRepository qContentRepository;

@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class ConentLikedRepositoryImpl implements ContentLikedRepository {
+public class ContentLikedRepositoryImpl implements ContentLikedRepository {
 	
 	private final ContentLikedJpaRepository contentLikedJpaRepository;
 	
