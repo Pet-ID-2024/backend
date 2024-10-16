@@ -33,8 +33,7 @@ public class HospitalOrderScheduler {
     @Transactional
     @Scheduled(cron = "0 * 9-19 * * *")
     @Scheduled(cron = "0  0-29 19 * * *") 
-    public void processConfirmedOrders() {
-    	System.out.println("Order Scheduler called");
+    public void processConfirmedOrders() {    	
         List<HospitalOrderSummaryDTO> confirmedOrders = hospitalOrderRepository.findAllByStatus(OrderStatus.CONFIRMED);
         
         for (HospitalOrderSummaryDTO order : confirmedOrders) {
