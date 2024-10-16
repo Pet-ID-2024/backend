@@ -13,7 +13,7 @@ public interface ContentRepository {
 	
 	List<Content> findByCategory(Category category, long memberId);
 	
-	Optional<Content> findById(long contentId);
+	Content findById(long contentId, long memberId);
 
 	Optional<Content> updateContent(Long id, Content updatedContent);
 
