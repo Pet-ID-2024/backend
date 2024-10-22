@@ -41,15 +41,6 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
         if (token == null) throw new CustomAuthException(CustomAuthExceptionType.NO_TOKEN);
 
-        // test용
-        if (token.equals("test")) {
-        	if(request.getParameter("id") == null ) {
-        		request.setAttribute("id", 1);
-        	}
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         if (tokenValidator.isTokenNotValid(token)) throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
 
         long memberId = tokenValidator.getMemberIdFromToken(token);
