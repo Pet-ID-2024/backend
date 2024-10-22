@@ -46,14 +46,21 @@ public class HospitalOrderService {
         hospitalOrderRepository.save(deleted);
     }
 
-    public List<HospitalOrderSummaryDTO> getOrders(
+    public List<HospitalOrderSummaryDTO> getAllOrders(
         OrderStatus status
     ) {
-        return  hospitalOrderRepository.findAllByStatus(status);
+        return hospitalOrderRepository.findAllByStatus(null, status);
     }
     
     @Transactional
     public int updateOrderStatus(long orderId , OrderStatus  status) {
     	return hospitalOrderRepository.updateOrderStatus(orderId,  status);
+    }
+
+    public List<HospitalOrderSummaryDTO> findMemberOrders(
+            long memberId,
+            OrderStatus status
+    ) {
+        return hospitalOrderRepository.findAllByStatus(memberId, status);
     }
 }
