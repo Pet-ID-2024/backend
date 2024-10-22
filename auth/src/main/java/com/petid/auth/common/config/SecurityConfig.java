@@ -66,6 +66,7 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/auth/oauth2/join/**"),
                                         new AntPathRequestMatcher("/auth/oauth2/login/**"),
                                         new AntPathRequestMatcher("/auth/token/refresh"),
+                                        new AntPathRequestMatcher("/auth/test/**"),
                                         new AntPathRequestMatcher("/v1/**")
                                 )
                                 .permitAll()
