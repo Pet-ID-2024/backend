@@ -5,6 +5,7 @@ import com.petid.api.member.dto.MemberAuthDto;
 import com.petid.domain.member.manager.MemberAuthManager;
 import com.petid.domain.member.model.MemberAuth;
 import com.petid.domain.member.service.MemberService;
+import com.petid.domain.pet.service.S3Service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/member")
 public class MemberController {
 
+    private final S3Service s3Service;
     private final MemberService memberService;
     private final MemberAuthManager memberAuthManager;
 
@@ -60,5 +62,25 @@ public class MemberController {
         memberService.updateOptionalPolicy(memberId, ad);
 
         return ResponseEntity.ok(ad);
+    }
+
+    @GetMapping("/images/presigned-url")
+    public ResponseEntity<String> getPetImageBucketUrl(
+            @RequestBody String filePath
+    ) {
+        String url = s3Service.createPresignedGetUrl(filePath);
+        return ResponseEntity.ok(url);
+    }
+
+    @PostMapping("/images/presigned-url")
+    public ResponseEntity<String> putPetImageBucketUrl(
+            HttpServletRequest request,
+            @RequestBody String filePath
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+        memberService.updateMemberProfileImage(memberId, filePath);
+
+        String url = s3Service.createPresignedPutUrl(filePath);
+        return ResponseEntity.ok(url);
     }
 }
