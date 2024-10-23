@@ -24,6 +24,11 @@ public class QContentRepository {
         QContentEntity content = QContentEntity.contentEntity;
         QContentLikedEntity contentLiked =  QContentLikedEntity.contentLikedEntity;
         
+        BooleanExpression isLiked = JPAExpressions.selectOne()
+        	    .from(contentLiked)
+        	    .where(contentLiked.contentId.eq(content.contentId)
+        	           .and(contentLiked.memberId.eq(memberId)))
+        	    .exists();
         
         return queryFactory.select(Projections.constructor(
                 Content.class, // Project fields into a DTO
@@ -36,7 +41,7 @@ public class QContentRepository {
                 content.updatedAt,
                 contentLiked.likeId.count().as("likesCount"),
                 content.authorId,
-                contentLiked.memberId.eq(memberId).coalesce(false).as("isLiked") // Check if content is liked by the member
+                isLiked // Check if content is liked by the member
             ))
             .from(content)
             .leftJoin(contentLiked)
