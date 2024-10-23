@@ -21,19 +21,17 @@ public record MemberAuthDto() {
     }
 
     public record Response(
-            Long id,
-            Long memberId,
             String name,
             String address,
-            String phone
+            String phone,
+            String image
     ) {
         public static Response from(MemberAuth memberAuth) {
             return new Response(
-                    memberAuth.id(),
-                    memberAuth.memberId(),
                     memberAuth.name(),
                     memberAuth.address(),
-                    memberAuth.phone()
+                    memberAuth.phone(),
+                    memberAuth.image()
             );
         }
     }

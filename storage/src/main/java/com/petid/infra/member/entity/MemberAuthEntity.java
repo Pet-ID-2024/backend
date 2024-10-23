@@ -18,7 +18,7 @@ public class MemberAuthEntity extends BaseEntity {
 
     private Long memberId;
     private String name;
-    private String ssn;
+    private String image;
     private String phone;
     private String address;
 
@@ -29,7 +29,7 @@ public class MemberAuthEntity extends BaseEntity {
                 memberAuth.id(),
                 memberAuth.memberId(),
                 memberAuth.name(),
-                memberAuth.ssn(),
+                memberAuth.image(),
                 memberAuth.phone(),
                 memberAuth.address()
         );
@@ -40,7 +40,7 @@ public class MemberAuthEntity extends BaseEntity {
                 id,
                 memberId,
                 name,
-                ssn,
+                image,
                 phone,
                 address
         );

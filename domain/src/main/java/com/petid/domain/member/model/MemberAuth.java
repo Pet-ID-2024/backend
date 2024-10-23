@@ -4,7 +4,7 @@ public record MemberAuth(
         Long id,
         Long memberId,
         String name,
-        String ssn,
+        String image,
         String address,
         String phone
 ) {
@@ -29,7 +29,7 @@ public record MemberAuth(
                 id,
                 memberId,
                 updateMemberAuth.name(),
-                updateMemberAuth.ssn(),
+                updateMemberAuth.image(),
                 updateMemberAuth.address(),
                 updateMemberAuth.phone()
         );
@@ -37,5 +37,18 @@ public record MemberAuth(
 
     public boolean isAuthed() {
         return address != null && phone != null;
+    }
+
+    public MemberAuth updateProfileImage(
+            String filePath
+    ) {
+        return new MemberAuth(
+                id,
+                memberId,
+                name,
+                filePath,
+                address,
+                phone
+        );
     }
 }

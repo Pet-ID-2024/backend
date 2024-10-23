@@ -1,0 +1,1 @@
+ALTER TABLE member CHANGE ssn image varchar;
