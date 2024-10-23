@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import com.petid.api.common.RequestUtil;
 import com.petid.domain.content.ContentService;
 import com.petid.domain.content.model.Content;
+import com.petid.domain.pet.service.S3Service;
 import com.petid.domain.type.Category;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class ContentController {
 
 	private final ContentService contentService;
+	private final S3Service S3service;  
 
     // Create a new content
     @PostMapping
@@ -77,5 +81,20 @@ public class ContentController {
     	contentService.unlikeContent(memberId, contentId);
         return ResponseEntity.ok().build();
     }
+    
+    @GetMapping("/presigned-get-url")
+    public ResponseEntity<String> getContentImageBucketUrl(@RequestParam String filePath) {
+      String decodedFilePath = URLDecoder.decode(filePath, StandardCharsets.UTF_8);
+  	  String url = S3service.createPresignedGetUrl(decodedFilePath);
+        return new ResponseEntity<String>(url, HttpStatus.OK);
+    }
+
+    @PostMapping("/presigned-put-url")
+    public ResponseEntity<String> putContentImageBucketUrl(@RequestBody String encodedFilePath) {
+      String decodedFilePath = URLDecoder.decode(encodedFilePath, StandardCharsets.UTF_8);
+  	  String url = S3service.createPresignedPutUrl(decodedFilePath);
+        return new ResponseEntity<String>(url, HttpStatus.OK);
+    }
+    
 
 }
