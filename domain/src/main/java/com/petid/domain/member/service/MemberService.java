@@ -1,9 +1,7 @@
 package com.petid.domain.member.service;
 
 import com.petid.domain.member.manager.MemberAuthManager;
-import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.manager.MemberPolicyManager;
-import com.petid.domain.member.model.Member;
 import com.petid.domain.member.model.MemberAuth;
 import com.petid.domain.member.model.MemberPolicy;
 import com.petid.domain.member.repository.MemberAuthRepository;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberManager memberManager;
     private final MemberAuthManager memberAuthManager;
     private final MemberAuthRepository memberAuthRepository;
     private final MemberPolicyManager memberPolicyManager;
@@ -42,11 +39,19 @@ public class MemberService {
             long memberId,
             boolean ad
     ) {
-        Member member = memberManager.get(memberId);
-
-        MemberPolicy memberPolicy = memberPolicyManager.getByMemberId(member.id());
+        MemberPolicy memberPolicy = memberPolicyManager.getByMemberId(memberId);
         MemberPolicy updated = memberPolicy.updatePolicy(ad);
 
         memberPolicyRepository.save(updated);
+    }
+
+    public void updateMemberProfileImage(
+            long memberId,
+            String filePath
+    ) {
+        MemberAuth memberAuth = memberAuthManager.getByMemberId(memberId);
+        MemberAuth updated = memberAuth.updateProfileImage(filePath);
+
+        memberAuthRepository.save(updated);
     }
 }

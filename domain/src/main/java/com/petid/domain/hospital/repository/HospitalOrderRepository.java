@@ -14,7 +14,7 @@ public interface HospitalOrderRepository {
 
     Optional<HospitalOrder> findById(Long orderId);
     
-    List<HospitalOrderSummaryDTO> findAllByStatus(OrderStatus status);
+    List<HospitalOrderSummaryDTO> findAllByStatus(Long memberId, OrderStatus status);
     
     int updateOrderStatus(long orderId, OrderStatus status);
 

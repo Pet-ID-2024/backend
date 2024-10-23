@@ -6,7 +6,6 @@ import com.petid.api.hospital.dto.HospitalOrderDto;
 import com.petid.api.hospital.dto.UpdateHospitalOrderDto;
 import com.petid.domain.email.EmailService;
 import com.petid.domain.hospital.model.HospitalOrder;
-import com.petid.domain.hospital.model.HospitalOrderSummaryDTO;
 import com.petid.domain.hospital.service.HospitalHourService;
 import com.petid.domain.hospital.service.HospitalOrderService;
 import com.petid.domain.hospital.type.DayType;
@@ -35,10 +34,16 @@ public class HospitalOrderController {
     private final EmailService emailService; 
 
     @GetMapping
-    public List<HospitalOrderSummaryDTO> findAllOrder(@RequestParam("status") OrderStatus status) {
-        // TODO 조회 페이지 기획 필요 - 페이징 적용 가능성
+    public List<HospitalOrderDto.NameResponse> findAllMemberOrder(
+            HttpServletRequest request,
+            @RequestParam("status") OrderStatus status
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
 
-        return hospitalOrderService.getOrders(status);
+        return hospitalOrderService.findMemberOrders(memberId, status)
+                .stream()
+                .map(HospitalOrderDto.NameResponse::from)
+                .toList();
 
     }
 
@@ -47,12 +52,7 @@ public class HospitalOrderController {
             HttpServletRequest request,
             @RequestBody HospitalOrderDto.Request orderRequest
     ) {
-        long memberId;
-        if (request.getParameter("id") != null) {
-        	memberId = Long.parseLong(request.getParameter("id"));
-        }else {
-        	memberId = RequestUtil.getMemberIdFromRequest(request);
-        }
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
 
         HospitalOrder hospitalOrder = hospitalOrderService.createOrder(orderRequest.toDomain(memberId));
 

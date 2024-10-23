@@ -6,11 +6,8 @@ import com.petid.domain.hospital.repository.HospitalOrderRepository;
 import com.petid.domain.hospital.type.OrderStatus;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
-
 import com.petid.infra.hospital.entity.HospitalOrderEntity;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
@@ -52,8 +49,8 @@ public class HospitalOrderRepositoryImpl implements HospitalOrderRepository {
     }
 
     @Override
-	public List<HospitalOrderSummaryDTO> findAllByStatus(OrderStatus status) {		
-		return qRepository.findAllByStatus(status);
+	public List<HospitalOrderSummaryDTO> findAllByStatus(Long memberId, OrderStatus status) {
+		return qRepository.findAllByStatus(memberId, status);
 	}
 
 	@Override
