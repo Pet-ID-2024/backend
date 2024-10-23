@@ -90,8 +90,8 @@ public class ContentController {
     }
 
     @PostMapping("/presigned-put-url")
-    public ResponseEntity<String> putContentImageBucketUrl(@RequestBody String encodedFilePath) {
-      String decodedFilePath = URLDecoder.decode(encodedFilePath, StandardCharsets.UTF_8);
+    public ResponseEntity<String> putContentImageBucketUrl(@RequestBody String filePath) {
+      String decodedFilePath = URLDecoder.decode(filePath, StandardCharsets.UTF_8);
   	  String url = S3service.createPresignedPutUrl(decodedFilePath);
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }

@@ -48,15 +48,15 @@ public class BannerController {
     }
     
     @GetMapping("/presigned-get-url")
-    public ResponseEntity<String> getBannerImageBucketUrl(@RequestParam String encodedFilePath) {
-      String decodedFilePath = URLDecoder.decode(encodedFilePath, StandardCharsets.UTF_8);
+    public ResponseEntity<String> getBannerImageBucketUrl(@RequestParam String filePath) {
+      String decodedFilePath = URLDecoder.decode(filePath, StandardCharsets.UTF_8);
   	  String url = S3service.createPresignedGetUrl(decodedFilePath);
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }
 
     @PostMapping("/presigned-put-url")
-    public ResponseEntity<String> putBannerImageBucketUrl(@RequestBody String encodedFilePath) {
-      String decodedFilePath = URLDecoder.decode(encodedFilePath, StandardCharsets.UTF_8);
+    public ResponseEntity<String> putBannerImageBucketUrl(@RequestBody String filePath) {
+      String decodedFilePath = URLDecoder.decode(filePath, StandardCharsets.UTF_8);
   	  String url = S3service.createPresignedPutUrl(decodedFilePath);
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }
