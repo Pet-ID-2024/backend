@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -86,7 +87,7 @@ public class PetController {
   }
   
   @GetMapping("/{petId}/images/presigned-url")
-  public ResponseEntity<String> getPetImageBucketUrl(@PathVariable (name = "petId") Long petId, @RequestBody String filePath) {
+  public ResponseEntity<String> getPetImageBucketUrl(@PathVariable (name = "petId") Long petId, @RequestParam String filePath) {
 	  if(!petService.findPetById(petId).isPresent()) return new ResponseEntity<String>("pet not found", HttpStatus.OK);;
 	  String url = S3service.createPresignedGetUrl(filePath);
       return new ResponseEntity<String>(url, HttpStatus.OK);

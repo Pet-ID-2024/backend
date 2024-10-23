@@ -66,7 +66,7 @@ public class MemberController {
 
     @GetMapping("/images/presigned-url")
     public ResponseEntity<String> getPetImageBucketUrl(
-            @RequestBody String filePath
+            @RequestParam String filePath
     ) {
         String url = s3Service.createPresignedGetUrl(filePath);
         return ResponseEntity.ok(url);
