@@ -4,5 +4,5 @@ import com.petid.domain.hospital.type.OrderStatus;
 
 import java.time.Instant;
 
-public record HospitalOrderSummaryDTO(Long id, Long memberId, String email, String hospitalName, OrderStatus status, Instant date ) {
+public record HospitalOrderSummaryDTO(Long id, Long memberId, String name, String hospitalName, OrderStatus status, Instant date ) {
 }

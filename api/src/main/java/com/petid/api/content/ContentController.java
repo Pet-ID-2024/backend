@@ -15,7 +15,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -69,17 +71,23 @@ public class ContentController {
     }
     
     @PostMapping("/{contentId}/like")
-    public ResponseEntity<Void> likeContent(HttpServletRequest request, @PathVariable Long contentId) {
+    public ResponseEntity<Map<String, Object>> likeContent(HttpServletRequest request, @PathVariable Long contentId) {
     	long memberId = RequestUtil.getMemberIdFromRequest(request);
     	contentService.likeContent(memberId, contentId);
-        return ResponseEntity.ok().build();
+    	Map<String, Object> response = new HashMap<>();
+    	response.put("likeCount", contentService.getCount(contentId));
+    	response.put("contentId", contentId);
+    	return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @DeleteMapping("/{contentId}/like")
-    public ResponseEntity<Void> unlikeContent(HttpServletRequest request, @PathVariable Long contentId) {
+    public ResponseEntity<Map<String, Object>> unlikeContent(HttpServletRequest request, @PathVariable Long contentId) {
     	long memberId = RequestUtil.getMemberIdFromRequest(request);
     	contentService.unlikeContent(memberId, contentId);
-        return ResponseEntity.ok().build();
+    	Map<String, Object> response = new HashMap<>();
+    	response.put("likeCount", contentService.getCount(contentId));
+    	response.put("contentId", contentId);
+    	return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @GetMapping("/presigned-get-url")

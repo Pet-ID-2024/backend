@@ -61,4 +61,9 @@ public class ContentService {
         // Remove the like if it exists
         contentLikedRepository.deleteByMemberIdAndContentId(memberId, contentId);
     }
+    
+
+    public long getCount(long contentId) {
+    	return contentLikedRepository.countByContentId(contentId);
+    }
 }

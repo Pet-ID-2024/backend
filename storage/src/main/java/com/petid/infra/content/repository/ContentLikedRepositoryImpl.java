@@ -28,13 +28,17 @@ public class ContentLikedRepositoryImpl implements ContentLikedRepository {
 	
 	@Override
 	public long countByContentId(Long contentId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return contentLikedJpaRepository.countByContentId(contentId);
 	}
 
 	@Override
 	public void deleteByMemberIdAndContentId(Long memberId, Long contentId) {
-		// TODO Auto-generated method stub
+		contentLikedJpaRepository.findByMemberIdAndContentId(memberId, contentId)
+		.ifPresentOrElse(like -> {
+			contentLikedJpaRepository.delete(like);
+		}, 
+				()->{					
+				});
 		
 	}
 

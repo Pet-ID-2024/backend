@@ -12,7 +12,7 @@ public interface ContentLikedJpaRepository extends JpaRepository<ContentLikedEnt
     Optional<ContentLikedEntity> findByMemberIdAndContentId(Long memberId, Long contentId);
 
     // Count total likes for a specific content
-    long countByContentId(Long contentId);
+    Long countByContentId(Long contentId);
 
     // Optionally, delete the like
     void deleteByMemberIdAndContentId(Long memberId, Long contentId);
