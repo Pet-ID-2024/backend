@@ -55,19 +55,15 @@ public class ContentController {
     // Update content by ID
     @PutMapping("/{contentId}")
     public ResponseEntity<Content> updateContent(@PathVariable long contentId, @RequestBody Content content) {
-        Optional<Content> updatedContent = contentService.updateContent(contentId, content);
-        return updatedContent.map(ResponseEntity::ok)
-                             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Content updatedContent = contentService.updateContent(contentId, content);
+        return new ResponseEntity<>(updatedContent, HttpStatus.OK);      
     }
 
     // Delete content by ID
     @DeleteMapping("/{contentId}")
     public ResponseEntity<Void> deleteContent(@PathVariable long contentId) {
-        boolean isDeleted = contentService.deleteContent(contentId);
-        if (isDeleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        contentService.deleteContent(contentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @PostMapping("/{contentId}/like")
