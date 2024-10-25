@@ -104,5 +104,12 @@ public class ContentController {
         return new ResponseEntity<String>(url, HttpStatus.OK);
     }
     
+    @DeleteMapping("/images/{contentId}")
+    public ResponseEntity<String> deleteImageInS3(@RequestBody String filePath) {
+      String decodedFilePath = URLDecoder.decode(filePath, StandardCharsets.UTF_8);
+  	  String url = S3service.deleteImage(decodedFilePath);
+        return new ResponseEntity<String>(url, HttpStatus.OK);
+    }
+    
 
 }

@@ -19,7 +19,7 @@ public class S3Config {
     public S3Client s3Client() {
         return S3Client.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-                .region(Region.AP_NORTHEAST_2)
+                .region(Region.of(region))
                 .build();
     }
     
@@ -28,7 +28,7 @@ public class S3Config {
         return S3Presigner.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 //.region(Region.of(region))
-                .region(Region.AP_NORTHEAST_2)
+                .region(Region.of(region))
                 .build();
     }
    

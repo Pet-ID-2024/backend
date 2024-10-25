@@ -14,6 +14,7 @@ import com.petid.domain.member.model.Member;
 import com.petid.domain.type.Category;
 import com.petid.infra.banner.entity.BannerEntity;
 import com.petid.infra.content.entity.ContentEntity;
+import com.petid.infra.pet.entity.PetEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -47,15 +48,22 @@ public class ContentRepositoryImpl implements ContentRepository {
 	}
 
 	@Override
-	public Optional<Content> updateContent(Long id, Content updatedContent) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public Content updateContent(Long contentId, Content updatedContent) {
+		Optional<ContentEntity> optionalContentEntity = contentJpaRepository.findById(contentId);
+		 if (optionalContentEntity.isPresent()) {
+			 	ContentEntity contentEntity = optionalContentEntity.get();
+			 	contentEntity.setTitle(updatedContent.title());
+			 	contentEntity.setBody(updatedContent.body());
+			 	contentEntity.setBody(updatedContent.imageUrl());		
+	            contentJpaRepository.save(contentEntity);
+	            return contentEntity.toDomain();
+	        }
+		 throw new RuntimeException("Content not found");
 	}
 
 	@Override
-	public boolean deleteById(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public void deleteById(Long id) {
+		contentJpaRepository.deleteById(id);
 	}
 
 
