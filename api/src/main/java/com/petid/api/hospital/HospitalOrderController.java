@@ -1,7 +1,6 @@
 package com.petid.api.hospital;
 
 import com.petid.api.common.RequestUtil;
-import com.petid.api.hospital.dto.CancelHospitalOrderDto;
 import com.petid.api.hospital.dto.HospitalOrderDto;
 import com.petid.api.hospital.dto.UpdateHospitalOrderDto;
 import com.petid.domain.email.EmailService;
@@ -82,12 +81,11 @@ public class HospitalOrderController {
 
     @DeleteMapping
     public ResponseEntity<Long> cancelOrder(
-            @RequestBody CancelHospitalOrderDto.Request cancelRequest
+            @RequestParam("orderId") long orderId
     ) {
-        long requestOrderId = cancelRequest.orderId();
-        hospitalOrderService.cabcekOrder(requestOrderId);
+        hospitalOrderService.cabcekOrder(orderId);
 
-        return ResponseEntity.ok(requestOrderId);
+        return ResponseEntity.ok(orderId);
     }
 
     @GetMapping("/time")
