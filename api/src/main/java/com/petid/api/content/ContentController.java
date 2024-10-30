@@ -63,11 +63,8 @@ public class ContentController {
     // Delete content by ID
     @DeleteMapping("/{contentId}")
     public ResponseEntity<Void> deleteContent(@PathVariable long contentId) {
-        boolean isDeleted = contentService.deleteContent(contentId);
-        if (isDeleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        contentService.deleteContent(contentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @PostMapping("/{contentId}/like")

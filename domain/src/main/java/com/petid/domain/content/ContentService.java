@@ -41,12 +41,12 @@ public class ContentService {
 
     // Update content
     public Optional<Content> updateContent(long id, Content content) {
-        return contentRepository.updateContent(id, content);
+        return Optional.ofNullable(contentRepository.updateContent(id, content));
     }
 
     // Delete content
-    public boolean deleteContent(long id) {
-        return contentRepository.deleteById(id);
+    public void deleteContent(long id) {
+        contentRepository.deleteById(id);
     }
     
     @Transactional

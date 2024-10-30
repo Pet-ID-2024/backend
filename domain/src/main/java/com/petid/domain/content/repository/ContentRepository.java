@@ -1,9 +1,9 @@
 package com.petid.domain.content.repository;
 
-import java.util.List;
-
 import com.petid.domain.content.model.Content;
 import com.petid.domain.type.Category;
+
+import java.util.List;
 
 public interface ContentRepository {
 	Content save(Content content, long authorId);
