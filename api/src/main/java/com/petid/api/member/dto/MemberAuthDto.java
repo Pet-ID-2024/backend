@@ -6,6 +6,7 @@ public record MemberAuthDto() {
     public record Request(
             String name,
             String address,
+            String addressDetails,
             String phone
     ) {
         public MemberAuth toDomain(long memberId) {
@@ -15,6 +16,7 @@ public record MemberAuthDto() {
                     name,
                     null,
                     address,
+                    addressDetails,
                     phone
             );
         }
@@ -23,6 +25,7 @@ public record MemberAuthDto() {
     public record Response(
             String name,
             String address,
+            String addressDetails,
             String phone,
             String image
     ) {
@@ -30,6 +33,7 @@ public record MemberAuthDto() {
             return new Response(
                     memberAuth.name(),
                     memberAuth.address(),
+                    memberAuth.addressDetails(),
                     memberAuth.phone(),
                     memberAuth.image()
             );

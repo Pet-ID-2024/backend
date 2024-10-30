@@ -6,6 +6,7 @@ public record MemberAuth(
         String name,
         String image,
         String address,
+        String addressDetails,
         String phone
 ) {
     public static MemberAuth createDefaultMemberAuth(
@@ -16,6 +17,7 @@ public record MemberAuth(
                 null,
                 memberId,
                 randomName,
+                null,
                 null,
                 null,
                 null
@@ -31,6 +33,7 @@ public record MemberAuth(
                 updateMemberAuth.name(),
                 updateMemberAuth.image(),
                 updateMemberAuth.address(),
+                updateMemberAuth.addressDetails(),
                 updateMemberAuth.phone()
         );
     }
@@ -48,6 +51,7 @@ public record MemberAuth(
                 name,
                 filePath,
                 address,
+                addressDetails,
                 phone
         );
     }
