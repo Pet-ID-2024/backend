@@ -45,7 +45,8 @@ public class MemberAuthEntity extends BaseEntity {
                 image,
                 phone,
                 address,
-                addressDetails
+                addressDetails,
+                null
         );
     }
 }
