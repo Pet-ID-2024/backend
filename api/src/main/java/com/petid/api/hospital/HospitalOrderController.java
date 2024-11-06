@@ -79,7 +79,7 @@ public class HospitalOrderController {
         );
     }
 
-    @DeleteMapping
+    @PostMapping
     public ResponseEntity<Long> cancelOrder(
             @RequestParam("orderId") long orderId
     ) {
