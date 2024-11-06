@@ -1,6 +1,6 @@
 package com.petid.infra.member.repository;
 
-import com.petid.domain.member.model.MemberAuth;
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.infra.member.entity.MemberAuthEntity;
 import lombok.RequiredArgsConstructor;
@@ -12,18 +12,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberAuthRepositoryImpl implements MemberAuthRepository {
 
+    private final QMemberAuthRepository qMemberAuthRepository;
     private final MemberAuthJpaRepository memberAuthJpaRepository;
 
     @Override
-    public Optional<MemberAuth> findByMemberId(Long id) {
-        return memberAuthJpaRepository.findByMemberId(id)
-                .map(MemberAuthEntity::toDomain);
+    public Optional<MemberAuthInfo> findByMemberId(long id) {
+        return qMemberAuthRepository.findMemberInfo(id);
     }
 
     @Override
-    public MemberAuth save(
-            MemberAuth memberAuth
+    public MemberAuthInfo save(
+            MemberAuthInfo memberAuthInfo
     ) {
-        return memberAuthJpaRepository.save(MemberAuthEntity.from(memberAuth)).toDomain();
+        return memberAuthJpaRepository.save(MemberAuthEntity.from(memberAuthInfo)).toDomain();
     }
 }

@@ -1,22 +1,24 @@
 package com.petid.domain.member.model;
 
-public record MemberAuth(
+public record MemberAuthInfo(
         Long id,
         Long memberId,
         String name,
         String image,
         String address,
         String addressDetails,
-        String phone
+        String phone,
+        Long petId
 ) {
-    public static MemberAuth createDefaultMemberAuth(
+    public static MemberAuthInfo createDefaultMemberAuth(
             long memberId,
             String randomName
     ) {
-        return new MemberAuth(
+        return new MemberAuthInfo(
                 null,
                 memberId,
                 randomName,
+                null,
                 null,
                 null,
                 null,
@@ -24,17 +26,18 @@ public record MemberAuth(
         );
     }
 
-    public MemberAuth update(
-            MemberAuth updateMemberAuth
+    public MemberAuthInfo update(
+            MemberAuthInfo updateMemberAuthInfo
     ) {
-        return new MemberAuth(
+        return new MemberAuthInfo(
                 id,
                 memberId,
-                updateMemberAuth.name(),
-                updateMemberAuth.image(),
-                updateMemberAuth.address(),
-                updateMemberAuth.addressDetails(),
-                updateMemberAuth.phone()
+                updateMemberAuthInfo.name(),
+                updateMemberAuthInfo.image(),
+                updateMemberAuthInfo.address(),
+                updateMemberAuthInfo.addressDetails(),
+                updateMemberAuthInfo.phone(),
+                petId
         );
     }
 
@@ -42,17 +45,18 @@ public record MemberAuth(
         return address != null && phone != null;
     }
 
-    public MemberAuth updateProfileImage(
+    public MemberAuthInfo updateProfileImage(
             String filePath
     ) {
-        return new MemberAuth(
+        return new MemberAuthInfo(
                 id,
                 memberId,
                 name,
                 filePath,
                 address,
                 addressDetails,
-                phone
+                phone,
+                petId
         );
     }
 }

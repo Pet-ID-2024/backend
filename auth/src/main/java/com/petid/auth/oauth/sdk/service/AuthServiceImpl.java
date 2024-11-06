@@ -12,7 +12,7 @@ import com.petid.auth.oauth.sdk.controller.OAuth2UserInfoUriConverter;
 import com.petid.auth.oauth.sdk.controller.dto.TokenDto;
 import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.model.Member;
-import com.petid.domain.member.model.MemberAuth;
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.model.MemberPolicy;
 import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.domain.member.repository.MemberPolicyRepository;
@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
                         : requestToAuthServer(token, platform);
 
         Member member = memberManager.getOrSave(oAuth2UserInfo.toDomain(platform.getPlatform(), fcmToken));
-        memberAuthRepository.save(MemberAuth.createDefaultMemberAuth(member.id(), randomNameUtil.getRandomName()));
+        memberAuthRepository.save(MemberAuthInfo.createDefaultMemberAuth(member.id(), randomNameUtil.getRandomName()));
         memberPolicyRepository.save(MemberPolicy.of(member, advertisement));
 
         String accessToken = tokenProvider.getAccessToken(member);
