@@ -79,11 +79,14 @@ public class HospitalOrderController {
         );
     }
 
-    @PostMapping
+    @DeleteMapping("/{orderId}")
     public ResponseEntity<Long> cancelOrder(
-            @RequestParam("orderId") long orderId
+            HttpServletRequest request,
+            @PathVariable long orderId
     ) {
-        hospitalOrderService.cabcekOrder(orderId);
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+
+        hospitalOrderService.cancelOrder(orderId, memberId);
 
         return ResponseEntity.ok(orderId);
     }
