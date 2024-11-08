@@ -1,27 +1,19 @@
 package com.petid.api.pet;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.petid.api.common.RequestUtil;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.service.PetService;
 import com.petid.domain.pet.service.S3Service;
-
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 
 
@@ -35,8 +27,14 @@ public class PetController {
   private final S3Service S3service;  
 
   @PostMapping
-  public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
-      Pet createdPet = petService.createPet(pet);
+  public ResponseEntity<Pet> createPet(
+          HttpServletRequest request,
+          @RequestBody Pet pet
+  ) {
+      long memberId = RequestUtil.getMemberIdFromRequest(request);
+      Pet targetPet = pet.setOwnerId(memberId);
+
+      Pet createdPet = petService.createPet(targetPet);
       return new ResponseEntity<>(createdPet, HttpStatus.CREATED);
   }
 

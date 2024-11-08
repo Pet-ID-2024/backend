@@ -18,7 +18,26 @@ public record Pet(
 		PetAppearance appearance,
 		List<PetImage> petImages
 ) {
-	public Pet updatePetAPpearance(
+	public Pet setOwnerId(
+			long ownerId
+	) {
+		return new Pet(
+				petId,
+				ownerId,
+				petRegNo,
+				petName,
+				petBirthDate,
+				petSex,
+				petNeuteredYn,
+				petNeuteredDate,
+				petAddr,
+				chipType,
+				appearance,
+				petImages
+		);
+	}
+
+	public Pet updatePetAppearance(
 			PetAppearance appearance
     ) {
         return new Pet(
@@ -37,7 +56,7 @@ public record Pet(
         );
     }
 	
-	public Pet updatePetimages(
+	public Pet updatePetImages(
 			List<PetImage> petImages
     ) {
         return new Pet(

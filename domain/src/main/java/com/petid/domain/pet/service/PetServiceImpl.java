@@ -32,14 +32,14 @@ public class PetServiceImpl implements PetService {
   public Pet createPet(Pet pet) {
 	  
 	  PetAppearance savedPetAppearance =  petAppearanceRepo.createPetAppearance(pet.appearance());
-	  Pet savedPet = petRepo.createPet(pet.updatePetAPpearance(savedPetAppearance));
+	  Pet savedPet = petRepo.createPet(pet.updatePetAppearance(savedPetAppearance));
 	  petRepo.updatePet(savedPet);
 	  List<PetImage> petImages = pet.petImages();
 	  List<PetImage> newPetImages = new ArrayList<PetImage>();
 	  if(petImages != null && !petImages.isEmpty()) {
 		  petImages.forEach(image ->newPetImages.add(petImgRepo.createPetImage(savedPet.petId(), image)));
 	  };
-	  Pet responsePet = savedPet.updatePetAPpearance(savedPetAppearance).updatePetimages(newPetImages);
+	  Pet responsePet = savedPet.updatePetAppearance(savedPetAppearance).updatePetImages(newPetImages);
 	  
 	  return responsePet;
   }
