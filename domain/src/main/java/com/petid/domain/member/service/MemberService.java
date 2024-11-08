@@ -2,7 +2,7 @@ package com.petid.domain.member.service;
 
 import com.petid.domain.member.manager.MemberAuthManager;
 import com.petid.domain.member.manager.MemberPolicyManager;
-import com.petid.domain.member.model.MemberAuth;
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.model.MemberPolicy;
 import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.domain.member.repository.MemberPolicyRepository;
@@ -21,16 +21,16 @@ public class MemberService {
     public boolean isMemberAuthed(
             long memberId
     ) {
-        MemberAuth memberAuth = memberAuthManager.getByMemberId(memberId);
+        MemberAuthInfo memberAuthInfo = memberAuthManager.getByMemberId(memberId);
 
-        return memberAuth.isAuthed();
+        return memberAuthInfo.isAuthed();
     }
 
-    public MemberAuth updateMemberAuth(
-            MemberAuth updateMemberAuth
+    public MemberAuthInfo updateMemberAuth(
+            MemberAuthInfo updateMemberAuthInfo
     ) {
-        MemberAuth memberAuth = memberAuthManager.getByMemberId(updateMemberAuth.memberId());
-        MemberAuth updated = memberAuth.update(updateMemberAuth);
+        MemberAuthInfo memberAuthInfo = memberAuthManager.getByMemberId(updateMemberAuthInfo.memberId());
+        MemberAuthInfo updated = memberAuthInfo.update(updateMemberAuthInfo);
 
         return memberAuthRepository.save(updated);
     }
@@ -49,8 +49,8 @@ public class MemberService {
             long memberId,
             String filePath
     ) {
-        MemberAuth memberAuth = memberAuthManager.getByMemberId(memberId);
-        MemberAuth updated = memberAuth.updateProfileImage(filePath);
+        MemberAuthInfo memberAuthInfo = memberAuthManager.getByMemberId(memberId);
+        MemberAuthInfo updated = memberAuthInfo.updateProfileImage(filePath);
 
         memberAuthRepository.save(updated);
     }

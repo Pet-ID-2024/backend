@@ -1,8 +1,8 @@
 package com.petid.domain.pet.model;
 
-import java.util.List;
+import com.petid.domain.type.Chip;
 
-import com.petid.domain.member.model.Member;
+import java.util.List;
 
 public record Pet(
 		Long petId,
@@ -14,6 +14,7 @@ public record Pet(
 		Character petNeuteredYn,
 		String petNeuteredDate,
 		String petAddr,
+		Chip chipType,
 		PetAppearance appearance,
 		List<PetImage> petImages
 ) {
@@ -30,6 +31,7 @@ public record Pet(
         		petNeuteredYn,
         		petNeuteredDate,
         		petAddr,
+				chipType,
         		appearance,
         		petImages
         );
@@ -48,6 +50,7 @@ public record Pet(
         		petNeuteredYn,
         		petNeuteredDate,
         		petAddr,
+				chipType,
         		appearance,
         		petImages
         );
