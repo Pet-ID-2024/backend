@@ -1,6 +1,6 @@
 package com.petid.infra.member.entity;
 
-import com.petid.domain.member.model.MemberAuth;
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.infra.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -21,28 +21,32 @@ public class MemberAuthEntity extends BaseEntity {
     private String image;
     private String phone;
     private String address;
+    private String addressDetails;
 
     public static MemberAuthEntity from(
-            MemberAuth memberAuth
+            MemberAuthInfo memberAuthInfo
     ) {
         return new MemberAuthEntity(
-                memberAuth.id(),
-                memberAuth.memberId(),
-                memberAuth.name(),
-                memberAuth.image(),
-                memberAuth.phone(),
-                memberAuth.address()
+                memberAuthInfo.id(),
+                memberAuthInfo.memberId(),
+                memberAuthInfo.name(),
+                memberAuthInfo.image(),
+                memberAuthInfo.phone(),
+                memberAuthInfo.address(),
+                memberAuthInfo.addressDetails()
         );
     }
 
-    public MemberAuth toDomain() {
-        return new MemberAuth(
+    public MemberAuthInfo toDomain() {
+        return new MemberAuthInfo(
                 id,
                 memberId,
                 name,
                 image,
                 phone,
-                address
+                address,
+                addressDetails,
+                null
         );
     }
 }

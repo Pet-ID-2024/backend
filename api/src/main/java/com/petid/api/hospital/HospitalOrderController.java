@@ -1,7 +1,6 @@
 package com.petid.api.hospital;
 
 import com.petid.api.common.RequestUtil;
-import com.petid.api.hospital.dto.CancelHospitalOrderDto;
 import com.petid.api.hospital.dto.HospitalOrderDto;
 import com.petid.api.hospital.dto.UpdateHospitalOrderDto;
 import com.petid.domain.email.EmailService;
@@ -80,14 +79,16 @@ public class HospitalOrderController {
         );
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{orderId}")
     public ResponseEntity<Long> cancelOrder(
-            @RequestBody CancelHospitalOrderDto.Request cancelRequest
+            HttpServletRequest request,
+            @PathVariable long orderId
     ) {
-        long requestOrderId = cancelRequest.orderId();
-        hospitalOrderService.cabcekOrder(requestOrderId);
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
 
-        return ResponseEntity.ok(requestOrderId);
+        hospitalOrderService.cancelOrder(orderId, memberId);
+
+        return ResponseEntity.ok(orderId);
     }
 
     @GetMapping("/time")

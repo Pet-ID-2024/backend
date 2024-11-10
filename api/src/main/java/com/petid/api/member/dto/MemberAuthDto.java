@@ -1,21 +1,24 @@
 package com.petid.api.member.dto;
 
-import com.petid.domain.member.model.MemberAuth;
+import com.petid.domain.member.model.MemberAuthInfo;
 
 public record MemberAuthDto() {
     public record Request(
             String name,
             String address,
+            String addressDetails,
             String phone
     ) {
-        public MemberAuth toDomain(long memberId) {
-            return new MemberAuth(
+        public MemberAuthInfo toDomain(long memberId) {
+            return new MemberAuthInfo(
                     null,
                     memberId,
                     name,
                     null,
                     address,
-                    phone
+                    addressDetails,
+                    phone,
+                    null
             );
         }
     }
@@ -23,15 +26,17 @@ public record MemberAuthDto() {
     public record Response(
             String name,
             String address,
+            String addressDetails,
             String phone,
             String image
     ) {
-        public static Response from(MemberAuth memberAuth) {
+        public static Response from(MemberAuthInfo memberAuthInfo) {
             return new Response(
-                    memberAuth.name(),
-                    memberAuth.address(),
-                    memberAuth.phone(),
-                    memberAuth.image()
+                    memberAuthInfo.name(),
+                    memberAuthInfo.address(),
+                    memberAuthInfo.addressDetails(),
+                    memberAuthInfo.phone(),
+                    memberAuthInfo.image()
             );
         }
     }

@@ -1,1 +1,1 @@
-ALTER TABLE member CHANGE ssn image varchar;
+ALTER TABLE member_auth ALTER COLUMN ssn RENAME TO image;

@@ -1,7 +1,7 @@
 package com.petid.domain.member.manager;
 
 import com.petid.domain.exception.MemberAuthNotFoundException;
-import com.petid.domain.member.model.MemberAuth;
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.repository.MemberAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ public class MemberAuthManager {
 
     private final MemberAuthRepository memberAuthRepository;
 
-    public MemberAuth getByMemberId(
+    public MemberAuthInfo getByMemberId(
             long memberId
     ) {
         return memberAuthRepository.findByMemberId(memberId)

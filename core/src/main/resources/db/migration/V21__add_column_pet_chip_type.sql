@@ -1,0 +1,2 @@
+ALTER TABLE pet
+    ADD COLUMN chip_type VARCHAR(50);
