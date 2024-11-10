@@ -40,8 +40,8 @@ public class ContentService {
     }
 
     // Update content
-    public Optional<Content> updateContent(long id, Content content) {
-        return Optional.ofNullable(contentRepository.updateContent(id, content));
+    public Content updateContent(long id, Content content) {
+        return contentRepository.updateContent(id, content);
     }
 
     // Delete content

@@ -55,9 +55,8 @@ public class ContentController {
     // Update content by ID
     @PutMapping("/{contentId}")
     public ResponseEntity<Content> updateContent(@PathVariable long contentId, @RequestBody Content content) {
-        Optional<Content> updatedContent = contentService.updateContent(contentId, content);
-        return updatedContent.map(ResponseEntity::ok)
-                             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Content updatedContent = contentService.updateContent(contentId, content);
+        return new ResponseEntity<>(updatedContent, HttpStatus.OK);      
     }
 
     // Delete content by ID
