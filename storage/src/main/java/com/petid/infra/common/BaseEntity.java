@@ -19,4 +19,12 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(nullable = false)
     Instant updatedAt;
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
 }

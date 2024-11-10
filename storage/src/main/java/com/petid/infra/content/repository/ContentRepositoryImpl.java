@@ -38,8 +38,8 @@ public class ContentRepositoryImpl implements ContentRepository {
 	}
 	
 	@Override
-	public List<Content> findByCategory(Category category, long memberId) {
-		return qContentRepository.findAllByCategory(category, memberId);
+	public List<Content> findByCategory(Category category, long memberId, boolean isFullBody) {
+		return qContentRepository.findAllByCategory(category, memberId, isFullBody);
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class ContentRepositoryImpl implements ContentRepository {
 		Optional<ContentEntity> optionalContentEntity = contentJpaRepository.findById(contentId);
 		 if (optionalContentEntity.isPresent()) {
 			 	ContentEntity contentEntity = optionalContentEntity.get();
-			 	contentEntity.setTitle(updatedContent.title());
-			 	contentEntity.setBody(updatedContent.body());
-			 	contentEntity.setBody(updatedContent.imageUrl());		
+			 	contentEntity.setTitle(updatedContent.title());				
+			 	contentEntity.setBody(updatedContent.body());			 							
+				contentEntity.setCategory(updatedContent.category());			 
 	            contentJpaRepository.save(contentEntity);
 	            return contentEntity.toDomain();
 	        }
