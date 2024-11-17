@@ -42,6 +42,8 @@ public class PetEntity extends BaseEntity {
     @JoinColumn(name = "pet_id", referencedColumnName = "pet_id", insertable = false, updatable = false)
     private List<PetImageEntity> petImages;
 
+    private String signPath;
+
     public Pet toDomain() {
         return new Pet(
                 id,
@@ -57,7 +59,8 @@ public class PetEntity extends BaseEntity {
                 (id != null && appearance != null) ? appearance.toDomain() : null,
                 (id != null && petImages != null) ? petImages.stream()
                         .map(PetImageEntity::toDomain)
-                        .toList() : null
+                        .toList() : null,
+                signPath
         );
     }
 
@@ -76,7 +79,8 @@ public class PetEntity extends BaseEntity {
                 pet.appearance() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
                 pet.petId() != null && pet.petImages() != null ? pet.petImages().stream()
                         .map(PetImageEntity::from)
-                        .toList() : null
+                        .toList() : null,
+                pet.signPath()
         );
     }
 }

@@ -16,7 +16,8 @@ public record Pet(
 		String petAddr,
 		Chip chipType,
 		PetAppearance appearance,
-		List<PetImage> petImages
+		List<PetImage> petImages,
+		String signPath
 ) {
 	public Pet setOwnerId(
 			long ownerId
@@ -33,7 +34,8 @@ public record Pet(
 				petAddr,
 				chipType,
 				appearance,
-				petImages
+				petImages,
+				signPath
 		);
 	}
 
@@ -52,7 +54,8 @@ public record Pet(
         		petAddr,
 				chipType,
         		appearance,
-        		petImages
+        		petImages,
+				signPath
         );
     }
 	
@@ -71,7 +74,8 @@ public record Pet(
         		petAddr,
 				chipType,
         		appearance,
-        		petImages
+        		petImages,
+				signPath
         );
     }
 }
