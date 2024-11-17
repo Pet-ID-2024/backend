@@ -1,6 +1,8 @@
 package com.petid.api.pet;
 
 import com.petid.api.common.RequestUtil;
+import com.petid.api.pet.dto.PetIdDto;
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.model.PetImage;
@@ -23,18 +25,20 @@ import java.util.Optional;
 public class PetController {
 
   private final PetService petService;
-  
+
   private final S3Service S3service;  
 
   @PostMapping
-  public ResponseEntity<Pet> createPet(
+  public ResponseEntity<Pet> createPetId(
           HttpServletRequest request,
-          @RequestBody Pet pet
+          @RequestBody PetIdDto.Request requestBody
   ) {
       long memberId = RequestUtil.getMemberIdFromRequest(request);
-      Pet targetPet = pet.setOwnerId(memberId);
+      Pet targetPet = requestBody.toPetDomain().setOwnerId(memberId);
+      MemberAuthInfo memberAuthInfo = requestBody.proposer().toDomain(memberId);
 
-      Pet createdPet = petService.createPet(targetPet);
+      Pet createdPet = petService.createPet(targetPet, memberAuthInfo);
+
       return new ResponseEntity<>(createdPet, HttpStatus.CREATED);
   }
 
@@ -97,5 +101,13 @@ public class PetController {
 	  String url = S3service.createPresignedPutUrl(filePath);
       return new ResponseEntity<String>(url, HttpStatus.OK);
   }
+
+    @PostMapping("/sign/images/presigned-url")
+    public ResponseEntity<String> putPetIdSignBucketUrl(
+            @RequestBody String filePath
+    ) {
+        String url = S3service.createPresignedPutUrl(filePath);
+        return ResponseEntity.ok(url);
+    }
   
 }
