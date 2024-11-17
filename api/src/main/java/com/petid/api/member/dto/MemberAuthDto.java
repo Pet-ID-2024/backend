@@ -4,7 +4,6 @@ import com.petid.domain.member.model.MemberAuthInfo;
 
 public record MemberAuthDto() {
     public record Request(
-            String name,
             String address,
             String addressDetails,
             String phone
@@ -13,7 +12,7 @@ public record MemberAuthDto() {
             return new MemberAuthInfo(
                     null,
                     memberId,
-                    name,
+                    null,
                     null,
                     address,
                     addressDetails,
