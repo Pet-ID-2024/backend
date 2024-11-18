@@ -1,5 +1,7 @@
 package com.petid.domain.pet.service;
 
+import com.petid.domain.member.model.MemberAuthInfo;
+import com.petid.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -26,10 +28,11 @@ public class PetServiceImpl implements PetService {
   private final PetRepository petRepo;
   private final PetAppearanceRepository petAppearanceRepo;
   private final PetImageRepository petImgRepo;
+  private final MemberService memberService;
 
   @Override
   @Transactional
-  public Pet createPet(Pet pet) {
+  public Pet createPet(Pet pet, MemberAuthInfo memberAuth) {
 	  
 	  PetAppearance savedPetAppearance =  petAppearanceRepo.createPetAppearance(pet.appearance());
 	  Pet savedPet = petRepo.createPet(pet.updatePetAppearance(savedPetAppearance));
@@ -38,10 +41,10 @@ public class PetServiceImpl implements PetService {
 	  List<PetImage> newPetImages = new ArrayList<PetImage>();
 	  if(petImages != null && !petImages.isEmpty()) {
 		  petImages.forEach(image ->newPetImages.add(petImgRepo.createPetImage(savedPet.petId(), image)));
-	  };
-	  Pet responsePet = savedPet.updatePetAppearance(savedPetAppearance).updatePetImages(newPetImages);
-	  
-	  return responsePet;
+	  }
+
+    memberService.updateMemberAuth(memberAuth);
+    return savedPet.updatePetAppearance(savedPetAppearance).updatePetImages(newPetImages);
   }
 
   @Override

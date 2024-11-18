@@ -32,8 +32,8 @@ public record MemberAuthInfo(
         return new MemberAuthInfo(
                 id,
                 memberId,
-                updateMemberAuthInfo.name(),
-                updateMemberAuthInfo.image(),
+                (updateMemberAuthInfo.name == null)  ? name : updateMemberAuthInfo.name,
+                image,
                 updateMemberAuthInfo.address(),
                 updateMemberAuthInfo.addressDetails(),
                 updateMemberAuthInfo.phone(),

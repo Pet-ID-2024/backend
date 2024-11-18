@@ -1,15 +1,16 @@
 package com.petid.domain.pet.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.model.PetImage;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface PetService {
 
-  Pet createPet(Pet pet);
+  Pet createPet(Pet pet, MemberAuthInfo memberAuth);
   Pet updatePet(Long petId, Pet pet);
   void deletePet(Long petId);
   Optional<Pet> findPetById(Long petId);
