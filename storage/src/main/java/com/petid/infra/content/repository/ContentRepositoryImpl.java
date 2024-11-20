@@ -53,8 +53,7 @@ public class ContentRepositoryImpl implements ContentRepository {
 		 if (optionalContentEntity.isPresent()) {
 			 	ContentEntity contentEntity = optionalContentEntity.get();
 			 	contentEntity.setTitle(updatedContent.title());
-			 	contentEntity.setBody(updatedContent.body());
-			 	contentEntity.setBody(updatedContent.imageUrl());		
+			 	contentEntity.setBody(updatedContent.body());			 	
 	            contentJpaRepository.save(contentEntity);
 	            return contentEntity.toDomain();
 	        }
