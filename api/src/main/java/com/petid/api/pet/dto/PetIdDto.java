@@ -27,7 +27,7 @@ public record PetIdDto() {
         public Pet toPetDomain() {
             return new Pet(
                     petId,
-                    ownerId,
+                    null,
                     petRegNo,
                     petName,
                     petBirthDate,
