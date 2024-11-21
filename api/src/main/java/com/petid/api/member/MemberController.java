@@ -65,6 +65,18 @@ public class MemberController {
         return ResponseEntity.ok(ad);
     }
 
+    @PostMapping("/image")
+    public ResponseEntity<String> updateMemberProfileImage(
+            HttpServletRequest request,
+            @RequestBody String filePath
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+
+        memberService.updateMemberProfileImage(memberId, filePath);
+
+        return ResponseEntity.ok(filePath);
+    }
+
     @GetMapping("/images/presigned-url")
     public ResponseEntity<String> getPetImageBucketUrl(
             @RequestParam String filePath
@@ -75,12 +87,8 @@ public class MemberController {
 
     @PostMapping("/images/presigned-url")
     public ResponseEntity<String> putPetImageBucketUrl(
-            HttpServletRequest request,
             @RequestBody String filePath
     ) {
-        long memberId = RequestUtil.getMemberIdFromRequest(request);
-        memberService.updateMemberProfileImage(memberId, filePath);
-
         String url = s3Service.createPresignedPutUrl(filePath);
         return ResponseEntity.ok(url);
     }
