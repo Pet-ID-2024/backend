@@ -7,10 +7,7 @@ import com.petid.domain.hospital.type.DayType;
 import com.petid.domain.pet.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +31,17 @@ public class HospitalController {
                 hospitals.stream()
                         .map(HospitalDto.Response::from)
                         .toList()
+        );
+    }
+
+    @GetMapping("/{hospitalId}")
+    public ResponseEntity<HospitalDto.Response> findHospital(
+            @PathVariable long hospitalId
+    ) {
+        Hospital hospitals = hospitalService.findHospitalById(hospitalId);
+
+        return ResponseEntity.ok(
+                HospitalDto.Response.from(hospitals)
         );
     }
 
