@@ -4,6 +4,7 @@ import com.petid.api.hospital.dto.HospitalDto;
 import com.petid.domain.hospital.model.Hospital;
 import com.petid.domain.hospital.service.HospitalService;
 import com.petid.domain.hospital.type.DayType;
+import com.petid.domain.pet.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 public class HospitalController {
 
     private final HospitalService hospitalService;
+    private final S3Service s3Service;
 
     @GetMapping
     public ResponseEntity<List<HospitalDto.Response>> findAllHospital(
@@ -60,5 +62,13 @@ public class HospitalController {
         return ResponseEntity.ok(
                 hospitalService.isOffDay(hospitalId, day)
         );
+    }
+
+    @GetMapping("/images/presigned-url")
+    public ResponseEntity<String> getHospitalImageBucketUrl(
+            @RequestParam String filePath
+    ) {
+        String url = s3Service.createPresignedGetUrl(filePath);
+        return ResponseEntity.ok(url);
     }
 }
