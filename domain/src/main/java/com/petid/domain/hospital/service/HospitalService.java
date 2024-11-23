@@ -1,6 +1,7 @@
 package com.petid.domain.hospital.service;
 
 import com.petid.domain.hospital.manager.HospitalHourManager;
+import com.petid.domain.hospital.manager.HospitalManager;
 import com.petid.domain.hospital.model.Hospital;
 import com.petid.domain.hospital.model.HospitalHour;
 import com.petid.domain.hospital.repository.HospitalRepository;
@@ -16,6 +17,7 @@ public class HospitalService {
 
     private final HospitalRepository hospitalRepository;
     private final HospitalHourManager hospitalHourManager;
+    private final HospitalManager hospitalManager;
 
     public List<Hospital> findAllHospital(
             int sidoId,
@@ -42,5 +44,11 @@ public class HospitalService {
         HospitalHour hospitalHour = hospitalHourManager.getByHospitalIdAndDay(hospitalId, day);
 
         return hospitalHour.isClosed();
+    }
+
+    public Hospital findHospitalById(
+            long hospitalId
+    ) {
+        return hospitalManager.get(hospitalId);
     }
 }

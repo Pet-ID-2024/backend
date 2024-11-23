@@ -78,6 +78,26 @@ public record Pet(
 				signPath
         );
     }
+
+	public Pet update(
+			Pet updatePetData
+	) {
+		return new Pet(
+				petId,
+				ownerId,
+				petRegNo,
+				petName,
+				petBirthDate,
+				petSex,
+				petNeuteredYn,
+				updatePetData.petNeuteredDate(),
+				petAddr,
+				chipType,
+				appearance.update(updatePetData.appearance()),
+				petImages,
+				signPath
+		);
+	}
 }
 
 

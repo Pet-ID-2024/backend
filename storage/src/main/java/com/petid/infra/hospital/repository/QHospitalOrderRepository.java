@@ -51,7 +51,7 @@ public class QHospitalOrderRepository {
                 .leftJoin(hospitalEntity).on(hospitalEntity.id.eq(hospitalOrderEntity.hospitalId)) // Left join with hospitalEntity
                 .leftJoin(memberEntity).on(memberEntity.id.eq(hospitalOrderEntity.member.id))
                 .where(
-                        hospitalOrderEntity.member.id.eq(memberId),
+                        memberId != null ? hospitalOrderEntity.member.id.eq(memberId) : null,
                 		status.equals(OrderStatus.ALL)
                 		? Expressions.TRUE 
                 		: hospitalOrderEntity.status.eq(status)

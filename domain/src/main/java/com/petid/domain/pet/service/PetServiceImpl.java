@@ -2,19 +2,16 @@ package com.petid.domain.pet.service;
 
 import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
+import com.petid.domain.pet.manager.PetManager;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.repository.PetAppearanceRepository;
 import com.petid.domain.pet.repository.PetImageRepository;
 import com.petid.domain.pet.repository.PetRepository;
-
-
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +26,7 @@ public class PetServiceImpl implements PetService {
   private final PetAppearanceRepository petAppearanceRepo;
   private final PetImageRepository petImgRepo;
   private final MemberService memberService;
+  private final PetManager petManager;
 
   @Override
   @Transactional
@@ -49,11 +47,13 @@ public class PetServiceImpl implements PetService {
 
   @Override
   @Transactional
-  public Pet updatePet(Long petId, Pet pet) {
-    if (!petRepo.findPetById(petId).isPresent()) {
-      throw new RuntimeException("Pet not found for ID: " + petId);
-    }
-    return petRepo.updatePet(pet);
+  public Pet updatePet(
+          Pet updatePetData
+  ) {
+    Pet targetPet = petManager.get(updatePetData.petId());
+    Pet updatedPet = targetPet.update(updatePetData);
+
+    return petRepo.save(updatedPet);
   }
 
   @Override

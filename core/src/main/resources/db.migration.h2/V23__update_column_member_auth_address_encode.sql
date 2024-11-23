@@ -1,2 +1,0 @@
-ALTER TABLE member_auth MODIFY address VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-ALTER TABLE member_auth MODIFY address_details VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

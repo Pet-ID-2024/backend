@@ -1,5 +1,6 @@
 package com.petid.infra.pet.repository;
 
+import com.petid.domain.exception.PetNotFoundException;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.repository.PetRepository;
 import com.petid.infra.pet.entity.PetEntity;
@@ -38,7 +39,7 @@ public class PetRepositoryImpl implements PetRepository {
             petJpaRepo.save(updatedPetEntity);
             return updatedPetEntity.toDomain();
         }
-        throw new RuntimeException("Pet not found");
+        throw new PetNotFoundException(pet.petId());
     }
 
     @Override
@@ -57,5 +58,12 @@ public class PetRepositoryImpl implements PetRepository {
         return petJpaRepo.findAll().stream().map(PetEntity::toDomain).collect(Collectors.toList());
     }
 
-   
+    @Override
+    public Pet save(Pet pet) {
+        PetEntity petEntity = PetEntity.from(pet);
+
+        return petJpaRepo.save(petEntity).toDomain();
+    }
+
+
 }
