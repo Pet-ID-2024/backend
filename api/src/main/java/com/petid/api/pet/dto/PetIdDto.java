@@ -11,7 +11,6 @@ public record PetIdDto() {
     public record Request(
             Long petId,
             Long ownerId,
-            String petRegNo,
             String petName,
             String petBirthDate,
             Character petSex,
@@ -28,7 +27,7 @@ public record PetIdDto() {
             return new Pet(
                     petId,
                     null,
-                    petRegNo,
+                    null,
                     petName,
                     petBirthDate,
                     petSex,
