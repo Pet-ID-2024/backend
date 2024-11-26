@@ -15,4 +15,6 @@ public interface PetRepository {
     List<Pet> findAllPets();
 
     Pet save(Pet pet);
+
+    Optional<Pet> findPetByOwnerId(long ownerId);
 }

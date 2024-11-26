@@ -65,5 +65,11 @@ public class PetRepositoryImpl implements PetRepository {
         return petJpaRepo.save(petEntity).toDomain();
     }
 
+    @Override
+    public Optional<Pet> findPetByOwnerId(long ownerId) {
+        return petJpaRepo.findByOwnerId(ownerId)
+                .map(PetEntity::toDomain);
+    }
+
 
 }
