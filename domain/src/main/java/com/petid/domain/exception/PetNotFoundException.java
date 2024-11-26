@@ -1,6 +1,6 @@
 package com.petid.domain.exception;
 
-public class PetNotFoundException extends PetDataNotFoundException {
+public class PetNotFoundException extends PetDataException {
   
     private Long petId;
   

@@ -1,7 +1,7 @@
 package com.petid.domain.exception;
 
   
-public class PetAppearanceNotFoundException extends PetDataNotFoundException {
+public class PetAppearanceNotFoundException extends PetDataException {
   
     private Long petId;
   

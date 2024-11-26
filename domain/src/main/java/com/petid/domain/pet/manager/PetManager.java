@@ -17,4 +17,10 @@ public class PetManager {
         return petRepository.findPetById(id)
                 .orElseThrow(() -> new PetNotFoundException(id));
     }
+
+    public boolean isOwnerPetExists(
+            Long ownerId
+    ) {
+        return petRepository.findPetByOwnerId(ownerId).isPresent();
+    }
 }

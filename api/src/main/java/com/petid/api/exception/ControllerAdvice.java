@@ -13,10 +13,10 @@ public class ControllerAdvice {
     @ExceptionHandler(
             {
                     MemberDataNotFoundException.class,
-                    PetDataNotFoundException.class,
+                    PetDataException.class,
                     HospitalDataNotFoundException.class,
                     LocationDataNotFoundException.class,
-                    PetDataNotFoundException.class
+                    PetDataException.class
             }
     )
     public ResponseEntity<ExceptionResponse> handleMemberNotFoundException(
