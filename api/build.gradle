@@ -3,20 +3,32 @@ plugins {
 }
 
 group = 'com.petid'
-version = 'unspecified'
+version = '0.0.1-SNAPSHOT'
+
+bootJar.enabled = true
+jar.enabled = false
+
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(project(":domain"))
+    implementation project(":auth")
+    implementation project(":batch")
+    implementation project(":domain")
+    implementation project(":storage")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.hibernate:hibernate-spatial:6.6.0.Final'
 
+    // test
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation 'org.dbunit:dbunit:2.7.0'
 }
 
 test {
