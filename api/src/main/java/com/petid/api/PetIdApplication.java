@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableJpaAuditing
 @SpringBootApplication
-@ComponentScan({"com.petid.infra", "com.petid.domain"})
+@ComponentScan({"com.petid.api", "com.petid.auth", "com.petid.domain", "com.petid.infra"})
 @EntityScan("com.petid.infra")
 @EnableJpaRepositories("com.petid.infra")
 public class PetIdApplication {

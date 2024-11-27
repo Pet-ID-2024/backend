@@ -1,29 +1,16 @@
 package com.petid.api.pet.config;
 
-import com.github.springtestdbunit.bean.DatabaseConfigBean;
-import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
-import org.dbunit.ext.h2.H2DataTypeFactory;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configuration
+@TestConfiguration
 public class TestConfig {
-
     @Bean
-    public DatabaseConfigBean dbUnitDatabaseConfig() {
-        DatabaseConfigBean config = new DatabaseConfigBean();
-        config.setAllowEmptyFields(true);
-        config.setDatatypeFactory(new H2DataTypeFactory());
-        return config;
-    }
-
-    @Bean
-    public DatabaseDataSourceConnectionFactoryBean dbUnitDatabaseConnection(DataSource dataSource) {
-        DatabaseDataSourceConnectionFactoryBean dbUnitDatabaseConnection = new DatabaseDataSourceConnectionFactoryBean();
-        dbUnitDatabaseConnection.setDataSource(dataSource);
-        dbUnitDatabaseConnection.setDatabaseConfig(dbUnitDatabaseConfig());
-        return dbUnitDatabaseConnection;
+    public IDatabaseConnection dbUnitDatabaseConnection(DataSource dataSource) throws Exception {
+        return new DatabaseConnection(dataSource.getConnection());
     }
 }
