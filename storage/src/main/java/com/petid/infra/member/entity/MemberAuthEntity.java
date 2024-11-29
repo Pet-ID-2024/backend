@@ -19,9 +19,11 @@ public class MemberAuthEntity extends BaseEntity {
     private Long memberId;
     private String name;
     private String image;
-    private String phone;
     private String address;
     private String addressDetails;
+    private String rra;
+    private String rraDetails;
+    private String phone;
 
     public static MemberAuthEntity from(
             MemberAuthInfo memberAuthInfo
@@ -31,9 +33,11 @@ public class MemberAuthEntity extends BaseEntity {
                 memberAuthInfo.memberId(),
                 memberAuthInfo.name(),
                 memberAuthInfo.image(),
-                memberAuthInfo.phone(),
                 memberAuthInfo.address(),
-                memberAuthInfo.addressDetails()
+                memberAuthInfo.addressDetails(),
+                memberAuthInfo.rra(),
+                memberAuthInfo.rraDetails(),
+                memberAuthInfo.phone()
         );
     }
 
@@ -43,9 +47,11 @@ public class MemberAuthEntity extends BaseEntity {
                 memberId,
                 name,
                 image,
-                phone,
                 address,
                 addressDetails,
+                rra,
+                rraDetails,
+                phone,
                 null
         );
     }

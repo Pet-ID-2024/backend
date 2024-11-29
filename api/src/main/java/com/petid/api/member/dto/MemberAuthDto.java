@@ -16,6 +16,8 @@ public record MemberAuthDto() {
                     null,
                     address,
                     addressDetails,
+                    null,
+                    null,
                     phone,
                     null
             );
