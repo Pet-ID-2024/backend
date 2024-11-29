@@ -31,6 +31,7 @@ public class PetEntity extends BaseEntity {
     private Character petNeuteredYn;
     private String petNeuteredDate;
     private String petAddr;
+    private String petAddrDetails;
     @Enumerated(EnumType.STRING)
     private Chip chipType;
 
@@ -55,6 +56,7 @@ public class PetEntity extends BaseEntity {
                 petNeuteredYn,
                 petNeuteredDate,
                 petAddr,
+                petAddrDetails,
                 chipType,
                 (id != null && appearance != null) ? appearance.toDomain() : null,
                 (id != null && petImages != null) ? petImages.stream()
@@ -75,6 +77,7 @@ public class PetEntity extends BaseEntity {
                 pet.petNeuteredYn(),
                 pet.petNeuteredDate(),
                 pet.petAddr(),
+                pet.petAddrDetails(),
                 pet.chipType(),
                 pet.appearance() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
                 pet.petId() != null && pet.petImages() != null ? pet.petImages().stream()

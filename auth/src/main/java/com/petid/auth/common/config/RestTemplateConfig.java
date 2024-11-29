@@ -1,4 +1,4 @@
-package com.petid.api.config;
+package com.petid.auth.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

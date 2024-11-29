@@ -7,6 +7,8 @@ public record MemberAuthInfo(
         String image,
         String address,
         String addressDetails,
+        String rra, // Resident Registration Act
+        String rraDetails,
         String phone,
         Long petId
 ) {
@@ -18,6 +20,8 @@ public record MemberAuthInfo(
                 null,
                 memberId,
                 randomName,
+                null,
+                null,
                 null,
                 null,
                 null,
@@ -36,6 +40,8 @@ public record MemberAuthInfo(
                 image,
                 updateMemberAuthInfo.address(),
                 updateMemberAuthInfo.addressDetails(),
+                rra,
+                rraDetails,
                 updateMemberAuthInfo.phone(),
                 petId
         );
@@ -55,6 +61,8 @@ public record MemberAuthInfo(
                 filePath,
                 address,
                 addressDetails,
+                rra,
+                rraDetails,
                 phone,
                 petId
         );

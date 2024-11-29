@@ -11,7 +11,6 @@ import com.petid.domain.hospital.type.DayType;
 import com.petid.domain.hospital.type.OrderStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +22,6 @@ import java.util.List;
 @RequestMapping("/v1/hospital/order")
 public class HospitalOrderController {
 	
-	@Value("${spring.mail.username}")
-	private String emailSenderAddr;
-	
-
     private final HospitalOrderService hospitalOrderService;
     private final HospitalHourService hospitalHourService;
 
@@ -55,10 +50,9 @@ public class HospitalOrderController {
 
         HospitalOrder hospitalOrder = hospitalOrderService.createOrder(orderRequest.toDomain(memberId));
 
-        String recipientEmail = emailSenderAddr; // for unforeseeable future, when we absolutely need to send out emails for booking confirmation,  use "member.email();"
         String subject = "Booking Confirmation";
         String text = "새 병원 예약 요청이 들어왔습니다.";
-        emailService.sendEmail(recipientEmail, subject, text);
+        emailService.sendEmail(subject, text);
 
         return ResponseEntity.ok(
                 HospitalOrderDto.Response.from(hospitalOrder)

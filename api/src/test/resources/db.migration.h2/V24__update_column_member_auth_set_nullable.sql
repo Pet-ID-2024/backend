@@ -1,0 +1,3 @@
+ALTER TABLE member_auth ALTER COLUMN image SET NULL;
+ALTER TABLE member_auth ALTER COLUMN phone SET NULL;
+ALTER TABLE member_auth ALTER COLUMN address SET NULL;
