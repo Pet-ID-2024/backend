@@ -85,17 +85,20 @@ class PetControllerV1Test {
                     "name",
                     "address",
                     "address details",
+                    "address",
+                    "address details",
                     "010-1111-1111"
             );
             PetIdDto.Request requestBody = new PetIdDto.Request(
-                    1L,
-                    1L,
+                    null,
+                    null,
                     "testPetName",
                     "2024-10-11",
                     'M',
                     'Y',
                     "2019-07-23 09:00:00",
                     "testAddr",
+                    "testAddrDetails",
                     Chip.NA,
                     petAppearance,
                     Collections.emptyList(),

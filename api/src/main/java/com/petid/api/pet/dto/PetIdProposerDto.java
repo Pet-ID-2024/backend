@@ -6,6 +6,8 @@ public record PetIdProposerDto(
         String name,
         String address,
         String addressDetails,
+        String rra,
+        String rraDetails,
         String phone
 ) {
     public MemberAuthInfo toDomain(long memberId) {
@@ -16,6 +18,8 @@ public record PetIdProposerDto(
                 null,
                 address,
                 addressDetails,
+                rra,
+                rraDetails,
                 phone,
                 null
         );
