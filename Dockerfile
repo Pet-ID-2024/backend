@@ -4,7 +4,7 @@ COPY --chown=gradle:gradle . /home/gradle/project
 
 WORKDIR /home/gradle/project
 
-RUN gradle build --no-daemon
+RUN RUN gradle build --no-daemon --warning-mode all
 
 FROM openjdk:17-jdk-alpine
 
