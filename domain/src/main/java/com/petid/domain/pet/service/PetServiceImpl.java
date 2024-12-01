@@ -1,6 +1,7 @@
 package com.petid.domain.pet.service;
 
 import com.petid.domain.exception.PetAlreadyExistsException;
+import com.petid.domain.exception.PetNotFoundException;
 import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.service.MemberService;
 import com.petid.domain.pet.manager.PetManager;
@@ -65,8 +66,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Optional<Pet> findPetById(Long petId) {
-        return petRepo.findPetById(petId);
+    public Pet findPetById(Long petId) {
+        return petManager.get(petId);
     }
 
     @Override
@@ -125,8 +126,8 @@ public class PetServiceImpl implements PetService {
     @Override
     @Transactional
     public PetAppearance updatePetAppearance(Long petId, PetAppearance petAppearance) {
-        if (!petRepo.findPetById(petId).isPresent()) {
-            throw new RuntimeException("Pet not found for ID: " + petId);
+        if (petRepo.findPetById(petId).isEmpty()) {
+            throw new PetNotFoundException(petId);
         }
 
         return petAppearanceRepo.updatePetAppearance(petAppearance);
@@ -173,5 +174,8 @@ public class PetServiceImpl implements PetService {
         petImgRepo.deletePetImage(imageId);
     }
 
-
+    @Override
+    public boolean existByPetId(long petId) {
+        return petRepo.findPetById(petId).isPresent();
+    }
 }

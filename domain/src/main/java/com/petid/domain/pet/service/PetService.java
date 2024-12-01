@@ -13,7 +13,7 @@ public interface PetService {
   Pet createPet(Pet pet, MemberAuthInfo memberAuth);
   Pet updatePet(long petId, Pet updatePetData);
   void deletePet(Long petId);
-  Optional<Pet> findPetById(Long petId);
+  Pet findPetById(Long petId);
   List<Pet> findAllPets();
 
   PetImage createPetImage(Long petId, PetImage petImage);
@@ -30,5 +30,7 @@ public interface PetService {
   
   public void deletePetById(Long petId);
   public void deletePetImage(Long petId, Long imageId);
- }
+
+  boolean existByPetId(long petId);
+}
   

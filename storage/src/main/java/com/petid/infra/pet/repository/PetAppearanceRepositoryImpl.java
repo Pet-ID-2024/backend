@@ -1,5 +1,6 @@
 package com.petid.infra.pet.repository;
 
+import com.petid.domain.exception.PetAppearanceNotFoundException;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.repository.PetAppearanceRepository;
 import com.petid.infra.pet.entity.PetAppearanceEntity;
@@ -32,7 +33,7 @@ public class PetAppearanceRepositoryImpl implements PetAppearanceRepository {
             petAppearanceJpaRepo.save(updatedPetAppearanceEntity);
             return updatedPetAppearanceEntity.toDomain();
         }
-        throw new RuntimeException("Pet Appearance not found");
+        throw new PetAppearanceNotFoundException(petAppearance.appearanceId());
     }
 
     @Override
