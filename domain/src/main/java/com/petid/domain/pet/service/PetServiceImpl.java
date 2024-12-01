@@ -48,11 +48,11 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    @Transactional
     public Pet updatePet(
+            long petId,
             Pet updatePetData
     ) {
-        Pet targetPet = petManager.get(updatePetData.petId());
+        Pet targetPet = petManager.get(petId);
         Pet updatedPet = targetPet.update(updatePetData);
 
         return petRepo.save(updatedPet);

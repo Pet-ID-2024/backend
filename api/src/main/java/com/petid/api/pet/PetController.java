@@ -44,11 +44,11 @@ public class PetController {
 
     @PutMapping("/{petId}")
     public ResponseEntity<Pet> updatePet(
-            @PathVariable(name = "petId") Long petId,
+            @PathVariable(name = "petId") long petId,
             @RequestBody PetUpdateDto.Request request
     ) {
-        Pet updateData = request.toDomain(petId);
-        Pet updatedPet = petService.updatePet(updateData);
+        Pet updateData = request.toDomain();
+        Pet updatedPet = petService.updatePet(petId, updateData);
         return new ResponseEntity<>(updatedPet, HttpStatus.OK);
     }
 

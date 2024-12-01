@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface PetService {
 
   Pet createPet(Pet pet, MemberAuthInfo memberAuth);
-  Pet updatePet(Pet updatePetData);
+  Pet updatePet(long petId, Pet updatePetData);
   void deletePet(Long petId);
   Optional<Pet> findPetById(Long petId);
   List<Pet> findAllPets();
