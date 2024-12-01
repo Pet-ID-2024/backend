@@ -15,7 +15,8 @@ import java.lang.annotation.Target;
         "classpath:data/test_member_data.sql",
         "classpath:data/test_member_auth_data.sql",
         "classpath:data/test_pet_data.sql",
-        "classpath:data/test_pet_appearance.sql"
+        "classpath:data/test_pet_appearance_data.sql",
+        "classpath:data/test_pet_image_data.sql",
 })
 public @interface DbSetup {
 }
