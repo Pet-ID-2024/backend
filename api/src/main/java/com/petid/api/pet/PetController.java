@@ -7,14 +7,11 @@ import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.service.PetService;
-import com.petid.domain.pet.service.S3Service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -23,8 +20,6 @@ import java.util.List;
 public class PetController {
 
     private final PetService petService;
-
-    private final S3Service S3service;
 
     @PostMapping
     public ResponseEntity<PetDto.Response> createPetId(
@@ -73,9 +68,9 @@ public class PetController {
     @PostMapping("/{petId}/images")
     public ResponseEntity<PetImageDto.Response> addPetImage(
             @PathVariable(name = "petId") long petId,
-            @RequestBody PetImage petImage
+            @RequestBody PetImageDto.Request request
     ) {
-        PetImage createdImage = petService.createPetImage(petId, petImage);
+        PetImage createdImage = petService.createPetImage(petId, request.toDomain());
 
         return new ResponseEntity<>(
                 PetImageDto.Response.from(createdImage),
@@ -94,48 +89,12 @@ public class PetController {
         );
     }
 
-    @GetMapping
-    public ResponseEntity<List<PetDto.Response>> getAllPets() {
-        List<Pet> pets = petService.findAllPets();
-
-        return ResponseEntity.ok(
-                pets.stream().map(PetDto.Response::from).toList()
-        );
-    }
-
-    @DeleteMapping("/{petId}")
-    public ResponseEntity<Void> deletePet(@PathVariable(name = "petId") long petId) {
-        petService.deletePetById(petId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
     @DeleteMapping("/{petId}/images/{imageId}")
-    public ResponseEntity<Void> deletePetImage(@PathVariable(name = "petId") long petId, @PathVariable(name = "imageId") Long imageId) {
-        if (!petService.existByPetId(petId)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> deletePetImage(
+            @PathVariable(name = "petId") long petId,
+            @PathVariable(name = "imageId") long imageId
+    ) {
         petService.deletePetImage(petId, imageId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @GetMapping("/{petId}/images/presigned-url")
-    public ResponseEntity<String> getPetImageBucketUrl(@PathVariable(name = "petId") long petId, @RequestParam String filePath) {
-        if (!petService.existByPetId(petId)) return new ResponseEntity<>("pet not found", HttpStatus.NOT_FOUND);
-        String url = S3service.createPresignedGetUrl(filePath);
-        return ResponseEntity.ok(url);
-    }
-
-    @PostMapping("/{petId}/images/presigned-url")
-    public ResponseEntity<String> putPetImageBucketUrl(@PathVariable(name = "petId") long petId, @RequestBody String filePath) {
-        if (!petService.existByPetId(petId)) return new ResponseEntity<>("pet not found", HttpStatus.NOT_FOUND);
-        String url = S3service.createPresignedPutUrl(filePath);
-        return ResponseEntity.ok(url);
-    }
-
-    @PostMapping("/sign/images/presigned-url")
-    public ResponseEntity<String> putPetIdSignBucketUrl(
-            @RequestBody String filePath
-    ) {
-        String url = S3service.createPresignedPutUrl(filePath);
-        return ResponseEntity.ok(url);
-    }
-
 }

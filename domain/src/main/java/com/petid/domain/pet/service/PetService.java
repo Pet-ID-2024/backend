@@ -28,9 +28,7 @@ public interface PetService {
   Optional<PetAppearance> findPetAppearanceById(Long appearanceId);
   List<PetAppearance> findAllPetAppearances();
   
-  public void deletePetById(Long petId);
-  public void deletePetImage(Long petId, Long imageId);
-
-  boolean existByPetId(long petId);
+  void deletePetById(Long petId);
+  void deletePetImage(long petId, long imageId);
 }
   
