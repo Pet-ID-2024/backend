@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-    <pet pet_id="2" owner_id="2" appearance_id="1" pet_reg_no="12345" pet_name="test1" pet_birth_date="2024-01-01" pet_sex="M" pet_neutered_yn="Y" pet_neutered_date="2024-01-02 00:00:00" pet_addr="15 Yemen Road, Yemen" chip_type="NA" sign_path="petIdSign/t.png" created_at="2024-06-08 00:00:00" updated_at="2024-09-06 05:29:00" />
-</dataset>

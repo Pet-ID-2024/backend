@@ -1,13 +1,9 @@
 package com.petid.infra.pet.repository;
 
-import com.petid.domain.pet.model.Pet;
+import com.petid.domain.exception.PetAppearanceNotFoundException;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.pet.repository.PetAppearanceRepository;
-import com.petid.domain.pet.repository.PetRepository;
 import com.petid.infra.pet.entity.PetAppearanceEntity;
-import com.petid.infra.pet.entity.PetEntity;
-
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,13 +14,13 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class PetApearanceRepositoryImpl implements PetAppearanceRepository {
-    private final PetAppearanceJpaRepository petAppearanceJpaRepo;   
+public class PetAppearanceRepositoryImpl implements PetAppearanceRepository {
+    private final PetAppearanceJpaRepository petAppearanceJpaRepo;
 
-	 @Override
+    @Override
     @Transactional
     public PetAppearance createPetAppearance(PetAppearance petAppearance) {
-        PetAppearanceEntity petAppearanceEntity = PetAppearanceEntity.from(petAppearance);        
+        PetAppearanceEntity petAppearanceEntity = PetAppearanceEntity.from(petAppearance);
         PetAppearanceEntity savedPetAppearanceEntity = petAppearanceJpaRepo.save(petAppearanceEntity);
         return savedPetAppearanceEntity.toDomain();
     }
@@ -33,11 +29,11 @@ public class PetApearanceRepositoryImpl implements PetAppearanceRepository {
     @Transactional
     public PetAppearance updatePetAppearance(PetAppearance petAppearance) {
         if (petAppearanceJpaRepo.findById(petAppearance.appearanceId()).isPresent()) {
-            PetAppearanceEntity updatedPetAppearanceEntity = PetAppearanceEntity.from(petAppearance);            
+            PetAppearanceEntity updatedPetAppearanceEntity = PetAppearanceEntity.from(petAppearance);
             petAppearanceJpaRepo.save(updatedPetAppearanceEntity);
             return updatedPetAppearanceEntity.toDomain();
         }
-        throw new RuntimeException("Pet Appearance not found");
+        throw new PetAppearanceNotFoundException(petAppearance.appearanceId());
     }
 
     @Override
@@ -55,5 +51,5 @@ public class PetApearanceRepositoryImpl implements PetAppearanceRepository {
     public List<PetAppearance> findAllPetAppearances() {
         return petAppearanceJpaRepo.findAll().stream().map(PetAppearanceEntity::toDomain).collect(Collectors.toList());
     }
-   
+
 }

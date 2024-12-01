@@ -8,9 +8,9 @@ public record PetUpdateDto() {
             String petNeuteredDate,
             PetAppearanceUpdateDto appearance
     ) {
-        public Pet toDomain(long petId) {
+        public Pet toDomain() {
             return new Pet(
-                    petId,
+                    null,
                     null,
                     null,
                     null,

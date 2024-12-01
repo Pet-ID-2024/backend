@@ -23,4 +23,8 @@ public class PetManager {
     ) {
         return petRepository.findPetByOwnerId(ownerId).isPresent();
     }
+
+    public boolean existByPetId(long petId) {
+        return petRepository.findPetById(petId).isPresent();
+    }
 }

@@ -3,15 +3,13 @@ package com.petid.infra.pet.repository;
 import com.petid.domain.pet.model.PetImage;
 import com.petid.domain.pet.repository.PetImageRepository;
 import com.petid.infra.pet.entity.PetImageEntity;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
@@ -62,8 +60,4 @@ public class PetImageRepositoryImpl implements PetImageRepository {
 	public void deletePetImage(Long petImageId) {
 		petImageJpaRepo.deleteById(petImageId);
 	}
-
-    
-
-	
 }

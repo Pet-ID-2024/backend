@@ -1,6 +1,7 @@
 package com.petid.domain.pet.service;
 
 import com.petid.domain.exception.PetAlreadyExistsException;
+import com.petid.domain.exception.PetNotFoundException;
 import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.service.MemberService;
 import com.petid.domain.pet.manager.PetManager;
@@ -48,11 +49,11 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    @Transactional
     public Pet updatePet(
+            long petId,
             Pet updatePetData
     ) {
-        Pet targetPet = petManager.get(updatePetData.petId());
+        Pet targetPet = petManager.get(petId);
         Pet updatedPet = targetPet.update(updatePetData);
 
         return petRepo.save(updatedPet);
@@ -65,8 +66,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Optional<Pet> findPetById(Long petId) {
-        return petRepo.findPetById(petId);
+    public Pet findPetById(Long petId) {
+        return petManager.get(petId);
     }
 
     @Override
@@ -77,8 +78,8 @@ public class PetServiceImpl implements PetService {
     @Override
     @Transactional
     public PetImage createPetImage(Long petId, PetImage petImage) {
-        if (!petRepo.findPetById(petId).isPresent()) {
-            throw new RuntimeException("Pet not found for ID: " + petId);
+        if (!petManager.existByPetId(petId)) {
+            throw new PetNotFoundException(petId);
         }
         return petImgRepo.createPetImage(petId, petImage);
     }
@@ -86,8 +87,8 @@ public class PetServiceImpl implements PetService {
     @Override
     @Transactional
     public PetImage updatePetImage(Long petId, PetImage petImage) {
-        if (!petRepo.findPetById(petId).isPresent()) {
-            throw new RuntimeException("Pet not found for ID: " + petId);
+        if (!petManager.existByPetId(petId)) {
+            throw new PetNotFoundException(petId);
         }
 
         return petImgRepo.updatePetImage(petImage);
@@ -125,8 +126,8 @@ public class PetServiceImpl implements PetService {
     @Override
     @Transactional
     public PetAppearance updatePetAppearance(Long petId, PetAppearance petAppearance) {
-        if (!petRepo.findPetById(petId).isPresent()) {
-            throw new RuntimeException("Pet not found for ID: " + petId);
+        if (petRepo.findPetById(petId).isEmpty()) {
+            throw new PetNotFoundException(petId);
         }
 
         return petAppearanceRepo.updatePetAppearance(petAppearance);
@@ -166,12 +167,10 @@ public class PetServiceImpl implements PetService {
 
     }
 
-    public void deletePetImage(Long petId, Long imageId) {
-        if (!petRepo.findPetById(petId).isPresent()) {
-            throw new RuntimeException("Pet not found for ID: " + petId);
+    public void deletePetImage(long petId, long imageId) {
+        if (!petManager.existByPetId(petId)) {
+            throw new PetNotFoundException(petId);
         }
         petImgRepo.deletePetImage(imageId);
     }
-
-
 }
