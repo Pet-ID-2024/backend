@@ -1,4 +1,4 @@
-package com.petid.api.pet;
+package com.petid.api.config;
 
 import jakarta.transaction.Transactional;
 import org.springframework.test.context.jdbc.Sql;
