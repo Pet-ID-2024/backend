@@ -1,13 +1,11 @@
 package com.petid.api.pet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.petid.api.config.DbSetup;
+import com.petid.api.config.PetIdAPITestConfig;
 import com.petid.api.exception.ExceptionResponse;
 import com.petid.api.pet.dto.*;
-import com.petid.auth.jwt.TokenProvider;
 import com.petid.auth.jwt.TokenValidator;
-import com.petid.auth.oauth.sdk.controller.OAuth2UserInfoUriConverter;
-import com.petid.domain.config.FcmInitializer;
-import com.petid.domain.email.EmailService;
 import com.petid.domain.pet.model.PetAppearance;
 import com.petid.domain.type.Breed;
 import com.petid.domain.type.Chip;
@@ -18,11 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Collections;
 
+import static com.petid.api.config.PetIdAPITestConfig.TEST_TOKEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @DbSetup
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(PetIdAPITestConfig.class)
 @DisplayName("Pet Controller")
 class PetControllerV1Test {
 
@@ -44,20 +45,6 @@ class PetControllerV1Test {
     @MockBean
     @Autowired
     private TokenValidator tokenValidator;
-
-    @MockBean
-    private TokenProvider tokenProvider;
-
-    @MockBean
-    private OAuth2UserInfoUriConverter oAuth2UserInfoUriConverter;
-
-    @MockBean
-    private EmailService emailService;
-
-    @MockBean
-    private FcmInitializer fcmInitializer;
-
-    private static final String TEST_TOKEN = "testToken";
 
     @BeforeEach
     void setUp() {

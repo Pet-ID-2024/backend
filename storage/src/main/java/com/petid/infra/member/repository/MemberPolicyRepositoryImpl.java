@@ -18,12 +18,12 @@ public class MemberPolicyRepositoryImpl implements MemberPolicyRepository {
     private final MemberPolicyJpaRepository jpaRepository;
 
     @Override
-    public void save(
+    public MemberPolicy save(
             MemberPolicy memberPolicy
     ) {
         Member member = memberManager.get(memberPolicy.memberId());
 
-        jpaRepository.save(MemberPolicyEntity.from(memberPolicy, member));
+        return jpaRepository.save(MemberPolicyEntity.from(memberPolicy, member)).toDomain();
     }
 
     @Override

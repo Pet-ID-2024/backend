@@ -38,11 +38,11 @@ public record MemberAuthInfo(
                 memberId,
                 (updateMemberAuthInfo.name == null)  ? name : updateMemberAuthInfo.name,
                 image,
-                updateMemberAuthInfo.address(),
-                updateMemberAuthInfo.addressDetails(),
+                (updateMemberAuthInfo.address() == null) ? address : updateMemberAuthInfo.address,
+                (updateMemberAuthInfo.addressDetails() == null) ? addressDetails : updateMemberAuthInfo.addressDetails,
                 rra,
                 rraDetails,
-                updateMemberAuthInfo.phone(),
+                (updateMemberAuthInfo.phone() == null) ? phone : updateMemberAuthInfo.phone,
                 petId
         );
     }
@@ -58,7 +58,7 @@ public record MemberAuthInfo(
                 id,
                 memberId,
                 name,
-                filePath,
+                (filePath.isBlank()) ? image : filePath,
                 address,
                 addressDetails,
                 rra,

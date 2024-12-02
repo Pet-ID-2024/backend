@@ -35,23 +35,23 @@ public class MemberService {
         return memberAuthRepository.save(updated);
     }
 
-    public void updateOptionalPolicy(
+    public MemberPolicy updateOptionalPolicy(
             long memberId,
             boolean ad
     ) {
         MemberPolicy memberPolicy = memberPolicyManager.getByMemberId(memberId);
         MemberPolicy updated = memberPolicy.updatePolicy(ad);
 
-        memberPolicyRepository.save(updated);
+        return memberPolicyRepository.save(updated);
     }
 
-    public void updateMemberProfileImage(
+    public MemberAuthInfo updateMemberProfileImage(
             long memberId,
             String filePath
     ) {
         MemberAuthInfo memberAuthInfo = memberAuthManager.getByMemberId(memberId);
         MemberAuthInfo updated = memberAuthInfo.updateProfileImage(filePath);
 
-        memberAuthRepository.save(updated);
+        return memberAuthRepository.save(updated);
     }
 }
