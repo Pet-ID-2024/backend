@@ -58,7 +58,7 @@ public record MemberAuthInfo(
                 id,
                 memberId,
                 name,
-                filePath,
+                (filePath.isBlank()) ? image : filePath,
                 address,
                 addressDetails,
                 rra,

@@ -5,6 +5,7 @@ import com.petid.api.member.dto.MemberAuthDto;
 import com.petid.api.member.dto.MemberInfoDto;
 import com.petid.domain.member.manager.MemberAuthManager;
 import com.petid.domain.member.model.MemberAuthInfo;
+import com.petid.domain.member.model.MemberPolicy;
 import com.petid.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -57,10 +58,9 @@ public class MemberController {
             @RequestParam("ad") boolean ad
     ) {
         long memberId = RequestUtil.getMemberIdFromRequest(request);
+        MemberPolicy updatedPolicy = memberService.updateOptionalPolicy(memberId, ad);
 
-        memberService.updateOptionalPolicy(memberId, ad);
-
-        return ResponseEntity.ok(ad);
+        return ResponseEntity.ok(updatedPolicy.advertisement());
     }
 
     @PostMapping("/image")
@@ -69,9 +69,8 @@ public class MemberController {
             @RequestBody String filePath
     ) {
         long memberId = RequestUtil.getMemberIdFromRequest(request);
+        MemberAuthInfo updatedAuthInfo = memberService.updateMemberProfileImage(memberId, filePath);
 
-        memberService.updateMemberProfileImage(memberId, filePath);
-
-        return ResponseEntity.ok(filePath);
+        return ResponseEntity.ok(updatedAuthInfo.image());
     }
 }
