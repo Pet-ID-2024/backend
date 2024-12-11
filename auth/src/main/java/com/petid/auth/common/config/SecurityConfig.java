@@ -3,8 +3,6 @@ package com.petid.auth.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petid.auth.jwt.TokenAuthExceptionFilter;
 import com.petid.auth.jwt.TokenAuthFilter;
-import com.petid.auth.oauth.redirect.CustomOAuth2UserService;
-import com.petid.auth.oauth.redirect.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final TokenAuthFilter tokenAuthFilter;
-    private final CustomOAuth2UserService oAuth2UserService;
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -70,15 +66,11 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/v1/**")
                                 )
                                 .permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new TokenAuthExceptionFilter(objectMapper), TokenAuthFilter.class)
-
-                .oauth2Login(oauth ->
-                        oauth.userInfoEndpoint(c -> c.userService(oAuth2UserService))
-                                .successHandler(oAuth2SuccessHandler)
-                );
+        ;
 
         return http.build();
     }

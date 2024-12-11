@@ -31,6 +31,7 @@ public class PetEntity extends BaseEntity {
     private Character petNeuteredYn;
     private String petNeuteredDate;
     private String petAddr;
+    private String petAddrDetails;
     @Enumerated(EnumType.STRING)
     private Chip chipType;
 
@@ -41,6 +42,8 @@ public class PetEntity extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "pet_id", referencedColumnName = "pet_id", insertable = false, updatable = false)
     private List<PetImageEntity> petImages;
+
+    private String signPath;
 
     public Pet toDomain() {
         return new Pet(
@@ -53,11 +56,13 @@ public class PetEntity extends BaseEntity {
                 petNeuteredYn,
                 petNeuteredDate,
                 petAddr,
+                petAddrDetails,
                 chipType,
                 (id != null && appearance != null) ? appearance.toDomain() : null,
                 (id != null && petImages != null) ? petImages.stream()
                         .map(PetImageEntity::toDomain)
-                        .toList() : null
+                        .toList() : null,
+                signPath
         );
     }
 
@@ -72,11 +77,13 @@ public class PetEntity extends BaseEntity {
                 pet.petNeuteredYn(),
                 pet.petNeuteredDate(),
                 pet.petAddr(),
+                pet.petAddrDetails(),
                 pet.chipType(),
                 pet.appearance() != null ? PetAppearanceEntity.from(pet.appearance()) : null,
                 pet.petId() != null && pet.petImages() != null ? pet.petImages().stream()
                         .map(PetImageEntity::from)
-                        .toList() : null
+                        .toList() : null,
+                pet.signPath()
         );
     }
 }

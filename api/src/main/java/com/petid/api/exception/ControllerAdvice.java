@@ -13,19 +13,18 @@ public class ControllerAdvice {
     @ExceptionHandler(
             {
                     MemberDataNotFoundException.class,
-                    PetDataNotFoundException.class,
+                    PetDataException.class,
                     HospitalDataNotFoundException.class,
-                    LocationDataNotFoundException.class,
-                    PetDataNotFoundException.class
+                    LocationDataNotFoundException.class
             }
     )
     public ResponseEntity<ExceptionResponse> handleMemberNotFoundException(
             HttpServletRequest request,
-            MemberDataNotFoundException e
+            Exception e
     ) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ExceptionResponse.of(
-                        404,
+                        400,
                         e.getMessage(),
                         request.getRequestURI()
                 )

@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import com.petid.domain.content.model.Content;
 import com.petid.domain.type.Category;
+import com.petid.infra.common.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ContentEntity {
+public class ContentEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,13 +44,7 @@ public class ContentEntity {
     private Category category;
 
     @Column(name = "image_url", length = 255)
-    private String imageUrl;
-
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    private Instant updatedAt;
+    private String imageUrl;    
 
     @Column(name = "likes_count", columnDefinition = "INT(11) DEFAULT 0")
     private long likesCount;
@@ -64,8 +59,8 @@ public class ContentEntity {
 		        body,
 		        category,
 		        imageUrl,
-		        createdAt,
-		        updatedAt,
+		        getCreatedAt(),
+		        getUpdatedAt(),
 		        likesCount,
 		        authorId
         );
@@ -78,9 +73,7 @@ public class ContentEntity {
         entity.setTitle(domain.title());
         entity.setBody(domain.body());
         entity.setCategory(domain.category());
-        entity.setImageUrl(domain.imageUrl());
-        entity.setCreatedAt(domain.createdAt());
-        entity.setUpdatedAt(domain.updatedAt());
+        entity.setImageUrl(domain.imageUrl());        
         entity.setLikesCount(domain.likesCount());
         entity.setAuthorId(authorId);  // Set the Member entity here
         return entity;

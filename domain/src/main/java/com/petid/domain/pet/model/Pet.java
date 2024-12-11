@@ -14,9 +14,11 @@ public record Pet(
 		Character petNeuteredYn,
 		String petNeuteredDate,
 		String petAddr,
+		String petAddrDetails,
 		Chip chipType,
 		PetAppearance appearance,
-		List<PetImage> petImages
+		List<PetImage> petImages,
+		String signPath
 ) {
 	public Pet setOwnerId(
 			long ownerId
@@ -31,9 +33,11 @@ public record Pet(
 				petNeuteredYn,
 				petNeuteredDate,
 				petAddr,
+				petAddrDetails,
 				chipType,
 				appearance,
-				petImages
+				petImages,
+				signPath
 		);
 	}
 
@@ -50,9 +54,11 @@ public record Pet(
         		petNeuteredYn,
         		petNeuteredDate,
         		petAddr,
+				petAddrDetails,
 				chipType,
         		appearance,
-        		petImages
+        		petImages,
+				signPath
         );
     }
 	
@@ -69,11 +75,34 @@ public record Pet(
         		petNeuteredYn,
         		petNeuteredDate,
         		petAddr,
+				petAddrDetails,
 				chipType,
         		appearance,
-        		petImages
+        		petImages,
+				signPath
         );
     }
+
+	public Pet update(
+			Pet updatePetData
+	) {
+		return new Pet(
+				petId,
+				ownerId,
+				petRegNo,
+				petName,
+				petBirthDate,
+				petSex,
+				petNeuteredYn,
+				updatePetData.petNeuteredDate(),
+				petAddr,
+				petAddrDetails,
+				chipType,
+				appearance.update(updatePetData.appearance()),
+				petImages,
+				signPath
+		);
+	}
 }
 
 

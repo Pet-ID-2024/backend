@@ -1,10 +1,11 @@
 package com.petid.infra.pet.repository;
 
+import com.petid.domain.exception.PetNotFoundException;
 import com.petid.domain.pet.model.Pet;
 import com.petid.domain.pet.repository.PetRepository;
+import com.petid.infra.pet.entity.PetAppearanceEntity;
 import com.petid.infra.pet.entity.PetEntity;
-
-import jakarta.transaction.Transactional; 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class PetRepositoryImpl implements PetRepository {
 
     private final PetJpaRepository petJpaRepo;
+    private final PetAppearanceJpaRepository petAppearanceJpaRepository;
     
     @Override
     @Transactional
@@ -38,7 +40,7 @@ public class PetRepositoryImpl implements PetRepository {
             petJpaRepo.save(updatedPetEntity);
             return updatedPetEntity.toDomain();
         }
-        throw new RuntimeException("Pet not found");
+        throw new PetNotFoundException(pet.petId());
     }
 
     @Override
@@ -57,5 +59,22 @@ public class PetRepositoryImpl implements PetRepository {
         return petJpaRepo.findAll().stream().map(PetEntity::toDomain).collect(Collectors.toList());
     }
 
-   
+    @Override
+    @Transactional
+    public Pet save(Pet pet) {
+        PetEntity petEntity = PetEntity.from(pet);
+        PetAppearanceEntity appearanceEntity = petEntity.getAppearance();
+
+
+        petAppearanceJpaRepository.save(appearanceEntity);
+        return petJpaRepo.save(petEntity).toDomain();
+    }
+
+    @Override
+    public Optional<Pet> findPetByOwnerId(long ownerId) {
+        return petJpaRepo.findByOwnerId(ownerId)
+                .map(PetEntity::toDomain);
+    }
+
+
 }

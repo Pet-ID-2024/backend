@@ -9,6 +9,17 @@ public record PetAppearance(
 		Integer weight,
 		String hairLength
 ) {
+	public PetAppearance update(
+			PetAppearance updateData
+	) {
+		return new PetAppearance(
+				appearanceId,
+				breed,
+				hairColor,
+				updateData.weight(),
+				hairLength
+		);
+	}
 }
 
 

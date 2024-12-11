@@ -20,7 +20,7 @@ public class QContentRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<Content> findAllByCategory(Category category, long memberId) {
+    public List<Content> findAllByCategory(Category category, long memberId, Boolean isFullBody) {
         QContentEntity content = QContentEntity.contentEntity;
         QContentLikedEntity contentLiked =  QContentLikedEntity.contentLikedEntity;
         
@@ -34,7 +34,7 @@ public class QContentRepository {
                 Content.class, // Project fields into a DTO
                 content.contentId,
                 content.title,
-                content.body,
+                (isFullBody ? content.body : content.body.substring(0, 50)),
                 content.category,
                 content.imageUrl,
                 content.createdAt,
@@ -47,7 +47,8 @@ public class QContentRepository {
             .leftJoin(contentLiked)
                .on(content.contentId.eq(contentLiked.contentId))
             .where(category.equals(Category.ALL) ? null : content.category.eq(category))
-            .groupBy(contentLiked.contentId)
+            .groupBy(content.contentId)
+            .orderBy(content.contentId.desc())
             .fetch();
     }
     
@@ -78,7 +79,7 @@ public class QContentRepository {
             .leftJoin(contentLiked)
                .on(content.contentId.eq(contentLiked.contentId))
             .where(content.contentId.eq(contentId))
-            .groupBy(contentLiked.contentId)
+            .groupBy(content.contentId)
             .fetchFirst();
     }
 

@@ -29,6 +29,8 @@ public class QMemberAuthRepository {
                                         memberAuthEntity.image,
                                         memberAuthEntity.address,
                                         memberAuthEntity.addressDetails,
+                                        memberAuthEntity.rra,
+                                        memberAuthEntity.rraDetails,
                                         memberAuthEntity.phone,
                                         petEntity.id
                                 )

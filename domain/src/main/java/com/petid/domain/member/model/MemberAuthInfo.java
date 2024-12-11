@@ -7,6 +7,8 @@ public record MemberAuthInfo(
         String image,
         String address,
         String addressDetails,
+        String rra, // Resident Registration Act
+        String rraDetails,
         String phone,
         Long petId
 ) {
@@ -22,6 +24,8 @@ public record MemberAuthInfo(
                 null,
                 null,
                 null,
+                null,
+                null,
                 null
         );
     }
@@ -32,11 +36,13 @@ public record MemberAuthInfo(
         return new MemberAuthInfo(
                 id,
                 memberId,
-                updateMemberAuthInfo.name(),
-                updateMemberAuthInfo.image(),
-                updateMemberAuthInfo.address(),
-                updateMemberAuthInfo.addressDetails(),
-                updateMemberAuthInfo.phone(),
+                (updateMemberAuthInfo.name == null)  ? name : updateMemberAuthInfo.name,
+                image,
+                (updateMemberAuthInfo.address() == null) ? address : updateMemberAuthInfo.address,
+                (updateMemberAuthInfo.addressDetails() == null) ? addressDetails : updateMemberAuthInfo.addressDetails,
+                rra,
+                rraDetails,
+                (updateMemberAuthInfo.phone() == null) ? phone : updateMemberAuthInfo.phone,
                 petId
         );
     }
@@ -52,9 +58,11 @@ public record MemberAuthInfo(
                 id,
                 memberId,
                 name,
-                filePath,
+                (filePath.isBlank()) ? image : filePath,
                 address,
                 addressDetails,
+                rra,
+                rraDetails,
                 phone,
                 petId
         );

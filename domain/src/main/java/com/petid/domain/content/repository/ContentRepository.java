@@ -10,7 +10,7 @@ public interface ContentRepository {
 	
 	List<Content> findAll();
 	
-	List<Content> findByCategory(Category category, long memberId);
+	List<Content> findByCategory(Category category, long memberId, boolean isFullBody);
 	
 	Content findById(long contentId, long memberId);
 
