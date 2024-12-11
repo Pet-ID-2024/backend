@@ -65,7 +65,7 @@ public class HospitalOrderScheduler {
     	Map<String, Object> body = new HashMap<>();
     	body.put("status", order.status());
 		body.put("hostpitalName", order.hospitalName());
-    	Fcm fcm = new Fcm("Booking Info", body, member.fcmToken(), null);
+    	Fcm fcm = new Fcm("order", body, member.fcmToken(), null);
     	fcm.updateFcmToken(member.fcmToken());
     	fcmService.sendNotificationToUser(fcm);
     	if(order.status().equals(OrderStatus.CONFIRMED)){
@@ -80,7 +80,7 @@ public class HospitalOrderScheduler {
     	Map<String, Object> body = new HashMap<>();
     	body.put("id", member.id() );
     	body.put("message", "간단한 반려동물등록으로 평생을 함께하는 방법 지금 알려드려요!");		
-    	Fcm fcm = new Fcm("PetRegReminder", body, member.fcmToken(), null);
+    	Fcm fcm = new Fcm("reminder", body, member.fcmToken(), null);
     	fcm.updateFcmToken(member.fcmToken());
     	fcmService.sendNotificationToUser(fcm);    	
     }
