@@ -55,7 +55,7 @@ public class NotificationController  {
 			body.put("status", status);
 			body.put("hostpitalName", hospitalOrder.hospitalName());
 			
-			Fcm fcm = new Fcm("Booking Info", body , token, null);
+			Fcm fcm = new Fcm("booking", body , token, null);
 			fcmService.sendNotificationToUser(fcm);
 			
 			hostpitalOrderService.updateOrderStatus(hospitalOrder.id(), hospitalOrder.status());
