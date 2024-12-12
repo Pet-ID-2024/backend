@@ -48,7 +48,7 @@ public class QContentRepository {
                .on(content.contentId.eq(contentLiked.contentId))
             .where(category.equals(Category.ALL) ? null : content.category.eq(category))
             .groupBy(content.contentId)
-            .orderBy(content.contentId.desc())
+            .orderBy(content.createdAt.desc())
             .fetch();
     }
     

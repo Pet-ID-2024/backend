@@ -30,8 +30,7 @@ public class ContentService {
         return contentRepository.findAll();
     }
     
-    public List<Content> getContentsByCategory(Category category, long memberId, boolean isFullBody) {
-        List<Content> aaaa = contentRepository.findByCategory(category, memberId, isFullBody);
+    public List<Content> getContentsByCategory(Category category, long memberId, boolean isFullBody) {        
         return contentRepository.findByCategory(category, memberId, isFullBody);
     }
 
