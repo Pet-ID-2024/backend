@@ -79,8 +79,6 @@ class PetControllerV1Test {
                 'M',
                 'Y',
                 "2019-07-23 09:00:00",
-                "testAddr",
-                "testAddrDetails",
                 Chip.NA,
                 petAppearance,
                 Collections.emptyList(),

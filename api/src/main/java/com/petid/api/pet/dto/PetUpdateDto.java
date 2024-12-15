@@ -19,8 +19,6 @@ public record PetUpdateDto() {
                     null,
                     petNeuteredDate,
                     null,
-                    null,
-                    null,
                     appearance.toDomain(),
                     null,
                     null

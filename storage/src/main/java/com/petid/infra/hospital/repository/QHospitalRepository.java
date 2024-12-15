@@ -43,7 +43,7 @@ public class QHospitalRepository {
                 .where(
                         hospitalEntity.sidoId.eq(sidoId),
                         hospitalEntity.sigunguId.eq(sigunguId),
-                        hospitalEntity.eupmundongId.in(eupmundongIds)
+                        eupmundongIds != null ? hospitalEntity.eupmundongId.in(eupmundongIds) : null
                 )
                 .orderBy(
                         Expressions.numberTemplate(Double.class,
