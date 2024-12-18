@@ -18,6 +18,7 @@ import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.domain.member.repository.MemberPolicyRepository;
 import com.petid.domain.member.repository.MemberRepository;
 import com.petid.domain.member.util.RandomNameUtil;
+import com.petid.domain.type.WithdrawalStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -90,6 +91,9 @@ public class AuthServiceImpl implements AuthService {
             String fcmToken
     ) {
         Member member = memberManager.getByUid(uid);
+        if (member.status() == WithdrawalStatus.IN_PROGRESS) {
+            throw new CustomAuthException(CustomAuthExceptionType.MEMBER_WITHDRAW_IN_PROGRESS);
+        }
         memberRepository.save(member.updateFcmToken(fcmToken));
 
         String accessToken = tokenProvider.getAccessToken(member);

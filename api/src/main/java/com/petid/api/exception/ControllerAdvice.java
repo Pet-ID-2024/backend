@@ -1,5 +1,7 @@
 package com.petid.api.exception;
 
+import com.petid.auth.common.exception.CustomAuthException;
+import com.petid.auth.common.exception.CustomAuthExceptionType;
 import com.petid.domain.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,26 @@ public class ControllerAdvice {
                 ExceptionResponse.of(
                         400,
                         e.getMessage(),
+                        request.getRequestURI()
+                )
+        );
+    }
+
+    @ExceptionHandler(
+            {
+                    CustomAuthException.class
+            }
+    )
+    public ResponseEntity<ExceptionResponse> handleCustomAuthException(
+            HttpServletRequest request,
+            CustomAuthException e
+    ) {
+        CustomAuthExceptionType exceptionType = e.getExceptionType();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                ExceptionResponse.of(
+                        exceptionType.getCode(),
+                        exceptionType.getMessage(),
                         request.getRequestURI()
                 )
         );
