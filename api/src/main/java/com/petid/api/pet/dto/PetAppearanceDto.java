@@ -1,12 +1,11 @@
 package com.petid.api.pet.dto;
 
 import com.petid.domain.pet.model.PetAppearance;
-import com.petid.domain.type.Breed;
 
 public record PetAppearanceDto() {
     public record Request(
             Long appearanceId,
-            Breed breed,
+            String breed,
             String hairColor,
             Integer weight,
             String hairLength
@@ -24,7 +23,7 @@ public record PetAppearanceDto() {
 
     public record Response(
             Long appearanceId,
-            Breed breed,
+            String breed,
             String hairColor,
             Integer weight,
             String hairLength
