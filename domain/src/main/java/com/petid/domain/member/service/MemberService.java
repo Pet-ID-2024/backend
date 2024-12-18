@@ -1,11 +1,15 @@
 package com.petid.domain.member.service;
 
 import com.petid.domain.member.manager.MemberAuthManager;
+import com.petid.domain.member.manager.MemberManager;
 import com.petid.domain.member.manager.MemberPolicyManager;
+import com.petid.domain.member.model.Member;
 import com.petid.domain.member.model.MemberAuthInfo;
 import com.petid.domain.member.model.MemberPolicy;
 import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.domain.member.repository.MemberPolicyRepository;
+import com.petid.domain.member.repository.MemberRepository;
+import com.petid.domain.type.WithdrawalStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
+    private final MemberManager memberManager;
+    private final MemberRepository memberRepository;
     private final MemberAuthManager memberAuthManager;
     private final MemberAuthRepository memberAuthRepository;
     private final MemberPolicyManager memberPolicyManager;
@@ -53,5 +59,25 @@ public class MemberService {
         MemberAuthInfo updated = memberAuthInfo.updateProfileImage(filePath);
 
         return memberAuthRepository.save(updated);
+    }
+
+    public void withdraw(
+            long memberId
+    ) {
+        Member member = memberManager.get(memberId);
+
+        if (member.status() == WithdrawalStatus.NORMAL) {
+            memberRepository.save(member.withdraw());
+        }
+    }
+
+    public void restore(
+            long memberId
+    ) {
+        Member member = memberManager.get(memberId);
+
+        if (member.status() == WithdrawalStatus.IN_PROGRESS) {
+            memberRepository.save(member.restore());
+        }
     }
 }

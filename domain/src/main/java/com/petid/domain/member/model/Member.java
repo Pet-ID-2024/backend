@@ -29,4 +29,30 @@ public record Member(
                 statusUpdateDate
         );
     }
+
+    public Member withdraw() {
+        return new Member(
+                id,
+                uid,
+                platform,
+                fcmToken,
+                email,
+                role,
+                WithdrawalStatus.IN_PROGRESS,
+                LocalDate.now()
+        );
+    }
+
+    public Member restore() {
+        return new Member(
+                id,
+                uid,
+                platform,
+                fcmToken,
+                email,
+                role,
+                WithdrawalStatus.NORMAL,
+                LocalDate.now()
+        );
+    }
 }
