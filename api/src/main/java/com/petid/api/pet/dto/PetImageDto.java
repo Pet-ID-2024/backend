@@ -4,15 +4,16 @@ import com.petid.domain.pet.model.PetImage;
 
 public record PetImageDto() {
     public record Request(
-            long petImageId,
-            long petId,
-            String imagePath
+            String filePath
     ) {
-        public PetImage toDomain() {
+        public PetImage toDomain(
+                long petImageId,
+                long petId
+        ) {
             return new PetImage(
                     petImageId,
                     petId,
-                    imagePath
+                    filePath
             );
         }
     }

@@ -65,12 +65,27 @@ public class PetController {
         );
     }
 
-    @PostMapping("/{petId}/images")
+    @PostMapping("/{petId}/images/{imageId}")
     public ResponseEntity<PetImageDto.Response> addPetImage(
             @PathVariable(name = "petId") long petId,
+            @PathVariable(name = "imageId") long imageId,
             @RequestBody PetImageDto.Request request
     ) {
-        PetImage createdImage = petService.createPetImage(petId, request.toDomain());
+        PetImage createdImage = petService.createPetImage(request.toDomain(imageId, petId));
+
+        return new ResponseEntity<>(
+                PetImageDto.Response.from(createdImage),
+                HttpStatus.CREATED
+        );
+    }
+
+    @PatchMapping("/{petId}/images/{imageId}")
+    public ResponseEntity<PetImageDto.Response> updatePetImage(
+            @PathVariable(name = "petId") long petId,
+            @PathVariable(name = "imageId") long imageId,
+            @RequestBody PetImageDto.Request request
+    ) {
+        PetImage createdImage = petService.updatePetImage(request.toDomain(imageId, petId));
 
         return new ResponseEntity<>(
                 PetImageDto.Response.from(createdImage),

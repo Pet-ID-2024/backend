@@ -33,7 +33,7 @@ public class PetImageRepositoryImpl implements PetImageRepository {
         if (optionalPetImageEntity.isPresent()) {
             PetImageEntity petImageEntity = optionalPetImageEntity.get();
             PetImageEntity updatedPetImageEntity = PetImageEntity.from(petImage);
-            updatedPetImageEntity.setId(petImageEntity.getId());
+            updatedPetImageEntity.setImagePath(petImageEntity.getImagePath());
             petImageJpaRepo.save(updatedPetImageEntity);
             return updatedPetImageEntity.toDomain();
         }

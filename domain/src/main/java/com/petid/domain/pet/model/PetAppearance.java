@@ -14,7 +14,7 @@ public record PetAppearance(
 				appearanceId,
 				breed,
 				hairColor,
-				updateData.weight(),
+				(updateData.weight() != null) ? updateData.weight() : weight,
 				hairLength
 		);
 	}
