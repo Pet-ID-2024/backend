@@ -7,5 +7,6 @@ public enum Category {
 	SUPPORT,
 	TERMS,
 	NOTICE,
+	FAQ,
 	ALL
 }
