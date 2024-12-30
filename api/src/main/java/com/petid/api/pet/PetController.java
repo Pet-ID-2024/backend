@@ -65,13 +65,12 @@ public class PetController {
         );
     }
 
-    @PostMapping("/{petId}/images/{imageId}")
+    @PostMapping("/{petId}/images")
     public ResponseEntity<PetImageDto.Response> addPetImage(
             @PathVariable(name = "petId") long petId,
-            @PathVariable(name = "imageId") long imageId,
             @RequestBody PetImageDto.Request request
     ) {
-        PetImage createdImage = petService.createPetImage(request.toDomain(imageId, petId));
+        PetImage createdImage = petService.createPetImage(request.toDomain(null, petId));
 
         return new ResponseEntity<>(
                 PetImageDto.Response.from(createdImage),

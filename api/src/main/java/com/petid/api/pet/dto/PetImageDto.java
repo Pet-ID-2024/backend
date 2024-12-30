@@ -7,7 +7,7 @@ public record PetImageDto() {
             String filePath
     ) {
         public PetImage toDomain(
-                long petImageId,
+                Long petImageId,
                 long petId
         ) {
             return new PetImage(

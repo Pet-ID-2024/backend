@@ -261,8 +261,6 @@ class PetControllerV1Test {
         long petId = 2L;
         String imagePath = "testImage.png";
         PetImageDto.Request requestBody = new PetImageDto.Request(
-                petImageId,
-                petId,
                 imagePath
         );
 
