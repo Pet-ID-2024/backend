@@ -29,7 +29,7 @@ public class NotificationController  {
     private final MemberManager memberManager;
     private final HospitalOrderService hostpitalOrderService;    
 
-    @PostMapping()
+    @PostMapping("/content")
     public ResponseEntity<String> sendNotification(HttpServletRequest request, @RequestBody Fcm fcm) {
     	
     		String targetType = fcm.targetType();
