@@ -8,5 +8,6 @@ public enum Category {
 	TERMS,
 	NOTICE,
 	FAQ,
+	PRIVACY_POLICY,
 	ALL
 }
