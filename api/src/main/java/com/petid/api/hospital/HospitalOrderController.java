@@ -51,7 +51,8 @@ public class HospitalOrderController {
         HospitalOrder hospitalOrder = hospitalOrderService.createOrder(orderRequest.toDomain(memberId));
 
         String subject = "Booking Confirmation";
-        String text = "새 병원 예약 요청이 들어왔습니다.";
+        String text ="<p>새 병원 예약 요청이 들어왔습니다.</p>" +
+              "<p><a href='http://yourpet-id.com/'>여기를 클릭하여 예약 확인</a></p>";
         emailService.sendEmail(subject, text);
 
         return ResponseEntity.ok(
