@@ -54,6 +54,7 @@ public class NotificationController  {
 			Map<String, Object> body = new HashMap<>();
 			body.put("status", status);
 			body.put("hostpitalName", hospitalOrder.hospitalName());
+			body.put("id", hospitalOrder.id());
 			
 			Fcm fcm = new Fcm("booking", body , token, null);
 			fcmService.sendNotificationToUser(fcm);
