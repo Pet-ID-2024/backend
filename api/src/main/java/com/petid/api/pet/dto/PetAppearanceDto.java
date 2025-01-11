@@ -7,7 +7,7 @@ public record PetAppearanceDto() {
             Long appearanceId,
             String breed,
             String hairColor,
-            Integer weight,
+            Double weight,
             String hairLength
     ) {
         public PetAppearance toDomain() {
@@ -25,7 +25,7 @@ public record PetAppearanceDto() {
             Long appearanceId,
             String breed,
             String hairColor,
-            Integer weight,
+            Double weight,
             String hairLength
     ) {
         public static Response from(PetAppearance petAppearance) {

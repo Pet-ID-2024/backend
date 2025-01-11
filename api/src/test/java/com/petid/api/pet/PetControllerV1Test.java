@@ -59,7 +59,7 @@ class PetControllerV1Test {
                 null,
                 "Beagle",
                 "Green",
-                10,
+                10.0,
                 "Long"
         );
         PetIdProposerDto petIdProposer = new PetIdProposerDto(
@@ -175,7 +175,7 @@ class PetControllerV1Test {
         // given
         String newBreed = "Bulldog";
         String newHairColor = "Blue";
-        int newWeight = 1000;
+        double newWeight = 1000.0;
         String newHairLength = "Short";
         PetAppearanceDto.Request requestBody = new PetAppearanceDto.Request(
                 2L,

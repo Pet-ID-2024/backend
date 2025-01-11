@@ -24,7 +24,7 @@ public class PetAppearanceEntity extends BaseEntity {
   private String breed;
   
   private String hairColor;
-  private Integer weight;
+  private Double weight;
   private String hairLength;
 
   public PetAppearance toDomain() {

@@ -4,7 +4,7 @@ public record PetAppearance(
 		Long appearanceId,		
 		String breed,
 		String hairColor,
-		Integer weight,
+		Double weight,
 		String hairLength
 ) {
 	public PetAppearance update(
