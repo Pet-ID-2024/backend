@@ -86,7 +86,7 @@ public record Pet(
 				petBirthDate,
 				petSex,
 				petNeuteredYn,
-				updatePetData.petNeuteredDate(),
+				(updatePetData.petNeuteredDate() != null) ? updatePetData.petNeuteredDate() : petNeuteredDate,
 				chipType,
 				appearance.update(updatePetData.appearance()),
 				petImages,

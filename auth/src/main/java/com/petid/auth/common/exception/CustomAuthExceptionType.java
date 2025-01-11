@@ -10,7 +10,10 @@ public enum CustomAuthExceptionType {
 
     WRONG_TOKEN(403, "AT-0001", "유효하지 않은 토큰입니다."),
     NO_TOKEN(403, "AT-0002", "토큰이 존재하지 않습니다."),
-    TOKEN_EXPIRED(401, "AT-0002", "토큰이 만료되었습니다.");
+    TOKEN_EXPIRED(401, "AT-0002", "토큰이 만료되었습니다."),
+
+    MEMBER_WITHDRAW_IN_PROGRESS(401, "AT-0003", "유저가 탈퇴 진행중입니다.")
+    ;
 
     final int code;
     final String errorCode;

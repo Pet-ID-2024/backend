@@ -70,7 +70,21 @@ public class PetController {
             @PathVariable(name = "petId") long petId,
             @RequestBody PetImageDto.Request request
     ) {
-        PetImage createdImage = petService.createPetImage(petId, request.toDomain());
+        PetImage createdImage = petService.createPetImage(request.toDomain(null, petId));
+
+        return new ResponseEntity<>(
+                PetImageDto.Response.from(createdImage),
+                HttpStatus.CREATED
+        );
+    }
+
+    @PatchMapping("/{petId}/images/{imageId}")
+    public ResponseEntity<PetImageDto.Response> updatePetImage(
+            @PathVariable(name = "petId") long petId,
+            @PathVariable(name = "imageId") long imageId,
+            @RequestBody PetImageDto.Request request
+    ) {
+        PetImage createdImage = petService.updatePetImage(request.toDomain(imageId, petId));
 
         return new ResponseEntity<>(
                 PetImageDto.Response.from(createdImage),

@@ -16,8 +16,8 @@ public interface PetService {
   Pet findPetById(Long petId);
   List<Pet> findAllPets();
 
-  PetImage createPetImage(Long petId, PetImage petImage);
-  PetImage updatePetImage(Long petId, PetImage petImage);
+  PetImage createPetImage(PetImage petImage);
+  PetImage updatePetImage(PetImage petImage);
   void deletePetImage(Long petImageId);
   Optional<PetImage> findPetImageById(Long petId, Long petImageId);
   List<PetImage> findAllPetImages();

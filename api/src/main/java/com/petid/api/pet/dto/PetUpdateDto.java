@@ -27,7 +27,7 @@ public record PetUpdateDto() {
     }
 
     public record PetAppearanceUpdateDto(
-            int weight
+            double weight
     ){
         public PetAppearance toDomain() {
             return new PetAppearance(

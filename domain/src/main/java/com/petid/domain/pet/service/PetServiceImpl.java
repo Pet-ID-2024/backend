@@ -77,7 +77,8 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetImage createPetImage(Long petId, PetImage petImage) {
+    public PetImage createPetImage(PetImage petImage) {
+        long petId = petImage.petId();
         if (!petManager.existByPetId(petId)) {
             throw new PetNotFoundException(petId);
         }
@@ -86,7 +87,8 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetImage updatePetImage(Long petId, PetImage petImage) {
+    public PetImage updatePetImage(PetImage petImage) {
+        long petId = petImage.petId();
         if (!petManager.existByPetId(petId)) {
             throw new PetNotFoundException(petId);
         }

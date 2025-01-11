@@ -4,7 +4,9 @@ import com.petid.auth.common.exception.CustomAuthException;
 import com.petid.auth.common.exception.CustomAuthExceptionType;
 import com.petid.domain.member.model.Member;
 import com.petid.domain.type.Role;
+import com.petid.domain.type.WithdrawalStatus;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public record OAuth2UserInfoModel(
@@ -89,7 +91,9 @@ public record OAuth2UserInfoModel(
                 platform,
                 fcmToken,
                 email,
-                Role.ROLE_USER
+                Role.ROLE_USER,
+                WithdrawalStatus.NORMAL,
+                LocalDate.now()
         );
     }
 }
