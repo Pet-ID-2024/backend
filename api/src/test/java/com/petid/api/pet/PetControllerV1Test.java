@@ -7,7 +7,6 @@ import com.petid.api.exception.ExceptionResponse;
 import com.petid.api.pet.dto.*;
 import com.petid.auth.jwt.TokenValidator;
 import com.petid.domain.pet.model.PetAppearance;
-import com.petid.domain.type.Breed;
 import com.petid.domain.type.Chip;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,9 +57,9 @@ class PetControllerV1Test {
         // given
         PetAppearance petAppearance = new PetAppearance(
                 null,
-                Breed.BEAGLE,
+                "Beagle",
                 "Green",
-                10,
+                10.0,
                 "Long"
         );
         PetIdProposerDto petIdProposer = new PetIdProposerDto(
@@ -101,7 +100,7 @@ class PetControllerV1Test {
             assertThat(result.getResponse().getStatus()).isEqualTo(201);
             assertThat(response).isNotNull();
             assertThat(response.petName()).isEqualTo("testPetName");
-            assertThat(response.appearance().breed()).isEqualTo(Breed.BEAGLE);
+            assertThat(response.appearance().breed()).isEqualTo("Beagle");
         }
         // 2. Pet 중복 등록 시도
         {
@@ -174,9 +173,9 @@ class PetControllerV1Test {
     @DisplayName("[Pet] Pet Appearance 수정")
     void updatePetAppearance() throws Exception {
         // given
-        Breed newBreed = Breed.BULLDOG;
+        String newBreed = "Bulldog";
         String newHairColor = "Blue";
-        int newWeight = 1000;
+        double newWeight = 1000.0;
         String newHairLength = "Short";
         PetAppearanceDto.Request requestBody = new PetAppearanceDto.Request(
                 2L,
@@ -262,8 +261,6 @@ class PetControllerV1Test {
         long petId = 2L;
         String imagePath = "testImage.png";
         PetImageDto.Request requestBody = new PetImageDto.Request(
-                petImageId,
-                petId,
                 imagePath
         );
 

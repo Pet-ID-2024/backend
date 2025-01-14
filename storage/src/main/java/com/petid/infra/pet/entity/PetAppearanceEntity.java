@@ -1,10 +1,7 @@
 package com.petid.infra.pet.entity;
 
 import com.petid.domain.pet.model.PetAppearance;
-import com.petid.domain.type.Breed;
 import com.petid.infra.common.BaseEntity;
-import com.petid.infra.pet.converter.BreedConverter;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,11 +21,10 @@ public class PetAppearanceEntity extends BaseEntity {
   @Column(name = "appearance_id")
   private Long id;
 
-  @Convert(converter = BreedConverter.class)
-  private Breed breed;
+  private String breed;
   
   private String hairColor;
-  private Integer weight;
+  private Double weight;
   private String hairLength;
 
   public PetAppearance toDomain() {

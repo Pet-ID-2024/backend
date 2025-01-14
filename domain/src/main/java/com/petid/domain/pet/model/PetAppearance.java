@@ -1,12 +1,10 @@
 package com.petid.domain.pet.model;
 
-import com.petid.domain.type.Breed;
-
 public record PetAppearance(
 		Long appearanceId,		
-		Breed breed,
+		String breed,
 		String hairColor,
-		Integer weight,
+		Double weight,
 		String hairLength
 ) {
 	public PetAppearance update(
@@ -16,7 +14,7 @@ public record PetAppearance(
 				appearanceId,
 				breed,
 				hairColor,
-				updateData.weight(),
+				(updateData.weight() != null) ? updateData.weight() : weight,
 				hairLength
 		);
 	}

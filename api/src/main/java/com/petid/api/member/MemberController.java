@@ -73,4 +73,26 @@ public class MemberController {
 
         return ResponseEntity.ok(updatedAuthInfo.image());
     }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity<Void> withdrawMember(
+            HttpServletRequest request
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+
+        memberService.withdraw(memberId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/restore")
+    public ResponseEntity<Void> restoreMember(
+            HttpServletRequest request
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+
+        memberService.restore(memberId);
+
+        return ResponseEntity.ok().build();
+    }
 }
