@@ -6,6 +6,8 @@ import com.petid.domain.banner.repository.BannerRepository;
 import com.petid.infra.banner.entity.BannerEntity;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +24,8 @@ public class BannerRepositoryImpl implements BannerRepository {
 	@Override
 	public List<Banner> findByType(String type) {
 		if (type.equals("ALL")){
-			return bannerJpaRepository.findAll().stream().map(BannerEntity::toDomain).collect(Collectors.toList());
+			return bannerJpaRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"))
+					.stream().map(BannerEntity::toDomain).collect(Collectors.toList());
 		}
 		return bannerJpaRepository.findAllByType(type).stream().map(BannerEntity::toDomain).collect(Collectors.toList());
 	}

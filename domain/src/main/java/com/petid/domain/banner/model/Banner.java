@@ -5,5 +5,6 @@ public record Banner(
 	    String imageUrl,
 	    String text,
 	    String type,
-		String status
+		String status,
+		Long contentId
 	) {}

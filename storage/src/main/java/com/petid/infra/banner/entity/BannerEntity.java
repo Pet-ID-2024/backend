@@ -27,7 +27,10 @@ public class BannerEntity {
     private String imageUrl;
     private String text;
     private String type; 
-    private String status; 
+    private String status;
+    private Long contentId;
+    private String createdAt; 
+    private String updatedAt; 
    
     
     public static BannerEntity from(Banner banner) {
@@ -36,7 +39,10 @@ public class BannerEntity {
         		banner.imageUrl(),
         		banner.text(),
         		banner.type(),
-                banner.status()
+                banner.status(),
+                banner.contentId(),
+                null,
+                null
         		);
     }
     
@@ -46,7 +52,8 @@ public class BannerEntity {
             this.getImageUrl(),
             this.getText(),
             this.getType(),
-            this.getStatus()
+            this.getStatus(),
+            this.getContentId()
         );
     }
 
