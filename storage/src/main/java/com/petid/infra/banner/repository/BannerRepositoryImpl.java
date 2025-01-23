@@ -27,7 +27,7 @@ public class BannerRepositoryImpl implements BannerRepository {
 			return bannerJpaRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"))
 					.stream().map(BannerEntity::toDomain).collect(Collectors.toList());
 		}
-		return bannerJpaRepository.findAllByType(type).stream().map(BannerEntity::toDomain).collect(Collectors.toList());
+		return bannerJpaRepository.findAllByTypeOrderByUpdatedAtDesc(type).stream().map(BannerEntity::toDomain).collect(Collectors.toList());
 	}
 
 

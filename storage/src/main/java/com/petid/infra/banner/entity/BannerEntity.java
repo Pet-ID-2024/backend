@@ -1,6 +1,7 @@
 package com.petid.infra.banner.entity;
 
 import com.petid.domain.banner.model.Banner;
+import com.petid.infra.common.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "banner")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BannerEntity {
+public class BannerEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +29,7 @@ public class BannerEntity {
     private String text;
     private String type; 
     private String status;
-    private Long contentId;
-    private String createdAt; 
-    private String updatedAt; 
+    private Long contentId;     
    
     
     public static BannerEntity from(Banner banner) {
@@ -40,9 +39,7 @@ public class BannerEntity {
         		banner.text(),
         		banner.type(),
                 banner.status(),
-                banner.contentId(),
-                null,
-                null
+                banner.contentId()                
         		);
     }
     

@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BannerJpaRepository extends JpaRepository<BannerEntity, Long> {
 	List<BannerEntity> findAllByType(String type);
+	List<BannerEntity> findAllByTypeOrderByUpdatedAtDesc(String type);
 }
