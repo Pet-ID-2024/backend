@@ -152,15 +152,12 @@ public class PetServiceImpl implements PetService {
     }
 
     public void deletePetById(Long petId) {
-        Optional<Pet> pet = petRepo.findPetById(petId);
-        if (!pet.isPresent()) {
-            throw new RuntimeException("Pet not found for ID: " + petId);
-        }
-        Pet _pet = pet.get();
+        Pet pet = petRepo.findPetById(petId)
+                .orElseThrow(() -> new PetNotFoundException(petId));
 
         // Delete PetAppearance associated with the pet
-        if (_pet.appearance() != null && _pet.appearance().appearanceId() != null) {
-            petAppearanceRepo.deletePetAppearanceById(_pet.appearance().appearanceId());
+        if (pet.appearance() != null && pet.appearance().appearanceId() != null) {
+            petAppearanceRepo.deletePetAppearanceById(pet.appearance().appearanceId());
         }
         // Delete PetImage associated with the pet
         petImgRepo.deletePetImageByPetId(petId);

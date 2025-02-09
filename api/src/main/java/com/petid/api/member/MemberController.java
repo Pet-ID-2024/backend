@@ -85,6 +85,15 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<Boolean> getMemberStatus(
+            HttpServletRequest request
+    ) {
+        long memberId = RequestUtil.getMemberIdFromRequest(request);
+
+        return ResponseEntity.ok(memberService.getMemberStatus(memberId));
+    }
+
     @PostMapping("/restore")
     public ResponseEntity<Void> restoreMember(
             HttpServletRequest request

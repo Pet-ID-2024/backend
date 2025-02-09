@@ -32,10 +32,8 @@ public class PetImageRepositoryImpl implements PetImageRepository {
         Optional<PetImageEntity> optionalPetImageEntity = petImageJpaRepo.findById(petImage.petImageId());
         if (optionalPetImageEntity.isPresent()) {
             PetImageEntity petImageEntity = optionalPetImageEntity.get();
-            PetImageEntity updatedPetImageEntity = PetImageEntity.from(petImage);
-            updatedPetImageEntity.setImagePath(petImageEntity.getImagePath());
-            petImageJpaRepo.save(updatedPetImageEntity);
-            return updatedPetImageEntity.toDomain();
+            petImageEntity.setImagePath(petImage.imagePath());
+            return petImageEntity.toDomain();
         }
         throw new RuntimeException("Pet Image not found");
     }

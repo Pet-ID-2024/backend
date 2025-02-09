@@ -80,4 +80,12 @@ public class MemberService {
             memberRepository.save(member.restore());
         }
     }
+
+    public boolean getMemberStatus(
+            long memberId
+    ) {
+        Member member = memberManager.get(memberId);
+
+        return member.status() == WithdrawalStatus.IN_PROGRESS;
+    }
 }

@@ -40,4 +40,9 @@ public class TokenValidator {
         DecodedJWT jwt = JWT.decode(token);
         return Long.parseLong(jwt.getClaim("sub").asString());
     }
+
+    public String getSubFromIdToken(String token) {
+        DecodedJWT jwt = JWT.decode(token);
+        return jwt.getClaim("sub").asString();
+    }
 }

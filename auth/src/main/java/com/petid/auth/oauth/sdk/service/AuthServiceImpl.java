@@ -1,12 +1,9 @@
 package com.petid.auth.oauth.sdk.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.petid.auth.common.exception.CustomAuthException;
-import com.petid.auth.common.exception.CustomAuthExceptionType;
 import com.petid.auth.common.type.OAuth2Platform;
 import com.petid.auth.jwt.TokenProvider;
+import com.petid.auth.jwt.TokenValidator;
 import com.petid.auth.oauth.model.OAuth2UserInfoModel;
 import com.petid.auth.oauth.sdk.controller.OAuth2UserInfoUriConverter;
 import com.petid.auth.oauth.sdk.controller.dto.TokenDto;
@@ -18,7 +15,6 @@ import com.petid.domain.member.repository.MemberAuthRepository;
 import com.petid.domain.member.repository.MemberPolicyRepository;
 import com.petid.domain.member.repository.MemberRepository;
 import com.petid.domain.member.util.RandomNameUtil;
-import com.petid.domain.type.WithdrawalStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -28,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Base64;
 import java.util.Map;
 
 @Service
@@ -41,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
     private final MemberRepository memberRepository;
     private final MemberPolicyRepository memberPolicyRepository;
     private final TokenProvider tokenProvider;
+    private final TokenValidator tokenValidator;
     private final OAuth2UserInfoUriConverter oauth2Converter;
     private final MemberAuthRepository memberAuthRepository;
     private final RandomNameUtil randomNameUtil;
@@ -53,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
             boolean advertisement
     ) {
         OAuth2UserInfoModel oAuth2UserInfo =
-                (platform.getPlatform().equals("google"))
+                (platform.getPlatform().equals("google") || platform.getPlatform().equals("apple"))
                         ? parseSubFromToken(token)
                         : requestToAuthServer(token, platform);
 
@@ -91,9 +87,6 @@ public class AuthServiceImpl implements AuthService {
             String fcmToken
     ) {
         Member member = memberManager.getByUid(uid);
-        if (member.status() == WithdrawalStatus.IN_PROGRESS) {
-            throw new CustomAuthException(CustomAuthExceptionType.MEMBER_WITHDRAW_IN_PROGRESS);
-        }
         memberRepository.save(member.updateFcmToken(fcmToken));
 
         String accessToken = tokenProvider.getAccessToken(member);
@@ -137,19 +130,10 @@ public class AuthServiceImpl implements AuthService {
     private OAuth2UserInfoModel parseSubFromToken(
             String token
     ) {
-        byte[] decodedBytes = Base64.getDecoder().decode(token);
-        String decodedString = new String(decodedBytes);
-
-        JsonNode jsonNode;
-        try {
-            jsonNode = objectMapper.readTree(decodedString);
-        } catch (JsonProcessingException e) {
-            throw new CustomAuthException(CustomAuthExceptionType.WRONG_TOKEN);
-        }
-        String kid = jsonNode.get("kid").asText();
+        String sub = tokenValidator.getSubFromIdToken(token);
 
         return OAuth2UserInfoModel.of(
-                kid,
+                sub,
                 null,
                 null
         );
